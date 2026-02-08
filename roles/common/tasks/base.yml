@@ -1,7 +1,9 @@
 ---
-- name: Install Npm
+- name: Install Dependencies
   package:
-    name: npm
+    name:
+      - npm
+      - luarocks
     state: present
 
 - name: Install Npm Dependencies

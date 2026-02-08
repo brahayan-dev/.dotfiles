@@ -60,5 +60,11 @@
     --force
     DBI
     DBD::SQLite
+    Test::Nginx
   args:
     creates: "{{ ansible_facts['user_dir'] }}/.perl"
+
+- name: Install Lua Lapis
+  command: luarocks install lapis
+  args:
+    creates: /opt/homebrew/bin/lapis
