@@ -10,7 +10,7 @@ return {
         },
       })
 
-      vim.lsp.config('*', {
+      vim.lsp.config("*", {
         capabilities = capabilities,
       })
 
@@ -29,7 +29,8 @@ return {
         },
       })
 
-      vim.lsp.enable('sqls')
+      vim.lsp.enable("ruff")
+      vim.lsp.enable("sqls")
       vim.lsp.enable("ts_ls")
       vim.lsp.enable("lua_ls")
       vim.lsp.enable("yamlls")
@@ -37,7 +38,8 @@ return {
       vim.lsp.enable("jsonls")
       vim.lsp.enable("tofu_ls")
       vim.lsp.enable("ansiblels")
-      vim.lsp.enable('clojure_lsp')
+      vim.lsp.enable("clojure_lsp")
+      vim.lsp.enable("basedpyright")
 
       -- Keymaps LSP
       vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
