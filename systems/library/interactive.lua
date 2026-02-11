@@ -9,8 +9,12 @@ local paths = {
   hosts_file = "systems/hosts.ini",
 }
 
-M.not_found = function(_)
-  print("Command Not Found\n")
+local function not_found(name)
+  local message = string.format("Command '%s' Not Found!\n", name)
+
+  return function(_)
+    print(name and message or "Command Not Found!\n")
+  end
 end
 
 local set_repository_origin = function()
@@ -45,14 +49,34 @@ local set_ssh_key = function()
   }
 end
 
-M.connect = function(_)
-  set_repository_origin()
-  authenticate_github()
-  refresh_token()
-  set_ssh_key()
+local function install(package)
+  print(string.format("Installing '%s'...\n", package))
+  local packages = {
+    scala = function()
+      shell { "coursier", "setup" }
+    end,
+    java = function()
+      shell { "coursier", "java", "--jvm", "temurin:21", "--setup" }
+    end,
+  }
+
+  (packages[package] or not_found(package))()
 end
 
-M.setup = function(file, playbook)
+local function connect(entity)
+  local entities = {
+    github = function()
+      set_repository_origin()
+      authenticate_github()
+      refresh_token()
+      set_ssh_key()
+    end,
+  }
+
+  (entities[entity] or not_found(entity))()
+end
+
+local function setup(file, playbook)
   return function(_)
     shell {
       set_ansible_cfg(file),
@@ -65,7 +89,7 @@ M.setup = function(file, playbook)
   end
 end
 
-M.ping = function(file)
+local function ping(file)
   return function()
     shell {
       set_ansible_cfg(file),
@@ -75,4 +99,10 @@ M.ping = function(file)
   end
 end
 
-return M
+return {
+  ping = ping,
+  setup = setup,
+  install = install,
+  connect = connect,
+  not_found = not_found,
+}

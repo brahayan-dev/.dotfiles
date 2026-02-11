@@ -3,15 +3,7 @@
   package:
     name:
       - npm
-      - python
     state: latest
-
-- name: Install Pip Dependencies
-  pip:
-    state: latest
-    name:
-      - ruff
-      - basedpyright
 
 - name: Install Npm Dependencies
   community.general.npm:
@@ -20,6 +12,9 @@
     force: true
     state: latest
   loop:
+    - elm
+    - elm-test
+    - elm-format
     - prettier
     - typescript
     - bash-language-server

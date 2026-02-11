@@ -1,11 +1,12 @@
 local M = {}
 
 local shell = require "systems.library.common".shell
+local interactive = require "systems.library.interactive"
 
 local nu_update_proj = function()
-  shell { "nu", "proj", "update", "cljdev" }
   shell { "nu", "proj", "update", "nudev" }
   shell { "nu", "proj", "update", "nucli" }
+  shell { "nu", "proj", "update", "cljdev" }
 end
 
 local nu_dev_bd = function()
@@ -22,10 +23,10 @@ end
 local nu_certs = function()
   shell { "nu-co", "certs", "setup", "--env", "prod" }
   shell { "nu-co", "certs", "setup", "--env", "staging" }
-  shell { "nu-ist", "certs", "setup", "--env", "prod" }
-  shell { "nu-ist", "certs", "setup", "--env", "staging" }
   shell { "nu-mx", "certs", "setup", "--env", "prod" }
   shell { "nu-mx", "certs", "setup", "--env", "staging" }
+  shell { "nu-ist", "certs", "setup", "--env", "prod" }
+  shell { "nu-ist", "certs", "setup", "--env", "staging" }
 end
 
 local nu_jwt_co = function()
@@ -35,21 +36,27 @@ end
 
 local nu_tokens_stg = function()
   shell { "nu-co", "auth", "get-refresh-token", "--env", "staging", "--force" }
-  shell { "nu-ist", "auth", "get-refresh-token", "--env", "staging", "--force" }
   shell { "nu-mx", "auth", "get-refresh-token", "--env", "staging", "--force" }
+  shell { "nu-ist", "auth", "get-refresh-token", "--env", "staging", "--force" }
 
   shell { "nu-co", "auth", "get-access-token", "--env", "staging" }
-  shell { "nu-ist", "auth", "get-access-token", "--env", "staging" }
   shell { "nu-mx", "auth", "get-access-token", "--env", "staging" }
+  shell { "nu-ist", "auth", "get-access-token", "--env", "staging" }
 end
 
-M.nu = function(_)
-  nu_update_proj()
-  nu_dev_bd()
-  nu_creds_br()
-  nu_certs()
-  nu_jwt_co()
-  nu_tokens_stg()
+M.refresh = function(command)
+  local commands = {
+    nu = function()
+      nu_update_proj()
+      nu_dev_bd()
+      nu_creds_br()
+      nu_certs()
+      nu_jwt_co()
+      nu_tokens_stg()
+    end
+  }
+
+  (commands[command] or interactive.not_found(command))()
 end
 
 return M
