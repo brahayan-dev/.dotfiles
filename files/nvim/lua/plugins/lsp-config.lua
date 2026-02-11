@@ -34,6 +34,7 @@ return {
       vim.lsp.enable("lua_ls")
       vim.lsp.enable("yamlls")
       vim.lsp.enable("bashls")
+      vim.lsp.enable("elm_ls")
       vim.lsp.enable("jsonls")
       vim.lsp.enable("tofu_ls")
       vim.lsp.enable("ansiblels")
