@@ -1,18 +1,5 @@
 #!/usr/bin/env zsh
 
-# ---------
-# Settings
-# ---------
-
-# NOTE: Nvm setup
-[[ -e "$HOME/nvm/nvm.sh" ]] && source "$HOME/.nvm/nvm.sh"
-
-if [[ "$(uname)" == "Darwin" ]]; then
-    # NOTE: Path to binaries on Brew
-    export PATH="/opt/homebrew/bin:$PATH"
-    export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
-fi
-
 if [[ "$(uname)" == "Linux" ]]; then
     # NOTE: Other configurations
     export PATH="$HOME/.local/bin:$PATH"
