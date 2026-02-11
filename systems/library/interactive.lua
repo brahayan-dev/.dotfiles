@@ -56,7 +56,7 @@ local function install(package)
       shell { "coursier", "setup" }
     end,
     java = function()
-      shell { "coursier", "java", "--jvm", "temurin:21", "--setup" }
+      shell { "coursier", "java", "--jvm", "temurin:17", "--setup" }
     end,
   }
 
