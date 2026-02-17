@@ -6,6 +6,7 @@ vim.cmd("set softtabstop=2")
 -- Set <space> as the leader key
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
+vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
 
 -- Set to true if you have a Nerd Font installed
 vim.g.have_nerd_font = true
@@ -22,7 +23,9 @@ vim.o.ignorecase = true
 vim.o.smartcase = true
 vim.o.signcolumn = "yes"
 vim.o.updatetime = 250
-vim.o.timeoutlen = 300
+vim.o.timeout = true
+vim.o.ttimeoutlen = 0
+vim.o.timeoutlen = 500
 vim.o.splitright = true
 vim.o.splitbelow = true
 vim.o.list = true
@@ -39,11 +42,18 @@ vim.schedule(function()
   vim.o.clipboard = "unnamedplus"
 end)
 
--- Navigate vim panes better
-vim.keymap.set("n", "<C-i>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
-vim.keymap.set("n", "<C-k>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
-vim.keymap.set("n", "<C-l>", "<C-w><C-h>", { desc = "Move focus to the left window" })
-vim.keymap.set("n", "<C-j>", "<C-w><C-l>", { desc = "Move focus to the right window" })
+vim.keymap.set("n", "<leader>q", ":qa!<CR>", { desc = "Quit all" })
+vim.keymap.set("n", "<leader>;", ":write<CR>", { desc = "Save file" })
+
+vim.keymap.set("n", "<leader>c", "<C-w>q", { desc = "Quit window" })
+vim.keymap.set("n", "<leader>o", "<C-w>o", { desc = "Only window" })
+vim.keymap.set("n", "<leader>w", "<C-w>w", { desc = "Next window" })
+vim.keymap.set("n", "<leader>v", "<C-w>v", { desc = "Vertical split" })
+vim.keymap.set("n", "<leader>s", "<C-w>s", { desc = "Horizontal split" })
+vim.keymap.set("n", "<leader>k", "<C-w>k", { desc = "Move focus to the upper window" })
+vim.keymap.set("n", "<leader>h", "<C-w>h", { desc = "Move focus to the left window" })
+vim.keymap.set("n", "<leader>j", "<C-w>j", { desc = "Move focus to the lower window" })
+vim.keymap.set("n", "<leader>l", "<C-w>l", { desc = "Move focus to the right window" })
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")

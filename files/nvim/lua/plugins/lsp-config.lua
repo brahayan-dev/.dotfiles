@@ -32,7 +32,6 @@ return {
       vim.lsp.enable("sqls")
       vim.lsp.enable("ts_ls")
       vim.lsp.enable("elmls")
-      vim.lsp.enable("lua_ls")
       vim.lsp.enable("yamlls")
       vim.lsp.enable("bashls")
       vim.lsp.enable("jsonls")
@@ -42,12 +41,12 @@ return {
 
       -- Keymaps LSP
       vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
-      vim.keymap.set("n", "<leader>f", vim.lsp.buf.format, {})
-      vim.keymap.set("n", "<leader>gr", vim.lsp.buf.rename, {})
-      vim.keymap.set("n", "<leader>gd", vim.lsp.buf.references, {})
-      vim.keymap.set("n", "<leader>gg", vim.lsp.buf.definition, {})
-      vim.keymap.set("n", "<leader>ga", vim.lsp.buf.code_action, {})
-      vim.keymap.set("n", "<leader>gi", vim.lsp.buf.implementation, {})
+      vim.keymap.set("n", "<leader>i", vim.lsp.buf.format, {})
+      vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename, {})
+      vim.keymap.set("n", "<leader>g", vim.lsp.buf.references, {})
+      vim.keymap.set("n", "<leader>d", vim.lsp.buf.definition, {})
+      vim.keymap.set("n", "<leader>a", vim.lsp.buf.code_action, {})
+      vim.keymap.set("n", "<leader>p", vim.lsp.buf.implementation, {})
 
       vim.diagnostic.config({ virtual_text = true })
     end
