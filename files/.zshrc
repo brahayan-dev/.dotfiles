@@ -41,6 +41,8 @@ alias _max-neef='cd "$HOME/Projects/max-neef/"'
 alias _workbook='cd "$HOME/Projects/workbook/"'
 alias _fengari-hub='cd "$HOME/Projects/fengari-hub/"'
 alias _fengari-ops='cd "$HOME/Projects/fengari-ops/"'
+alias _fengari-web='cd "$HOME/Projects/fengari-web/"'
+alias _fengari-api='cd "$HOME/Projects/fengari-api/"'
 
 alias __kiln='cd "$HOME/Projects/kiln/" && nvim .'
 alias __dotfiles='cd "$HOME/.dotfiles/" && nvim .'
@@ -48,6 +50,8 @@ alias __max-neef='cd "$HOME/Projects/max-neef/" && nvim .'
 alias __workbook='cd "$HOME/Projects/workbook/" && nvim .'
 alias __fengari-hub='cd "$HOME/Projects/fengari-hub/" && nvim .'
 alias __fengari-ops='cd "$HOME/Projects/fengari-ops/" && nvim .'
+alias __fengari-web='cd "$HOME/Projects/fengari-web/" && nvim .'
+alias __fengari-api='cd "$HOME/Projects/fengari-api/" && nvim .'
 
 # NOTE: Direnv setup
 eval "$(direnv hook zsh)"
