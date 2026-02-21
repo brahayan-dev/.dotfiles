@@ -52,12 +52,9 @@ end
 local function install(package)
   print(string.format("Installing '%s'...\n", package))
   local packages = {
-    scala = function()
-      shell { "coursier", "setup" }
-    end,
-    java = function()
-      shell { "coursier", "java", "--jvm", "temurin:17", "--setup" }
-    end,
+    scala = require "systems.library.language".scala,
+    java = require "systems.library.language".java,
+    ruby = require "systems.library.language".ruby,
   }
 
   (packages[package] or not_found(package))()

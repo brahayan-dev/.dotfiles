@@ -34,14 +34,14 @@ alias lg='lazygit'
 # NOTE: Workstation CLI
 export PATH="$HOME/.dotfiles/:$PATH"
 
-# NOTE: Configurations
+# NOTE: Repositories
 alias _kiln='cd "$HOME/Projects/kiln/"'
 alias _dotfiles='cd "$HOME/.dotfiles/"'
 alias _max-neef='cd "$HOME/Projects/max-neef/"'
 alias _workbook='cd "$HOME/Projects/workbook/"'
 alias _fengari-hub='cd "$HOME/Projects/fengari-hub/"'
 alias _fengari-ops='cd "$HOME/Projects/fengari-ops/"'
-alias _fengari-web='cd "$HOME/Projects/fengari-web/"'
+alias _fengari-app='cd "$HOME/Projects/fengari-app/"'
 alias _fengari-api='cd "$HOME/Projects/fengari-api/"'
 
 alias __kiln='cd "$HOME/Projects/kiln/" && nvim .'
@@ -50,8 +50,9 @@ alias __max-neef='cd "$HOME/Projects/max-neef/" && nvim .'
 alias __workbook='cd "$HOME/Projects/workbook/" && nvim .'
 alias __fengari-hub='cd "$HOME/Projects/fengari-hub/" && nvim .'
 alias __fengari-ops='cd "$HOME/Projects/fengari-ops/" && nvim .'
-alias __fengari-web='cd "$HOME/Projects/fengari-web/" && nvim .'
+alias __fengari-app='cd "$HOME/Projects/fengari-app/" && nvim .'
 alias __fengari-api='cd "$HOME/Projects/fengari-api/" && nvim .'
 
-# NOTE: Direnv setup
+# NOTE: Configurations
 eval "$(direnv hook zsh)"
+eval "$(rbenv init - zsh)"
