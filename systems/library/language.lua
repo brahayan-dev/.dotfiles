@@ -20,7 +20,6 @@ function M.ruby()
   shell { "rbenv", "global", version }
   shell { "gem", "install", "bundler" }
   shell { "gem", "install", "rails" }
-  shell { "gem", "install", "rubocop" }
   shell { "gem", "install", "ruby-lsp" }
 end
 
