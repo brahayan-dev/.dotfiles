@@ -15,6 +15,7 @@
     - elm
     - elm-test
     - elm-format
+    - http-server
     - prettier
     - typescript
     - bash-language-server
