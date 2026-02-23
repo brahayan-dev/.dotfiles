@@ -4,6 +4,3 @@ if [[ "$(uname)" == "Darwin" ]]; then
   # NOTE: Path to binaries on Brew
   export PATH="/opt/homebrew/bin:$PATH"
 fi
-
-export JAVA_HOME="$HOME/Library/Caches/Coursier/arc/https/github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.18%252B8/OpenJDK17U-jdk_aarch64_mac_hotspot_17.0.18_8.tar.gz/jdk-17.0.18+8/Contents/Home"
-export PATH="$PATH:$HOME/Library/Application Support/Coursier/bin"
