@@ -43,19 +43,19 @@ ensure_deps_macos() {
 }
 
 ensure_deps_linux() {
-  if have apt-get; then
+  if have dnf; then
     if ! have ansible || ! have lua; then
-      log_info "Updating Apt Index"
-      sudo apt-get update
+      log_info "Updating Dnf Index"
+      sudo dnf update
     fi
 
     if ! have ansible; then
       log_info "Installing Ansible"
-      sudo apt-get install -y ansible
+      sudo dnf install -y ansible
     fi
     if ! have lua; then
       log_info "Installing Lua"
-      sudo apt-get install -y lua5.4
+      sudo dnf install -y lua
     fi
   else
     log_error "Could Not Detect Package Manager To Install Dependencies"

@@ -1,4 +1,19 @@
 ---
+- name: Set Zsh As Shell By Default
+  become: true
+  user:
+    name: "{{ ansible_facts['user_id'] }}"
+    shell: /bin/zsh
+    ssh_key_bits: 4096
+    generate_ssh_key: true
+    ssh_key_file: ".ssh/{{ ansible_facts['user_id'] }}_rsa"
+
+- name: Verify SSH Key Was Added
+  command: ssh-add -l
+  register: ssh_keys_added
+  failed_when: false
+  changed_when: false
+
 - name: Add SSH Key To Agent (Linux)
   shell: |
     eval "$(ssh-agent -s)"
@@ -6,3 +21,14 @@
   when:
     - "'ansible-generated' not in ssh_keys_added.stdout"
 
+- name: Add Git Configuration
+  community.general.git_config:
+    name: user.email
+    scope: global
+    value: bxsr@proton.me
+
+- name: Set Default Git Branch Globally
+  community.general.git_config:
+    name: init.defaultBranch
+    value: main
+    scope: global
