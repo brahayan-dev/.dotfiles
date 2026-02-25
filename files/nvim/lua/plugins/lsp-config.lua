@@ -31,7 +31,6 @@ return {
 
       vim.lsp.enable("sqls")
       vim.lsp.enable("ts_ls")
-      vim.lsp.enable("elmls")
       vim.lsp.enable("lua_ls")
       vim.lsp.enable("yamlls")
       vim.lsp.enable("bashls")

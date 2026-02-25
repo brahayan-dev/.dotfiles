@@ -12,16 +12,12 @@
     force: true
     state: latest
   loop:
-    - elm
-    - elm-test
-    - elm-format
-    - http-server
     - prettier
     - typescript
+    - http-server
     - bash-language-server
     - yaml-language-server
     - typescript-language-server
     - vscode-langservers-extracted
     - "@github/copilot-language-server"
-    - "@elm-tooling/elm-language-server"
     - "@ansible/ansible-language-server"
