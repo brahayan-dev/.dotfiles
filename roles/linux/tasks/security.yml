@@ -14,7 +14,7 @@
   failed_when: false
   changed_when: false
 
-- name: Add SSH Key To Agent (Linux)
+- name: Add SSH Key To Agent
   shell: |
     eval "$(ssh-agent -s)"
     ssh-add "{{ ansible_facts['user_dir'] }}/.ssh/{{ ansible_facts['user_id'] }}_rsa"

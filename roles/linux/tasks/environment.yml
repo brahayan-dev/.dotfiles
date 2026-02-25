@@ -5,3 +5,13 @@
     dest: "/{{ ansible_facts['user_dir'] }}/.config/ghostty/config"
     state: link
     force: true
+
+- name: Set Linux Symlink
+  ansible.builtin.file:
+    src: "/{{ ansible_facts['user_dir'] }}/.dotfiles/files/{{ item }}"
+    dest: "/{{ ansible_facts['user_dir'] }}/{{ item }}"
+    state: link
+    force: true
+  loop:
+    - .linux_profile
+  notify: event_reload_zsh_files

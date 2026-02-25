@@ -1,5 +1,6 @@
 ---
 - name: Install Copr Dependencies
+  become: true
   community.general.copr:
     name: "{{ item }}"
     state: enabled
@@ -8,12 +9,14 @@
     - scottames/ghostty
 
 - name: Install DBeaver
+  become: true
   dnf:
     name: https://dbeaver.io/files/dbeaver-ce-latest-stable.x86_64.rpm
     state: latest
     disable_gpg_check: yes
 
 - name: Install Dependencies
+  become: true
   dnf:
     name:
       - gh
@@ -70,7 +73,7 @@
 - name: Install Rbenv
   shell: curl -fsSL https://rbenv.org/install.sh | bash
   args:
-    creates: "/usr/bin/rbenv"
+    creates: "{{ ansible_facts['user_dir'] }}/.rbenv/bin/rbenv"
 
 - name: Install Ohmyzsh
   block:
