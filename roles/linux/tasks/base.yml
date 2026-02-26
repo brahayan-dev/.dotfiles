@@ -7,6 +7,7 @@
   loop:
     - dejan/lazygit
     - scottames/ghostty
+    - rustyclanker/lua-language-server
 
 - name: Install DBeaver
   become: true
@@ -43,6 +44,7 @@
       - opentofu
       - cpanminus
       - gmp-devel
+      - zlib-devel
       - shellcheck
       - glibc-devel
       - python3-pip
@@ -50,6 +52,7 @@
       - libyaml-devel
       - readline-devel
       - fira-code-fonts
+      - lua-language-server
     state: latest
     update_cache: true
   notify:
