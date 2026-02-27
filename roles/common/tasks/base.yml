@@ -1,11 +1,13 @@
 ---
 - name: Install Dependencies
+  become: "{{ ansible_facts['os_family'] != 'Darwin' }}"
   package:
     name:
       - npm
     state: latest
 
 - name: Install Npm Dependencies
+  become: "{{ ansible_facts['os_family'] != 'Darwin' }}"
   community.general.npm:
     name: "{{ item }}"
     global: true

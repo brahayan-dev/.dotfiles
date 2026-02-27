@@ -1,22 +1,28 @@
 ---
-- name: Install Snap Dependencies
+- name: Install Copr Dependencies
   become: true
-  community.general.snap:
+  community.general.copr:
     name: "{{ item }}"
-    classic: true
-    state: present
+    state: enabled
   loop:
-    - dbeaver-ce
-    - ghostty
+    - dejan/lazygit
+    - scottames/ghostty
+    - rustyclanker/lua-language-server
+
+- name: Install DBeaver
+  become: true
+  dnf:
+    name: https://dbeaver.io/files/dbeaver-ce-latest-stable.x86_64.rpm
+    state: latest
+    disable_gpg_check: yes
 
 - name: Install Dependencies
   become: true
-  apt:
+  dnf:
     name:
       - gh
       - git
       - zsh
-      - npm
       - gcc
       - curl
       - grip
@@ -32,11 +38,13 @@
       - direnv
       - pandoc
       - fd-find
+      - ghostty
       - ripgrep
       - lazygit
       - opentofu
       - cpanminus
       - gmp-devel
+      - zlib-devel
       - shellcheck
       - glibc-devel
       - python3-pip
@@ -44,11 +52,12 @@
       - libyaml-devel
       - readline-devel
       - fira-code-fonts
+      - lua-language-server
     state: latest
+    update_cache: true
   notify:
     - event_download_ohmyzsh
     - event_install_ohmyzsh
-    - event_install_pip_dependencies
 
 - name: Install Perl Dependencies
   become: true
@@ -63,6 +72,11 @@
   shell: curl -fsS https://dl.brave.com/install.sh | sh
   args:
     creates: "/usr/bin/brave-browser"
+
+- name: Install Rbenv
+  shell: curl -fsSL https://rbenv.org/install.sh | bash
+  args:
+    creates: "{{ ansible_facts['user_dir'] }}/.rbenv/bin/rbenv"
 
 - name: Install Ohmyzsh
   block:
