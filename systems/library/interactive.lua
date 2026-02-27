@@ -21,7 +21,7 @@ local set_repository_origin = function()
   shell {
     "git", "remote",
     "set-url", "origin",
-    "git@github.com:brahayan-dev/dotfiles.git"
+    "git@github.com:brahayan-dev/.dotfiles.git"
   }
 end
 
