@@ -22,7 +22,7 @@ return {
       view_options = {
         show_hidden = true,
         is_always_hidden = function(name, _)
-          local exclude = { "node_modules", "dist", "elm-stuff", ".git", ".parcel-cache", ".ruby-lsp", ".." }
+          local exclude = { "node_modules", ".become_", ".vault_", ".git", ".parcel-cache", ".ruby-lsp", ".." }
           for _, v in ipairs(exclude) do
             if name == v then
               return true
