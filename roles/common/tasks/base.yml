@@ -4,6 +4,8 @@
   package:
     name:
       - npm
+      - podman
+      - podman-compose
     state: latest
 
 - name: Install Npm Dependencies
