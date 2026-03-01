@@ -13,14 +13,4 @@ function M.java()
   shell { "coursier", "java", "--jvm", jvm, "--setup" }
 end
 
-function M.ruby()
-  local version = "3.4.8"
-
-  shell { "rbenv", "install", version }
-  shell { "rbenv", "global", version }
-  shell { "gem", "install", "bundler" }
-  shell { "gem", "install", "rails" }
-  shell { "gem", "install", "ruby-lsp" }
-end
-
 return M

@@ -54,7 +54,6 @@ local function install(package)
   local packages = {
     scala = require "systems.library.language".scala,
     java = require "systems.library.language".java,
-    ruby = require "systems.library.language".ruby,
   }
 
   (packages[package] or not_found(package))()

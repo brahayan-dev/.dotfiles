@@ -73,11 +73,6 @@
   args:
     creates: "/usr/bin/brave-browser"
 
-- name: Install Rbenv
-  shell: curl -fsSL https://rbenv.org/install.sh | bash
-  args:
-    creates: "{{ ansible_facts['user_dir'] }}/.rbenv/bin/rbenv"
-
 - name: Install Ohmyzsh
   block:
     - name: Install Ohmyzsh - Download Installer

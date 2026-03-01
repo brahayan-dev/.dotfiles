@@ -21,7 +21,6 @@
       - grip
       - perl
       - tree
-      - rbenv
       - cmake
       - shfmt
       - unzip
@@ -36,6 +35,7 @@
       - ghostty
       - coursier
       - readline
+      - luarocks
       - opentofu
       - cpanminus
       - openssl@3
