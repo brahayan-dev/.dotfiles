@@ -52,6 +52,7 @@
       - libyaml-devel
       - readline-devel
       - fira-code-fonts
+      - dotnet-sdk-10.0
       - lua-language-server
     state: latest
     update_cache: true

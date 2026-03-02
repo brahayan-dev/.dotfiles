@@ -33,6 +33,16 @@ alias lg='lazygit'
 # ---------
 # NOTE: Workstation CLI
 export PATH="$HOME/.dotfiles/:$PATH"
+# NOTE: Editor
+export EDITOR=nvim
+# NOTE: Dotnet Tools
+export PATH="$PATH:$HOME/.dotnet/tools"
+# NOTE: Direnv
+eval "$(direnv hook zsh)"
+if [[ "$(uname -a)" =~ Darwin ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+    export PATH="$PATH:$HOME/.local/bin"
+fi
 
 # NOTE: Repositories
 alias _kiln='cd "$HOME/Projects/kiln/"'
@@ -50,6 +60,3 @@ alias __workbook='cd "$HOME/Projects/workbook/" && nvim .'
 alias __fengari-app='cd "$HOME/Projects/fengari-app/" && nvim .'
 alias __fengari-api='cd "$HOME/Projects/fengari-api/" && nvim .'
 alias __fengari-hub='cd "$HOME/Projects/fengari-hub/" && nvim .'
-
-# NOTE: Configurations
-eval "$(direnv hook zsh)"

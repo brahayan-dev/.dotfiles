@@ -36,6 +36,7 @@ return {
       })
 
       vim.lsp.enable("sqls")
+      vim.lsp.enable("elmls")
       vim.lsp.enable("ts_ls")
       vim.lsp.enable("lua_ls")
       vim.lsp.enable("yamlls")
@@ -44,6 +45,7 @@ return {
       vim.lsp.enable("tofu_ls")
       vim.lsp.enable("ansiblels")
       vim.lsp.enable("clojure_lsp")
+      vim.lsp.enable("fsautocomplete")
 
       -- Keymaps LSP
       vim.keymap.set("n", "K", vim.lsp.buf.hover, {})

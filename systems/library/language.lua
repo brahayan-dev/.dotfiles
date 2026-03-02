@@ -13,4 +13,8 @@ function M.java()
   shell { "coursier", "java", "--jvm", jvm, "--setup" }
 end
 
+function M.dotnet()
+  shell { "dotnet", "tool", "install", "--global", "fsautocomplete" }
+end
+
 return M

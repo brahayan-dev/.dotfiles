@@ -49,8 +49,13 @@
 
 - name: Install Common Cask Dependencies
   community.general.homebrew_cask:
-    name: arc
-    state: present
+    name:
+      - arc
+      - dotnet-sdk
+    state: latest
+  notify:
+    - event_download_ohmyzsh
+    - event_install_ohmyzsh
 
 - name: Install Perl Dependencies
   become: true

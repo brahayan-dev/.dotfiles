@@ -52,8 +52,9 @@ end
 local function install(package)
   print(string.format("Installing '%s'...\n", package))
   local packages = {
-    scala = require "systems.library.language".scala,
     java = require "systems.library.language".java,
+    scala = require "systems.library.language".scala,
+    dotnet = require "systems.library.language".dotnet,
   }
 
   (packages[package] or not_found(package))()

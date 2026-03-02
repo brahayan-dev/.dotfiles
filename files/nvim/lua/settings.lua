@@ -90,3 +90,11 @@ vim.api.nvim_create_autocmd("BufWritePost", {
   end,
   desc = "Format current file with Prettier (sync) on save",
 })
+
+vim.filetype.add({
+  extension = {
+    fs = 'fsharp',
+    fsx = 'fsharp',
+    fsi = 'fsharp',
+  },
+})
