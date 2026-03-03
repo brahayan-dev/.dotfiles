@@ -51,7 +51,6 @@
   community.general.homebrew_cask:
     name:
       - arc
-      - dotnet-sdk
     state: latest
   notify:
     - event_download_ohmyzsh

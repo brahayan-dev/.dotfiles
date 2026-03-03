@@ -13,7 +13,18 @@ function M.java()
   shell { "coursier", "java", "--jvm", jvm, "--setup" }
 end
 
+local function install_posix()
+  shell { "luarocks", "install", "luaposix" }
+end
+
 function M.dotnet()
+  install_posix()
+  local sysname = require "posix.sys.utsname".uname().sysname
+
+  if sysname == "Darwin" then
+    shell { "brew", "install", "--cask", "dotnet-sdk" }
+    shell { "sudo", "dotnet", "workload", "update" }
+  end
   shell { "dotnet", "tool", "install", "--global", "fsautocomplete" }
 end
 
