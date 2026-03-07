@@ -20,7 +20,6 @@
   become: true
   community.general.pacman:
     name:
-      # - gh
       - git
       - zsh
       - gcc
@@ -43,6 +42,7 @@
       - lazygit
       - luarocks
       - opentofu
+      - github-cli
       # - gmp-devel
       # - zlib-devel
       - shellcheck
