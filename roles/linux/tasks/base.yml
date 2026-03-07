@@ -1,24 +1,24 @@
 ---
-- name: Install Copr Dependencies
-  become: true
-  community.general.copr:
-    name: "{{ item }}"
-    state: enabled
-  loop:
-    - dejan/lazygit
-    - scottames/ghostty
-    - rustyclanker/lua-language-server
-
-- name: Install DBeaver
-  become: true
-  dnf:
-    name: https://dbeaver.io/files/dbeaver-ce-latest-stable.x86_64.rpm
-    state: latest
-    disable_gpg_check: yes
+# - name: Install Copr Dependencies
+#   become: true
+#   community.general.copr:
+#     name: "{{ item }}"
+#     state: enabled
+#   loop:
+#     - dejan/lazygit
+#     - scottames/ghostty
+#     - rustyclanker/lua-language-server
+#
+# - name: Install DBeaver
+#   become: true
+#   dnf:
+#     name: https://dbeaver.io/files/dbeaver-ce-latest-stable.x86_64.rpm
+#     state: latest
+#     disable_gpg_check: yes
 
 - name: Install Dependencies
   become: true
-  dnf:
+  community.general.pacman:
     name:
       - gh
       - git
@@ -48,11 +48,11 @@
       - shellcheck
       - glibc-devel
       - python3-pip
-      - openssl-devel
+      - openssl-1.1
       - libyaml-devel
       - readline-devel
       - fira-code-fonts
-      - dotnet-sdk-10.0
+      # - dotnet-sdk-10.0
       - lua-language-server
     state: latest
     update_cache: true
