@@ -1,30 +1,13 @@
 ---
-# - name: Install Copr Dependencies
-#   become: true
-#   community.general.copr:
-#     name: "{{ item }}"
-#     state: enabled
-#   loop:
-#     - dejan/lazygit
-#     - scottames/ghostty
-#     - rustyclanker/lua-language-server
-#
-# - name: Install DBeaver
-#   become: true
-#   dnf:
-#     name: https://dbeaver.io/files/dbeaver-ce-latest-stable.x86_64.rpm
-#     state: latest
-#     disable_gpg_check: yes
-
 - name: Install Dependencies
   become: true
   community.general.pacman:
     name:
+      - fd
       - git
       - zsh
       - gcc
       - curl
-      # - grip
       - tree
       - tidy
       - cmake
@@ -36,23 +19,17 @@
       - rlwrap
       - direnv
       - pandoc
-      # - fd-find
+      - dbeaver
       - ghostty
       - ripgrep
       - lazygit
       - luarocks
       - opentofu
+      - dotnet-sdk
       - github-cli
-      # - gmp-devel
-      # - zlib-devel
       - shellcheck
-      # - glibc-devel
-      # - python3-pip
-      # - openssl-1.0
-      # - libyaml-devel
-      # - readline-devel
-      # - fira-code-fonts
-      # - dotnet-sdk-10.0
+      - python-pipx
+      - ttf-fira-code
       - lua-language-server
     state: latest
     update_cache: true
@@ -76,4 +53,4 @@
       shell: |
         echo "Y" | sh /tmp/ohmyzsh.sh
       args:
-        creates: "{{ ansible_env.HOME }}/.oh-my-zsh"
+        creates: "{{ ansible_facts['user_dir'] }}/.oh-my-zsh"
