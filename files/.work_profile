@@ -31,11 +31,8 @@ fi
 
 # NOTE: Python setup
 export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$HOME/.local/bin:$PATH"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/shims:$PATH"
-[[ -d $PYENV_ROOT/bin ]] && eval "$(pyenv init --path)"
-[[ -d $PYENV_ROOT/bin ]] && eval "$(pyenv init -)"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init - zsh)"
 
 # {mark} START IT-ENG JAMF SETUP MOBILE ZSHRC
 export MONOREPO_ROOT="$NU_HOME/mini-meta-repo"
@@ -63,7 +60,7 @@ export PATH="$NUCLI_HOME:$PATH"
 export PATH="$IOS_CLI_HOME:$PATH"
 # {mark} END IT-ENG JAMF SETUP - ~/.nurc File
 
-export NU_COUNTRY=co
+export NU_COUNTRY=data
 eval "$(rbenv init -)"
 
 [ -f ~/.nurc ] && source ~/.nurc
@@ -71,7 +68,7 @@ eval "$(rbenv init -)"
 # NOTE: Projects
 
 alias _itaipu='cd "$HOME/dev/nu/itaipu"'
-alias __itaipu='cd "$HOME/Projects/itaipu/" && nvim .'
+alias __itaipu='cd "$HOME/dev/nu/itaipu" && nvim .'
 
 alias _reference-data-registry='cd "$HOME/dev/nu/reference-data-registry"'
-alias __reference-data-registry='cd "$HOME/Projects/reference-data-registry/" && nvim .'
+alias __reference-data-registry='cd "$HOME/dev/nu/reference-data-registry" && nvim .'
