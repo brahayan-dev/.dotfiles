@@ -46,19 +46,29 @@ fi
 
 # NOTE: Repositories
 alias _kiln='cd "$HOME/Projects/kiln/"'
-alias _dotfiles='cd "$HOME/.dotfiles/"'
-alias _max-neef='cd "$HOME/Projects/max-neef/"'
-alias _workbook='cd "$HOME/Projects/workbook/"'
-alias _fengari-app='cd "$HOME/Projects/fengari-app/"'
-alias _fengari-api='cd "$HOME/Projects/fengari-api/"'
-alias _fengari-hub='cd "$HOME/Projects/fengari-hub/"'
-alias _fengari-box='cd "$HOME/Projects/fengari-box/"'
-
 alias __kiln='cd "$HOME/Projects/kiln/" && nvim .'
+
+alias _dotfiles='cd "$HOME/.dotfiles/"'
 alias __dotfiles='cd "$HOME/.dotfiles/" && nvim .'
-alias __max-neef='cd "$HOME/Projects/max-neef/" && nvim .'
+
+alias _workbook='cd "$HOME/Projects/workbook/"'
 alias __workbook='cd "$HOME/Projects/workbook/" && nvim .'
+
+# NOTE: Repositories (Ak)
+alias _max-neef='cd "$HOME/Projects/max-neef/"'
+alias __max-neef='cd "$HOME/Projects/max-neef/" && nvim .'
+
+alias _fengari-app='cd "$HOME/Projects/fengari-app/"'
 alias __fengari-app='cd "$HOME/Projects/fengari-app/" && nvim .'
+
+alias _fengari-api='cd "$HOME/Projects/fengari-api/"'
 alias __fengari-api='cd "$HOME/Projects/fengari-api/" && nvim .'
+
+alias _fengari-hub='cd "$HOME/Projects/fengari-hub/"'
 alias __fengari-hub='cd "$HOME/Projects/fengari-hub/" && nvim .'
+
+alias _fengari-box='cd "$HOME/Projects/fengari-box/"'
 alias __fengari-box='cd "$HOME/Projects/fengari-box/" && nvim .'
+
+alias _fengari-ops='cd "$HOME/Projects/fengari-ops/"'
+alias __fengari-ops='cd "$HOME/Projects/fengari-ops/" && nvim .'
