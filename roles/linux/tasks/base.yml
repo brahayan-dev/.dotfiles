@@ -1,31 +1,13 @@
 ---
-- name: Install Copr Dependencies
-  become: true
-  community.general.copr:
-    name: "{{ item }}"
-    state: enabled
-  loop:
-    - dejan/lazygit
-    - scottames/ghostty
-    - rustyclanker/lua-language-server
-
-- name: Install DBeaver
-  become: true
-  dnf:
-    name: https://dbeaver.io/files/dbeaver-ce-latest-stable.x86_64.rpm
-    state: latest
-    disable_gpg_check: yes
-
 - name: Install Dependencies
   become: true
-  dnf:
+  community.general.pacman:
     name:
-      - gh
+      - fd
       - git
       - zsh
       - gcc
       - curl
-      - grip
       - tree
       - tidy
       - cmake
@@ -37,37 +19,23 @@
       - rlwrap
       - direnv
       - pandoc
-      - fd-find
+      - dbeaver
       - ghostty
       - ripgrep
       - lazygit
+      - luarocks
       - opentofu
-      - cpanminus
-      - gmp-devel
-      - zlib-devel
+      - dotnet-sdk
+      - github-cli
       - shellcheck
-      - glibc-devel
-      - python3-pip
-      - openssl-devel
-      - libyaml-devel
-      - readline-devel
-      - fira-code-fonts
-      - dotnet-sdk-10.0
+      - python-pipx
+      - ttf-fira-code
       - lua-language-server
     state: latest
     update_cache: true
   notify:
     - event_download_ohmyzsh
     - event_install_ohmyzsh
-
-- name: Install Perl Dependencies
-  become: true
-  community.general.cpanm:
-    name: "{{ item }}"
-  loop:
-    - DBI
-    - DBD::SQLite
-    - App::Sqitch
 
 - name: Install Brave
   shell: curl -fsS https://dl.brave.com/install.sh | sh
@@ -85,4 +53,4 @@
       shell: |
         echo "Y" | sh /tmp/ohmyzsh.sh
       args:
-        creates: "{{ ansible_env.HOME }}/.oh-my-zsh"
+        creates: "{{ ansible_facts['user_dir'] }}/.oh-my-zsh"

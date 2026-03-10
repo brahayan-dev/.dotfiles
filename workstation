@@ -43,19 +43,19 @@ ensure_deps_macos() {
 }
 
 ensure_deps_linux() {
-  if have dnf; then
+  if have pacman; then
     if ! have ansible || ! have lua; then
-      log_info "Updating Dnf Index"
-      sudo dnf update
+      log_info "Updating Pacman Index"
+      sudo pacman-mirrors --fasttrack 5 && sudo pacman -Syu 
     fi
 
     if ! have ansible; then
       log_info "Installing Ansible"
-      sudo dnf install -y ansible
+      sudo pacman -S ansible
     fi
     if ! have lua; then
       log_info "Installing Lua"
-      sudo dnf install -y lua
+      sudo pacman -S lua
     fi
   else
     log_error "Could Not Detect Package Manager To Install Dependencies"
