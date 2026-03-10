@@ -67,3 +67,11 @@ export NU_COUNTRY=co
 eval "$(rbenv init -)"
 
 [ -f ~/.nurc ] && source ~/.nurc
+
+# NOTE: Projects
+
+alias _itaipu='cd "$HOME/dev/nu/itaipu"'
+alias __itaipu='cd "$HOME/Projects/itaipu/" && nvim .'
+
+alias _reference-data-registry='cd "$HOME/dev/nu/reference-data-registry"'
+alias __reference-data-registry='cd "$HOME/Projects/reference-data-registry/" && nvim .'
