@@ -47,14 +47,7 @@ return {
       vim.lsp.enable("clojure_lsp")
       vim.lsp.enable("fsautocomplete")
 
-      -- Keymaps LSP
-      vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
-      vim.keymap.set("n", "<leader>i", vim.lsp.buf.format, {})
-      vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename, {})
-      vim.keymap.set("n", "<leader>g", vim.lsp.buf.references, {})
-      vim.keymap.set("n", "<leader>d", vim.lsp.buf.definition, {})
-      vim.keymap.set("n", "<leader>a", vim.lsp.buf.code_action, {})
-      vim.keymap.set("n", "<leader>p", vim.lsp.buf.implementation, {})
+      require "keymaps".lsp()
 
       vim.diagnostic.config({ virtual_text = true })
     end

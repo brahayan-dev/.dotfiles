@@ -42,21 +42,8 @@ vim.schedule(function()
   vim.o.clipboard = "unnamedplus"
 end)
 
-vim.keymap.set("n", "<leader>q", ":qa!<CR>", { desc = "Quit all" })
-vim.keymap.set("n", "<leader>;", ":write<CR>", { desc = "Save file" })
-
-vim.keymap.set("n", "<leader>c", "<C-w>q", { desc = "Quit window" })
-vim.keymap.set("n", "<leader>o", "<C-w>o", { desc = "Only window" })
-vim.keymap.set("n", "<leader>w", "<C-w>w", { desc = "Next window" })
-vim.keymap.set("n", "<leader>v", "<C-w>v", { desc = "Vertical split" })
-vim.keymap.set("n", "<leader>s", "<C-w>s", { desc = "Horizontal split" })
-vim.keymap.set("n", "<leader>k", "<C-w>k", { desc = "Move focus to the upper window" })
-vim.keymap.set("n", "<leader>h", "<C-w>h", { desc = "Move focus to the left window" })
-vim.keymap.set("n", "<leader>j", "<C-w>j", { desc = "Move focus to the lower window" })
-vim.keymap.set("n", "<leader>l", "<C-w>l", { desc = "Move focus to the right window" })
-
--- Clear highlights on search when pressing <Esc> in normal mode
-vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
+require "keymaps".general()
+require "keymaps".window()
 
 vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold" }, {
   command = "checktime",
@@ -75,20 +62,6 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     vim.lsp.buf.format({ async = true })
   end,
   desc = "Format on save using LSP",
-})
-
-vim.api.nvim_create_autocmd("BufWritePost", {
-  pattern = { "*.html", "*.js", "*.json" },
-  callback = function(args)
-    local output = vim.fn.system({ "npx", "prettier", "--write", args.file })
-
-    if vim.v.shell_error ~= 0 then
-      vim.notify(output, vim.log.levels.ERROR)
-    else
-      vim.cmd("edit!")
-    end
-  end,
-  desc = "Format current file with Prettier (sync) on save",
 })
 
 vim.filetype.add({
