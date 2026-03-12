@@ -54,6 +54,9 @@ alias __dotfiles='cd "$HOME/.dotfiles/" && nvim .'
 alias _workbook='cd "$HOME/Projects/workbook/"'
 alias __workbook='cd "$HOME/Projects/workbook/" && nvim .'
 
+alias _turing='cd "$HOME/Projects/turing/"'
+alias __turing='cd "$HOME/Projects/turing/" && nvim .'
+
 # NOTE: Repositories (Ak)
 alias _max-neef='cd "$HOME/Projects/max-neef/"'
 alias __max-neef='cd "$HOME/Projects/max-neef/" && nvim .'
