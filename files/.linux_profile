@@ -5,3 +5,4 @@ if [[ "$(uname)" == "Linux" ]]; then
     export PATH="$HOME/.local/bin:$PATH"
     export PATH="$HOME/.rbenv/bin:$PATH"
 fi
+
