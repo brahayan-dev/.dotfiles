@@ -5,6 +5,9 @@ function M.general()
   vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
   vim.keymap.set("n", "<leader>q", ":qa!<CR>", { desc = "Quit all" })
   vim.keymap.set("n", "<leader>;", ":wall<CR>", { desc = "Save all" })
+  vim.keymap.set('n', '<leader>y', function()
+    vim.fn.setreg('+', vim.fn.expand('%:p'))
+  end, { desc = 'Copy file path to clipboard' })
 end
 
 function M.window()
