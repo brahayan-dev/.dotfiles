@@ -29,9 +29,10 @@ function M.dotnet()
 end
 
 function M.lua()
-  shell { "sudo", "luarocks", "install", "lapis" }
-  shell { "sudo", "luarocks", "install", "busted" }
-  shell { "sudo", "luarocks", "install", "luaossl" }
+  shell { "sudo", "luarocks", "--lua-version=5.4", "install", "busted" }
+  shell { "sudo", "luarocks", "--lua-version=5.4", "install", "cjson" }
+  shell { "sudo", "luarocks", "--lua-version=5.4", "install", "lapis" }
+  shell { "sudo", "luarocks", "--lua-version=5.4", "install", "luaossl" }
 end
 
 return M
