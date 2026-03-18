@@ -38,7 +38,7 @@ ensure_deps_macos() {
   fi
   if ! have lua; then
     log_info "Installing Lua"
-    brew install lua
+    brew install lua@5.4
   fi
 }
 
@@ -46,7 +46,7 @@ ensure_deps_linux() {
   if have pacman; then
     if ! have ansible || ! have lua; then
       log_info "Updating Pacman Index"
-      sudo pacman-mirrors --fasttrack 5 && sudo pacman -Syu 
+      sudo pacman-mirrors --fasttrack 5 && sudo pacman -Syu
     fi
 
     if ! have ansible; then

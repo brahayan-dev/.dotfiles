@@ -28,4 +28,11 @@ function M.dotnet()
   shell { "dotnet", "tool", "install", "--global", "fsautocomplete" }
 end
 
+function M.lua()
+  shell { "sudo", "luarocks", "--lua-version=5.4", "install", "busted" }
+  shell { "sudo", "luarocks", "--lua-version=5.4", "install", "cjson" }
+  shell { "sudo", "luarocks", "--lua-version=5.4", "install", "lapis" }
+  shell { "sudo", "luarocks", "--lua-version=5.4", "install", "luaossl" }
+end
+
 return M
