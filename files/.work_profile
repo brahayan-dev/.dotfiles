@@ -72,3 +72,6 @@ alias __itaipu='cd "$HOME/dev/nu/itaipu" && nvim .'
 
 alias _reference-data-registry='cd "$HOME/dev/nu/reference-data-registry"'
 alias __reference-data-registry='cd "$HOME/dev/nu/reference-data-registry" && nvim .'
+
+alias _databricks-notebooks-mcp='cd "$HOME/dev/nu/databricks-notebooks-mcp"'
+alias __databricks-notebooks-mcp='cd "$HOME/dev/nu/databricks-notebooks-mcp" && nvim .'
