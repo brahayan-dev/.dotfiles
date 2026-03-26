@@ -75,3 +75,6 @@ alias __reference-data-registry='cd "$HOME/dev/nu/reference-data-registry" && nv
 
 alias _databricks-notebooks-mcp='cd "$HOME/dev/nu/databricks-notebooks-mcp"'
 alias __databricks-notebooks-mcp='cd "$HOME/dev/nu/databricks-notebooks-mcp" && nvim .'
+
+alias _controlinho='cd "$HOME/dev/nu/controlinho"'
+alias __controlinho='cd "$HOME/dev/nu/controlinho" && nvim .'
