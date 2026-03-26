@@ -25,6 +25,7 @@ function M.dotnet()
     shell { "brew", "install", "--cask", "dotnet-sdk" }
     shell { "sudo", "dotnet", "workload", "update" }
   end
+  shell { "dotnet", "tool", "install", "--global", "fantomas" }
   shell { "dotnet", "tool", "install", "--global", "fsautocomplete" }
 end
 
