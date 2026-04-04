@@ -20,8 +20,10 @@
     - elm-test
     - elm-format
     - prettier
+    - stylelint
     - typescript
     - http-server
+    - js-beautify
     - bash-language-server
     - yaml-language-server
     - typescript-language-server

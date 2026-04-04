@@ -4,7 +4,11 @@
     name: "{{ item }}"
     state: present
   loop:
+    - clojure/tools
+    - weavejester/brew
     - sqitchers/sqitch
+    - clojure-lsp/brew
+    - d12frosted/emacs-plus
 
 - name: Install Dependencies
   community.general.homebrew:
@@ -24,6 +28,7 @@
       - cmake
       - shfmt
       - unzip
+      - cljfmt
       - sqlite
       - sqitch
       - pandoc
@@ -33,6 +38,7 @@
       - lazygit
       - ripgrep
       - ghostty
+      - clojure
       - coursier
       - readline
       - luarocks
@@ -40,7 +46,9 @@
       - cpanminus
       - openssl@3
       - shellcheck
+      - emacs-plus
       - font-fira-code
+      - clojure-lsp-native
       - lua-language-server
     state: latest
   notify:
