@@ -35,6 +35,7 @@ alias lg='lazygit'
 export PATH="$HOME/.dotfiles/:$PATH"
 # NOTE: Editor
 export EDITOR=nvim
+export PATH="$HOME/.config/emacs/bin/:$PATH"
 # NOTE: Dotnet
 export PATH="$PATH:$HOME/.dotnet/tools"
 # NOTE: Direnv
