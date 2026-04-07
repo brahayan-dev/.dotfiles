@@ -46,24 +46,30 @@ export PATH="$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME:$ANDROID
 # {mark} END IT-ENG JAMF SETUP MOBILE ZSHRC
 
 # Monocli needed config
-export GOPATH=$HOME/go && export PATH=$GOPATH/bin:$PATH
+export GOPATH="${NU_HOME}/go" && export PATH=$GOPATH/bin:$PATH
 export PATH="$PATH:/Users/xavier.ramirez/Library/Application Support/Coursier/bin"
 
 # {mark} START IT-ENG JAMF SETUP - ~/.nurc File
 export GITHUB_TOKEN=$GITHUBTOKEN
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
-export NU_HOME=~/dev/nu
 export NUCLI_HOME=~/dev/nu/nucli
 export IOS_CLI_HOME=~/dev/nu/ios-cli
 export PATH="$NUCLI_HOME:$PATH"
 export PATH="$IOS_CLI_HOME:$PATH"
 # {mark} END IT-ENG JAMF SETUP - ~/.nurc File
 
+# Node.js PATH (added by devtools)
+export PATH="$HOME/.local/node/bin:$PATH"
+
+# NVM (added by devtools)
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
 export NU_COUNTRY=data
 eval "$(rbenv init -)"
 
-[ -f ~/.nurc ] && source ~/.nurc
+[ -f ~/.nurc ] && source $HOME/.nurc
 
 # NOTE: Projects
 
