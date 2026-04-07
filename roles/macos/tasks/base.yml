@@ -35,6 +35,7 @@
       - neovim
       - direnv
       - tofu-ls
+      - libtool
       - lazygit
       - ripgrep
       - ghostty
@@ -45,6 +46,7 @@
       - opentofu
       - cpanminus
       - openssl@3
+      - leiningen
       - shellcheck
       - emacs-plus
       - font-fira-code
