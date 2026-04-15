@@ -7,7 +7,7 @@
 
  read-process-output-max (* 1024 1024)
 
- projectile-project-search-path '("~/dev/nu/")
+ projectile-project-search-path '("~/Projects")
  projectile-enable-caching nil
 
  evil-split-window-below t
@@ -18,12 +18,8 @@
  doom-big-font-increment 2
 
  doom-theme 'doom-nord-light
- doom-themes-treemacs-theme "all-the-icons"
  doom-localleader-key ","
 
- +format-on-save-enabled-modes '(dart-mode)
-
- treemacs-width-is-initially-locked nil
  evil-collection-setup-minibuffer t)
 
 (use-package! cider
@@ -51,7 +47,7 @@
         cljr-eagerly-build-asts-on-startup nil
         cljr-add-ns-to-blank-clj-files nil ; use lsp
         cljr-magic-require-namespaces
-        '(("s"   . "schema.core")
+        '(("s" . "schema.core")
           ("gen" . "common-test.generators")
           ("d-pro" . "common-datomic.protocols.datomic")
           ("ex" . "common-core.exceptions.core")
@@ -79,7 +75,7 @@
         lsp-semantic-tokens-enable t
         lsp-enable-indentation nil
         lsp-inlay-hint-enable t
-        lsp-idle-delay 0.05 ;; Smoother LSP features response in cost of performance (Most servers I use have good performance)
+        lsp-idle-delay 0.05
         lsp-use-plists t)
   (add-hook 'lsp-after-apply-edits-hook (lambda (&rest _) (save-buffer)))
 
@@ -93,20 +89,9 @@
   ;; Copilot
   (setq lsp-copilot-enabled nil))
 
-(use-package! lsp-treemacs
-  :config
-  (setq lsp-treemacs-error-list-current-project-only t))
-
 (use-package! lsp-ui
   :after lsp-mode
   :commands lsp-ui-mode
   :config
   (setq lsp-ui-doc-enable nil
         lsp-ui-peek-enable nil))
-
-(use-package! paredit
-  :hook ((clojure-mode . paredit-mode)
-         (emacs-lisp-mode . paredit-mode)))
-
-(use-package! treemacs-all-the-icons
-  :after treemacs)
