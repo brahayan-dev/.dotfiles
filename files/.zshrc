@@ -69,12 +69,6 @@ alias __turing='cd "$HOME/Projects/turing/" && nvim .'
 alias _max-neef='cd "$HOME/Projects/max-neef/"'
 alias __max-neef='cd "$HOME/Projects/max-neef/" && nvim .'
 
-alias _fengari-app='cd "$HOME/Projects/fengari-app/"'
-alias __fengari-app='cd "$HOME/Projects/fengari-app/" && nvim .'
-
-alias _fengari-api='cd "$HOME/Projects/fengari-api/"'
-alias __fengari-api='cd "$HOME/Projects/fengari-api/" && nvim .'
-
 alias _fengari-hub='cd "$HOME/Projects/fengari-hub/"'
 alias __fengari-hub='cd "$HOME/Projects/fengari-hub/" && nvim .'
 
