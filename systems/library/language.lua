@@ -36,4 +36,8 @@ function M.lua()
   shell { "sudo", "luarocks", "--lua-version=5.4", "install", "luaossl" }
 end
 
+function M.ruby()
+  shell { "mise", "use", "-g", "ruby@3" }
+end
+
 return M

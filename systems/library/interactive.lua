@@ -60,6 +60,7 @@ local function install(package)
     doom = doom,
     lua = require "systems.library.language".lua,
     java = require "systems.library.language".java,
+    ruby = require "systems.library.language".ruby,
     scala = require "systems.library.language".scala,
     dotnet = require "systems.library.language".dotnet,
   }
