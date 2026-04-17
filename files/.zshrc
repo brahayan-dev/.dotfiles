@@ -38,6 +38,8 @@ export EDITOR=nvim
 export PATH="$HOME/.config/emacs/bin/:$PATH"
 # NOTE: Dotnet
 export PATH="$PATH:$HOME/.dotnet/tools"
+# NOTE: Ruby
+eval "$(~/.local/bin/mise activate zsh)"
 # NOTE: Direnv
 eval "$(direnv hook zsh)"
 if [[ "$(uname -a)" =~ Darwin ]]; then
