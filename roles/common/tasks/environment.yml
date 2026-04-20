@@ -17,8 +17,6 @@
     force: true
   loop:
     - nvim
-    - doom
-    - emacs-plus
   notify: event_reload_zsh_files
 
 - name: Set Symlinks
