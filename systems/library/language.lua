@@ -30,13 +30,13 @@ function M.dotnet()
 end
 
 function M.lua()
-  shell { "sudo", "luarocks", "--lua-version=5.4", "install", "busted" }
-  shell { "sudo", "luarocks", "--lua-version=5.4", "install", "cjson" }
-  shell { "sudo", "luarocks", "--lua-version=5.4", "install", "lapis" }
-  shell { "sudo", "luarocks", "--lua-version=5.4", "install", "luaossl" }
+  shell { "sudo", "luarocks", "install", "busted" }
+  shell { "sudo", "luarocks", "install", "cjson" }
+  shell { "sudo", "luarocks", "install", "luaossl" }
 end
 
 function M.ruby()
+  shell { "mise", "settings", "ruby.compile=false" }
   shell { "mise", "use", "-g", "ruby@3" }
 end
 
