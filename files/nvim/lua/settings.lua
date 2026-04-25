@@ -64,6 +64,13 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   desc = "Format on save using LSP",
 })
 
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = "*.erb",
+  callback = function()
+    vim.bo.filetype = "eruby"
+  end,
+})
+
 vim.filetype.add({
   extension = {
     fs = 'fsharp',
