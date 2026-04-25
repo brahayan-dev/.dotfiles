@@ -4,12 +4,19 @@
     name: "{{ item }}"
     state: present
   loop:
+    - clojure/tools
+    - weavejester/brew
     - clojure-lsp/brew
     - coursier/formulas
+    - d12frosted/emacs-plus
 
 - name: Install Dependencies
   community.general.homebrew:
     name:
+      - cljfmt
+      - clojure
       - coursier
+      - leiningen
+      - emacs-plus
       - clojure-lsp-native
     state: latest

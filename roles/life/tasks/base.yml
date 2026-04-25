@@ -2,5 +2,22 @@
 - name: Install Dependencies
   community.general.homebrew:
     name:
+      - entr
+      - lima
+      - direnv
+      - sqlite
+      - tofu-ls
+      - luarocks
+      - opentofu
       - dbeaver-community
+      - lua-language-server
     state: latest
+
+- name: Install Common Cask Dependencies
+  community.general.homebrew_cask:
+    name:
+      - arc
+    state: latest
+  notify:
+    - event_download_ohmyzsh
+    - event_install_ohmyzsh

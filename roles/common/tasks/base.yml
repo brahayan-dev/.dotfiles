@@ -21,6 +21,9 @@
     force: true
     state: latest
   loop:
+    - elm
+    - elm-test
+    - elm-format
     - prettier
     - stylelint
     - typescript
