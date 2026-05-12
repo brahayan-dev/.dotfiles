@@ -41,6 +41,27 @@ function M.oil(oil)
   vim.keymap.set("n", "q", oil.close, {})
 end
 
+function M.metals()
+  local metals = require("metals")
+  vim.keymap.set("n", "<leader>mh", metals.hover_worksheet, { desc = "Metals hover worksheet" })
+  vim.keymap.set("n", "<leader>mc", metals.commands, { desc = "Metals commands" })
+  vim.keymap.set("n", "<leader>mt", metals.type_of_range, { desc = "Metals type of range" })
+  vim.keymap.set("v", "<leader>mt", metals.type_of_range, { desc = "Metals type of range" })
+end
+
+function M.dap()
+  local dap = require("dap")
+  local dapui = require("dapui")
+  vim.keymap.set("n", "<leader>dc", dap.continue, { desc = "Debug continue" })
+  vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint, { desc = "Toggle breakpoint" })
+  vim.keymap.set("n", "<leader>di", dap.step_into, { desc = "Step into" })
+  vim.keymap.set("n", "<leader>do", dap.step_over, { desc = "Step over" })
+  vim.keymap.set("n", "<leader>dO", dap.step_out, { desc = "Step out" })
+  vim.keymap.set("n", "<leader>dr", dap.repl.toggle, { desc = "Toggle REPL" })
+  vim.keymap.set("n", "<leader>dq", dap.terminate, { desc = "Terminate debug" })
+  vim.keymap.set("n", "<leader>du", dapui.toggle, { desc = "Toggle DAP UI" })
+end
+
 function M.autocomplete(cmp)
   return {
     ["<C-e>"] = cmp.mapping.abort(),
