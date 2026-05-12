@@ -53,6 +53,22 @@ return {
   config = function(self, metals_config)
     local group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
 
+    local original_register = vim.lsp.handlers["client/registerCapability"]
+    vim.lsp.handlers["client/registerCapability"] = function(err, result, ctx, config)
+      for _, registration in ipairs(result.registrations or {}) do
+        if registration.method == "workspace/didChangeWatchedFiles" then
+          for _, watcher in ipairs(registration.registerOptions and registration.registerOptions.watchers or {}) do
+            if type(watcher.globPattern) == "string" then
+              watcher.globPattern = watcher.globPattern:gsub("^file://", "")
+            elseif type(watcher.globPattern) == "table" and watcher.globPattern.pattern then
+              watcher.globPattern.pattern = watcher.globPattern.pattern:gsub("^file://", "")
+            end
+          end
+        end
+      end
+      return original_register(err, result, ctx, config)
+    end
+
     vim.api.nvim_create_autocmd("FileType", {
       pattern = self.ft,
       group = group,
