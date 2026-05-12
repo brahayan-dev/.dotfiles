@@ -7,7 +7,7 @@ function M.scala()
 end
 
 function M.java()
-  local version = "17"
+  local version = "11"
   local jvm = string.format("temurin:%s", version)
 
   shell { "coursier", "java", "--jvm", jvm, "--setup" }

@@ -1,27 +1,25 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
+    branch = "main",
     build = ":TSUpdate",
     config = function()
-      local config = require("nvim-treesitter.configs")
-      config.setup({
-        modules = {},
-        ignore_install = {},
-        sync_install = true,
-        auto_install = true,
-        indent = { enable = false },
-        highlight = { enable = true },
-        ensure_installed = {
-          "lua",
-          "sql",
-          "yaml",
-          "json",
-          "html",
-          "ruby",
-          "scala",
-          "embedded_template"
-        },
+      require("nvim-treesitter").setup()
+      require("nvim-treesitter").install({
+        "lua",
+        "sql",
+        "yaml",
+        "json",
+        "html",
+        "ruby",
+        "scala",
+        "embedded_template",
       })
-    end
-  }
+      vim.api.nvim_create_autocmd("FileType", {
+        callback = function(args)
+          pcall(vim.treesitter.start, args.buf)
+        end,
+      })
+    end,
+  },
 }
