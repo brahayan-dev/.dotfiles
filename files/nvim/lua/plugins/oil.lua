@@ -29,7 +29,6 @@ return {
             ".become_",
             ".parcel-cache",
             "dist",
-            "elm-stuff",
             "node_modules"
           }
           for _, v in ipairs(exclude) do
