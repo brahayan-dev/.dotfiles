@@ -3,11 +3,15 @@ local M = {}
 local shell = require "systems.library.common".shell
 
 function M.scala()
-  shell { "coursier", "setup" }
+  local flag = "--install-dir"
+  local dir = "~/.local/share/coursier/bin"
+
+  shell { "coursier", "setup", flag, dir }
+  shell { "coursier", "install", "metals", flag, dir }
 end
 
 function M.java()
-  local version = "11"
+  local version = "17" -- Used by Metals
   local jvm = string.format("temurin:%s", version)
 
   shell { "coursier", "java", "--jvm", jvm, "--setup" }
