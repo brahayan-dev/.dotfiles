@@ -6,6 +6,7 @@
       - npm
       - podman
       - podman-compose
+      - tree-sitter-cli
     state: latest
 
 - name: Install Mise
