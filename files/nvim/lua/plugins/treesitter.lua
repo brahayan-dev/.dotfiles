@@ -8,11 +8,16 @@ return {
       require("nvim-treesitter").install({
         "lua",
         "sql",
+        "css",
+        "bash",
         "yaml",
         "json",
         "html",
         "ruby",
         "scala",
+        "python",
+        "clojure",
+        "javascript",
         "embedded_template",
       })
       vim.api.nvim_create_autocmd("FileType", {

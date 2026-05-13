@@ -38,7 +38,7 @@ ensure_deps_macos() {
   fi
   if ! have lua; then
     log_info "Installing Lua"
-    brew install lua@5.4
+    brew install lua
   fi
 }
 
