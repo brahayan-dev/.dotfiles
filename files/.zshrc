@@ -77,3 +77,6 @@ alias __fengari-box='cd "$HOME/Projects/fengari-box/" && nvim .'
 
 alias _fengari-ops='cd "$HOME/Projects/fengari-ops/"'
 alias __fengari-ops='cd "$HOME/Projects/fengari-ops/" && nvim .'
+
+alias _thalassa-box='cd "$HOME/Projects/thalassa-box/"'
+alias __thalassa-box='cd "$HOME/Projects/thalassa-box/" && nvim .'

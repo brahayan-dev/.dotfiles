@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 
 if [[ "$(uname)" == "Darwin" ]]; then
-  export JAVA_HOME="/Users/brahayanxavier/Library/Caches/Coursier/arc/https/github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.18%252B8/OpenJDK17U-jdk_aarch64_mac_hotspot_17.0.18_8.tar.gz/jdk-17.0.18+8/Contents/Home"
+  export JAVA_HOME="/Users/brahayanxavier/Library/Caches/Coursier/arc/https/github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.31%252B11/OpenJDK11U-jdk_aarch64_mac_hotspot_11.0.31_11.tar.gz/jdk-11.0.31+11/Contents/Home"
 
   # NOTE: Path to binaries on Brew
   export PATH="/opt/homebrew/bin:$PATH"
+  export PATH="$PATH:/Users/brahayanxavier/Library/Application Support/Coursier/bin"
 fi
