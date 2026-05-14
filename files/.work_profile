@@ -88,3 +88,6 @@ alias __databricks-notebooks-mcp='cd "$HOME/dev/nu/databricks-notebooks-mcp" && 
 
 alias _controlinho='cd "$HOME/dev/nu/controlinho"'
 alias __controlinho='cd "$HOME/dev/nu/controlinho" && nvim .'
+
+alias _lending-claude-workspace='cd "$HOME/dev/nu/lending-claude-workspace"'
+alias __lending-claude-workspace='cd "$HOME/dev/nu/lending-claude-workspace" && nvim .'
