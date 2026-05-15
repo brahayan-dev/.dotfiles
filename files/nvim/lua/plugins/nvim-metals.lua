@@ -20,16 +20,10 @@ return {
     metals_config.settings = {
       showImplicitArguments = false,
       showInferredType = false,
-      showInferredTypeExtra = false,
       showImplicitConversionsAndClasses = true,
       superMethodLensesEnabled = true,
       enableSemanticHighlighting = true,
       enableIndentOnPaste = true,
-
-      excludedPackages = {
-        "akka.actor.typed.javadsl",
-        "com.github.swagger.akka.javadsl",
-      },
 
       inlayHints = {
         hintsInPatternMatch = {
