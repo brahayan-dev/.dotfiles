@@ -3,15 +3,11 @@ vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.softtabstop = 2
 
--- Set <space> as the leader key
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
 
--- Set to true if you have a Nerd Font installed
 vim.g.have_nerd_font = true
-
--- [[ Setting options ]]
 
 vim.o.number = true
 vim.o.relativenumber = true
@@ -42,39 +38,43 @@ vim.schedule(function()
   vim.o.clipboard = "unnamedplus"
 end)
 
-require "keymaps".general()
-require "keymaps".window()
+require("keymaps").general()
+require("keymaps").window()
 
 vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold" }, {
   command = "checktime",
 })
 
 vim.api.nvim_create_autocmd("TextYankPost", {
-  group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
+  group = vim.api.nvim_create_augroup("highlight-yank", { clear = true }),
   callback = function()
     vim.hl.on_yank()
   end,
-  desc = "Highlight when yanking (copying) text"
+  desc = "Highlight when yanking text",
 })
+
+local lsp_format_group = vim.api.nvim_create_augroup("lsp-format-on-save", { clear = true })
 
 vim.api.nvim_create_autocmd("BufWritePre", {
-  callback = function()
-    vim.lsp.buf.format({ async = true })
-  end,
-  desc = "Format on save using LSP",
-})
+  group = lsp_format_group,
+  callback = function(args)
+    local ft = vim.bo[args.buf].filetype
 
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-  pattern = "*.erb",
-  callback = function()
-    vim.bo.filetype = "eruby"
-  end,
-})
+    if ft == "scala" then
+      vim.lsp.buf.code_action({
+        bufnr = args.buf,
+        apply = true,
+        context = {
+          only = { "source.organizeImports" },
+          diagnostics = {},
+        },
+      })
+    end
 
-vim.filetype.add({
-  extension = {
-    fs = 'fsharp',
-    fsx = 'fsharp',
-    fsi = 'fsharp',
-  },
+    vim.lsp.buf.format({
+      bufnr = args.buf,
+      async = false,
+    })
+  end,
+  desc = "Format on save; organize imports for Scala",
 })

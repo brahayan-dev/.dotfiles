@@ -5,9 +5,15 @@ function M.general()
   vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
   vim.keymap.set("n", "<leader>q", ":qa!<CR>", { desc = "Quit all" })
   vim.keymap.set("n", "<leader>;", ":wall<CR>", { desc = "Save all" })
+  vim.keymap.set("n", "<leader>of", vim.diagnostic.open_float,
+    { desc = "Open float on diagnostic" })
   vim.keymap.set('n', '<leader>y', function()
     vim.fn.setreg('+', vim.fn.expand('%:p'))
   end, { desc = 'Copy file path to clipboard' })
+  vim.keymap.set("n", "<leader>ih", function()
+    local enabled = vim.lsp.inlay_hint.is_enabled({ bufnr = 0 })
+    vim.lsp.inlay_hint.enable(not enabled, { bufnr = 0 })
+  end, { desc = "Toggle inlay hints" })
 end
 
 function M.window()
@@ -39,14 +45,6 @@ end
 function M.oil(oil)
   vim.keymap.set("n", "-", oil.toggle_float, {})
   vim.keymap.set("n", "q", oil.close, {})
-end
-
-function M.metals()
-  local metals = require("metals")
-  vim.keymap.set("n", "<leader>mh", metals.hover_worksheet, { desc = "Metals hover worksheet" })
-  vim.keymap.set("n", "<leader>mc", metals.commands, { desc = "Metals commands" })
-  vim.keymap.set("n", "<leader>mt", metals.type_of_range, { desc = "Metals type of range" })
-  vim.keymap.set("v", "<leader>mt", metals.type_of_range, { desc = "Metals type of range" })
 end
 
 function M.dap()
