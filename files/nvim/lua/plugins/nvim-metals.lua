@@ -18,34 +18,20 @@ return {
         require("cmp_nvim_lsp").default_capabilities()
 
     metals_config.settings = {
-      showImplicitArguments = false,
       showInferredType = false,
-      showImplicitConversionsAndClasses = true,
+      showImplicitArguments = false,
+      showImplicitConversionsAndClasses = false,
       superMethodLensesEnabled = true,
       enableSemanticHighlighting = true,
       enableIndentOnPaste = true,
 
       inlayHints = {
-        hintsInPatternMatch = {
-          enable = true,
-        },
-
-        implicitArguments = {
-          enable = true,
-        },
-
-        implicitConversions = {
-          enable = true,
-        },
-
-        inferredTypes = {
-          enable = true,
-        },
-
-        typeParameters = {
-          enable = true,
-        },
-      },
+        inferredTypes = { enable = false },
+        typeParameters = { enable = false },
+        implicitArguments = { enable = false },
+        implicitConversions = { enable = false },
+        hintsInPatternMatch = { enable = false }
+      }
     }
 
     metals_config.init_options.statusBarProvider = "on"
