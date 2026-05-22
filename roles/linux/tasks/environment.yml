@@ -15,3 +15,11 @@
   loop:
     - .linux_profile
   notify: event_reload_zsh_files
+
+- name: Set Claude Configuration Symlink
+  ansible.builtin.file:
+    src: "/{{ ansible_facts['user_dir'] }}/.dotfiles/systems/linux.md"
+    dest: "/{{ ansible_facts['user_dir'] }}/.claude/CLAUDE.md"
+    state: link
+    force: true
+  notify: event_reload_zsh_files

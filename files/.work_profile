@@ -75,19 +75,33 @@ eval "$(rbenv init -)"
 export PATH="$PATH:/Users/xavier.ramirez/.local/share/coursier/bin"
 export JAVA_HOME="/Users/xavier.ramirez/Library/Caches/Coursier/arc/https/github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.19%252B10/OpenJDK17U-jdk_aarch64_mac_hotspot_17.0.19_10.tar.gz/jdk-17.0.19+10/Contents/Home"
 
+# NOTE: Repositories
+
+alias _dotfiles='cd "$HOME/.dotfiles/" && claude'
+alias __dotfiles='cd "$HOME/.dotfiles/" && nvim .'
+
+alias _workbook='cd "$HOME/Projects/workbook/" && claude'
+alias __workbook='cd "$HOME/Projects/workbook/" && nvim .'
+
+alias _turing='cd "$HOME/Projects/turing/" && claude'
+alias __turing='cd "$HOME/Projects/turing/" && nvim .'
+
 # NOTE: Projects
 
-alias _itaipu='cd "$HOME/dev/nu/itaipu"'
+alias _itaipu='cd "$HOME/dev/nu/itaipu" && claude'
 alias __itaipu='cd "$HOME/dev/nu/itaipu" && nvim .'
 
-alias _reference-data-registry='cd "$HOME/dev/nu/reference-data-registry"'
+alias _reference-data-registry='cd "$HOME/dev/nu/reference-data-registry" && claude'
 alias __reference-data-registry='cd "$HOME/dev/nu/reference-data-registry" && nvim .'
 
-alias _databricks-notebooks-mcp='cd "$HOME/dev/nu/databricks-notebooks-mcp"'
+alias _databricks-notebooks-mcp='cd "$HOME/dev/nu/databricks-notebooks-mcp" && claude'
 alias __databricks-notebooks-mcp='cd "$HOME/dev/nu/databricks-notebooks-mcp" && nvim .'
 
-alias _controlinho='cd "$HOME/dev/nu/controlinho"'
+alias _controlinho='cd "$HOME/dev/nu/controlinho" && claude'
 alias __controlinho='cd "$HOME/dev/nu/controlinho" && nvim .'
 
-alias _lending-claude-workspace='cd "$HOME/dev/nu/lending-claude-workspace"'
+alias _data-quality-custom-checks='cd "$HOME/dev/nu/data-quality-custom-checks" && claude'
+alias __data-quality-custom-checks='cd "$HOME/dev/nu/data-quality-custom-checks" && nvim .'
+
+alias _lending-claude-workspace='cd "$HOME/dev/nu/lending-claude-workspace" && claude'
 alias __lending-claude-workspace='cd "$HOME/dev/nu/lending-claude-workspace" && nvim .'

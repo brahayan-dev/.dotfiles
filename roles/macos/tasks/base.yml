@@ -29,3 +29,12 @@
     - event_download_ohmyzsh
     - event_install_ohmyzsh
 
+- name: Install Common Cask Dependencies
+  community.general.homebrew_cask:
+    name:
+      - arc
+      - ollama-app
+    state: latest
+  notify:
+    - event_download_ohmyzsh
+    - event_install_ohmyzsh

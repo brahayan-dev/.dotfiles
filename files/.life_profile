@@ -6,4 +6,37 @@ if [[ "$(uname)" == "Darwin" ]]; then
   # NOTE: Path to binaries on Brew
   export PATH="/opt/homebrew/bin:$PATH"
   export PATH="$PATH:$HOME/.local/share/coursier/bin"
+  export ANTHROPIC_AUTH_TOKEN=ollama
+  export ANTHROPIC_API_KEY=""
+  export ANTHROPIC_BASE_URL=http://localhost:11434
 fi
+
+# NOTE: Repositories
+
+llm() {
+  ollama launch claude --model qwen3.6 --yes
+}
+
+alias _dotfiles='cd "$HOME/.dotfiles/" && llm'
+alias __dotfiles='cd "$HOME/.dotfiles/" && nvim .'
+
+alias _workbook='cd "$HOME/Projects/workbook/" && llm'
+alias __workbook='cd "$HOME/Projects/workbook/" && nvim .'
+
+alias _turing='cd "$HOME/Projects/turing/" && llm'
+alias __turing='cd "$HOME/Projects/turing/" && nvim .'
+
+alias _max-neef='cd "$HOME/Projects/max-neef/" && llm'
+alias __max-neef='cd "$HOME/Projects/max-neef/" && nvim .'
+
+alias _fengari-hub='cd "$HOME/Projects/fengari-hub/" && llm'
+alias __fengari-hub='cd "$HOME/Projects/fengari-hub/" && nvim .'
+
+alias _fengari-box='cd "$HOME/Projects/fengari-box/" && llm'
+alias __fengari-box='cd "$HOME/Projects/fengari-box/" && nvim .'
+
+alias _fengari-ops='cd "$HOME/Projects/fengari-ops/" && llm'
+alias __fengari-ops='cd "$HOME/Projects/fengari-ops/" && nvim .'
+
+alias _thalassa-box='cd "$HOME/Projects/thalassa-box/"'
+alias __thalassa-box='cd "$HOME/Projects/thalassa-box/" && nvim .'

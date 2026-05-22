@@ -52,31 +52,7 @@ if [[ "$(uname -a)" =~ Darwin ]]; then
     export PKG_CONFIG_PATH="/opt/homebrew/opt/lua@5.4/lib/pkgconfig"
 fi
 
-# NOTE: Repositories
+# NOTE: Repository
 alias _kiln='cd "$HOME/Projects/kiln/"'
 alias __kiln='cd "$HOME/Projects/kiln/" && nvim .'
 
-alias _dotfiles='cd "$HOME/.dotfiles/"'
-alias __dotfiles='cd "$HOME/.dotfiles/" && nvim .'
-
-alias _workbook='cd "$HOME/Projects/workbook/"'
-alias __workbook='cd "$HOME/Projects/workbook/" && nvim .'
-
-alias _turing='cd "$HOME/Projects/turing/"'
-alias __turing='cd "$HOME/Projects/turing/" && nvim .'
-
-# NOTE: Repositories (Ak)
-alias _max-neef='cd "$HOME/Projects/max-neef/"'
-alias __max-neef='cd "$HOME/Projects/max-neef/" && nvim .'
-
-alias _fengari-hub='cd "$HOME/Projects/fengari-hub/"'
-alias __fengari-hub='cd "$HOME/Projects/fengari-hub/" && nvim .'
-
-alias _fengari-box='cd "$HOME/Projects/fengari-box/"'
-alias __fengari-box='cd "$HOME/Projects/fengari-box/" && nvim .'
-
-alias _fengari-ops='cd "$HOME/Projects/fengari-ops/"'
-alias __fengari-ops='cd "$HOME/Projects/fengari-ops/" && nvim .'
-
-alias _thalassa-box='cd "$HOME/Projects/thalassa-box/"'
-alias __thalassa-box='cd "$HOME/Projects/thalassa-box/" && nvim .'
