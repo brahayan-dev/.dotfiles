@@ -17,8 +17,13 @@ function M.java()
   shell { "coursier", "java", "--jvm", jvm, "--setup" }
 end
 
+local function luarocks(args)
+  local dir = os.getenv "LUA_DIR" or "/opt/homebrew/opt/luajit"
+  shell { "luarocks", "--lua-dir=" .. dir, table.unpack(args) }
+end
+
 local function install_posix()
-  shell { "luarocks", "install", "luaposix" }
+  luarocks { "install", "luaposix" }
 end
 
 function M.dotnet()
@@ -34,9 +39,9 @@ function M.dotnet()
 end
 
 function M.lua()
-  shell { "sudo", "luarocks", "install", "busted" }
-  shell { "sudo", "luarocks", "install", "cjson" }
-  shell { "sudo", "luarocks", "install", "luaossl" }
+  luarocks { "install", "busted" }
+  luarocks { "install", "cjson" }
+  luarocks { "install", "luaossl" }
 end
 
 function M.ruby()

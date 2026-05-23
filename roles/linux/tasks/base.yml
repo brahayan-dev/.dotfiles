@@ -24,6 +24,7 @@
       - ghostty
       - ripgrep
       - lazygit
+      - luajit
       - luarocks
       - opentofu
       - base-devel

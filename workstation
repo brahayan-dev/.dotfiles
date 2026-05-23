@@ -36,15 +36,15 @@ ensure_deps_macos() {
     log_info "Installing Ansible"
     brew install ansible
   fi
-  if ! have lua; then
-    log_info "Installing Lua"
-    brew install lua
+  if ! have luajit; then
+    log_info "Installing LuaJIT"
+    brew install luajit
   fi
 }
 
 ensure_deps_linux() {
   if have pacman; then
-    if ! have ansible || ! have lua; then
+    if ! have ansible || ! have luajit; then
       log_info "Updating Pacman Index"
       sudo pacman-mirrors --fasttrack 5 && sudo pacman -Syu
     fi
@@ -53,9 +53,9 @@ ensure_deps_linux() {
       log_info "Installing Ansible"
       sudo pacman -S ansible
     fi
-    if ! have lua; then
-      log_info "Installing Lua"
-      sudo pacman -S lua
+    if ! have luajit; then
+      log_info "Installing LuaJIT"
+      sudo pacman -S luajit
     fi
   else
     log_error "Could Not Detect Package Manager To Install Dependencies"
@@ -86,7 +86,7 @@ main() {
     ;;
   esac
 
-  exec lua "$script" "$@"
+  exec luajit "$script" "$@"
 }
 
 main "$@"

@@ -45,11 +45,11 @@ eval "$(direnv hook zsh)"
 if [[ "$(uname -a)" =~ Darwin ]]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
     export PATH="$PATH:$HOME/.local/bin"
-    # NOTE: Lua
-    export PATH="/opt/homebrew/opt/lua@5.4/bin:$PATH"
-    export LDFLAGS="-L/opt/homebrew/opt/lua@5.4/lib"
-    export CPPFLAGS="-I/opt/homebrew/opt/lua@5.4/include"
-    export PKG_CONFIG_PATH="/opt/homebrew/opt/lua@5.4/lib/pkgconfig"
+    # NOTE: LuaJIT
+    export PATH="/opt/homebrew/opt/luajit/bin:$PATH"
+    export LDFLAGS="-L/opt/homebrew/opt/luajit/lib"
+    export CPPFLAGS="-I/opt/homebrew/opt/luajit/include"
+    export PKG_CONFIG_PATH="/opt/homebrew/opt/luajit/lib/pkgconfig"
 fi
 
 # NOTE: Repository
