@@ -14,7 +14,7 @@ fi
 # NOTE: Repositories
 
 llm() {
-  ollama launch claude --model qwen3.6 --yes
+  ollama launch claude --model glm-5.1:cloud --yes
 }
 
 alias _dotfiles='cd "$HOME/.dotfiles/" && llm'

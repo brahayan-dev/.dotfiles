@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 
 if [[ "$(uname)" == "Linux" ]]; then
-    # NOTE: Other configurations
-    export PATH="$HOME/.local/bin:$PATH"
-    export PATH="$HOME/.rbenv/bin:$PATH"
-    export ANTHROPIC_AUTH_TOKEN=ollama
-    export ANTHROPIC_API_KEY=""
-    export ANTHROPIC_BASE_URL=http://localhost:11434
+  # NOTE: Other configurations
+  export PATH="$HOME/.local/bin:$PATH"
+  export PATH="$HOME/.rbenv/bin:$PATH"
+  export ANTHROPIC_AUTH_TOKEN=ollama
+  export ANTHROPIC_API_KEY=""
+  export ANTHROPIC_BASE_URL=http://localhost:11434
 fi
 
 llm() {
-  ollama launch claude --model qwen3.6 --yes
+  ollama launch claude --model glm-5.1:cloud --yes
 }
 
 alias _dotfiles='cd "$HOME/.dotfiles/" && llm'
