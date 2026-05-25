@@ -13,8 +13,8 @@
 ║                   ┌────┐ ┌────┐ ┌─────┐                              ║
 ║                   │work│ │life│ │linux│   ◀── V(G), |V| = 3          ║
 ║                   └─┬──┘ └─┬──┘ └──┬──┘                              ║
-║                     │      │      │                                  ║
-║                     └──────┼──────┘                                  ║
+║                     │      │       │                                 ║
+║                     └──────┼───────┘                                 ║
 ║                            ▼                                         ║
 ║                      ╔═══════════╗                                   ║
 ║                      ║  Ansible  ║   ◀── orchestrator                ║
@@ -59,13 +59,13 @@ Three environments, partitioned by host signal:
 ```
               ┌─────────┐
               │  work   │   macOS · ~/.nurc exists
-              ├─────────┤   Clojure · Java · Doom Emacs
+              ├─────────┤   Scala · Clojure · Neovim/Emacs · Claude Code
               │         │
               └─────────┘
 
               ┌─────────┐
               │  life   │   macOS · default
-              ├─────────┤   personal dev · claude-code
+              ├─────────┤   Scala · Ruby · Neovim · Claude Code
               │         │
               └─────────┘
 
@@ -79,7 +79,7 @@ Three environments, partitioned by host signal:
 Intersection ─ what every vertex inherits:
 
 ```
-   work ∩ life ∩ linux  =  { nvim, zsh, ssh, git, ~/.config }
+   work ∩ life ∩ linux  =  { Scala, Neovim, Claude Code, zsh, ~/.config }
 ```
 
 ---
