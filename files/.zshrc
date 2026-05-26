@@ -52,6 +52,8 @@ if [[ "$(uname -a)" =~ Darwin ]]; then
     export PKG_CONFIG_PATH="/opt/homebrew/opt/luajit/lib/pkgconfig"
 fi
 
+alias setup='cd "$HOME/.dotfiles/" && ./workstation setup'
+
 # NOTE: Repository
 alias _kiln='cd "$HOME/Projects/kiln/"'
 alias __kiln='cd "$HOME/Projects/kiln/" && nvim .'

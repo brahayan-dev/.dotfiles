@@ -75,6 +75,8 @@ eval "$(rbenv init -)"
 export PATH="$PATH:/Users/xavier.ramirez/.local/share/coursier/bin"
 export JAVA_HOME="/Users/xavier.ramirez/Library/Caches/Coursier/arc/https/github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.19%252B10/OpenJDK17U-jdk_aarch64_mac_hotspot_17.0.19_10.tar.gz/jdk-17.0.19+10/Contents/Home"
 
+alias refresh='cd "$HOME/.dotfiles/" && ./workstation refresh nu'
+
 # NOTE: Repositories
 
 alias _dotfiles='cd "$HOME/.dotfiles/" && claude'
