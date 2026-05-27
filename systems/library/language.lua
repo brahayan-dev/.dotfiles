@@ -4,7 +4,7 @@ local shell = require "systems.library.common".shell
 
 local function luarocks(args)
   local dir = os.getenv "LUA_DIR" or "/opt/homebrew/opt/luajit"
-  shell { "luarocks", "--lua-dir=" .. dir, unpack(args) }
+  shell { "luarocks", "--local", "--lua-dir=" .. dir, unpack(args) }
 end
 
 function M.lua()
