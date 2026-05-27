@@ -9,7 +9,7 @@ end
 
 function M.lua()
   luarocks { "install", "busted" }
-  luarocks { "install", "cjson" }
+  luarocks { "install", "lua-cjson" }
   luarocks { "install", "luaossl" }
 end
 
