@@ -2,15 +2,9 @@ local M = {}
 
 local shell = require "systems.library.common".shell
 
-local function luarocks(args)
-  local dir = os.getenv "LUA_DIR" or "/opt/homebrew/opt/luajit"
-  shell { "luarocks", "--local", "--lua-dir=" .. dir, unpack(args) }
-end
-
 function M.lua()
-  luarocks { "install", "busted" }
-  luarocks { "install", "cjson" }
-  luarocks { "install", "luaossl" }
+  print("Lua tooling is installed via the Ansible role (luajit, luarocks, lua-language-server, stylua).")
+  print("Run './workstation setup' to provision.")
 end
 
 function M.ruby()
