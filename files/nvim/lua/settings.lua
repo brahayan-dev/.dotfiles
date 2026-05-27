@@ -53,30 +53,22 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   desc = "Highlight when yanking text",
 })
 
-local lsp_format_group = vim.api.nvim_create_augroup("lsp-format-on-save", { clear = true })
+local organize_imports_group = vim.api.nvim_create_augroup("organize-imports-on-save", { clear = true })
 
 vim.api.nvim_create_autocmd("BufWritePre", {
-  group = lsp_format_group,
+  group = organize_imports_group,
+  pattern = "*.py",
   callback = function(args)
-    local ft = vim.bo[args.buf].filetype
-
-    if ft == "scala" then
-      vim.lsp.buf.code_action({
-        bufnr = args.buf,
-        apply = true,
-        context = {
-          only = { "source.organizeImports" },
-          diagnostics = {},
-        },
-      })
-    end
-
-    vim.lsp.buf.format({
+    vim.lsp.buf.code_action({
       bufnr = args.buf,
-      async = false,
+      apply = true,
+      context = {
+        only = { "source.organizeImports" },
+        diagnostics = {},
+      },
     })
   end,
-  desc = "Format on save; organize imports for Scala",
+  desc = "Organize Python imports on save",
 })
 
 vim.api.nvim_create_autocmd("FileType", {
@@ -88,5 +80,39 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.expandtab = true
     vim.opt_local.autoindent = true
     vim.opt_local.smartindent = true
+  end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "python",
+  callback = function()
+    vim.opt_local.tabstop = 4
+    vim.opt_local.shiftwidth = 4
+    vim.opt_local.softtabstop = 4
+    vim.opt_local.expandtab = true
+    vim.opt_local.autoindent = true
+    vim.opt_local.smartindent = true
+  end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "lua",
+  callback = function()
+    vim.opt_local.tabstop = 2
+    vim.opt_local.shiftwidth = 2
+    vim.opt_local.softtabstop = 2
+    vim.opt_local.expandtab = true
+    vim.opt_local.autoindent = true
+  end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "elm",
+  callback = function()
+    vim.opt_local.tabstop = 4
+    vim.opt_local.shiftwidth = 4
+    vim.opt_local.softtabstop = 4
+    vim.opt_local.expandtab = true
+    vim.opt_local.autoindent = true
   end,
 })

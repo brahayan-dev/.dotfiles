@@ -12,6 +12,7 @@
       - opentofu
       - dbeaver-community
       - lua-language-server
+      - stylua
     state: latest
 
 - name: Install Common Cask Dependencies
