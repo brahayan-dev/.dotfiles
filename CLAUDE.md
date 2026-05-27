@@ -65,6 +65,7 @@ Ansible Vault encrypts `roles/life/vars/main.yml` and `roles/linux/vars/main.yml
 
 ## Key Conventions
 
+- Ansible task names use Title Case (e.g., `Install Dependencies`, `Configure Luarocks For LuaJIT`)
 - Config deployment is always via symlinks — never copy files into `$HOME`
 - Ghostty has three configs: `built-in` (work macOS), `external` (personal macOS), `linux`
 - Each environment's CLAUDE.md is symlinked to `~/.claude/CLAUDE.md`
