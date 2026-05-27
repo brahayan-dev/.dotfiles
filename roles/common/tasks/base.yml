@@ -25,6 +25,10 @@
     - prettier
     - stylelint
     - typescript
+    - elm
+    - elm-format
+    - elm-test
+    - "@elm-tooling/elm-language-server"
     - http-server
     - js-beautify
     - bash-language-server

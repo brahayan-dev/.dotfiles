@@ -28,10 +28,9 @@
       - luarocks
       - opentofu
       - base-devel
-      - dotnet-sdk
       - github-cli
       - shellcheck
-      - python-pipx
+      - stylua
       - ttf-fira-code
       - lua-language-server
     state: latest

@@ -30,7 +30,8 @@ return {
             ".parcel-cache",
             "dist",
             "node_modules",
-            ".ruby-lsp"
+            ".ruby-lsp",
+            "elm-stuff"
           }
           for _, v in ipairs(exclude) do
             if name == v then

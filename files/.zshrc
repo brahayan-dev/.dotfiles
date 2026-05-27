@@ -36,8 +36,6 @@ export PATH="$HOME/.dotfiles/:$PATH"
 # NOTE: Editor
 export EDITOR=nvim
 export PATH="$HOME/.config/emacs/bin/:$PATH"
-# NOTE: Dotnet
-export PATH="$PATH:$HOME/.dotnet/tools"
 # NOTE: Ruby
 eval "$(~/.local/bin/mise activate zsh)"
 # NOTE: Direnv
@@ -46,10 +44,11 @@ if [[ "$(uname -a)" =~ Darwin ]]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
     export PATH="$PATH:$HOME/.local/bin"
     # NOTE: LuaJIT
-    export PATH="/opt/homebrew/opt/luajit/bin:$PATH"
-    export LDFLAGS="-L/opt/homebrew/opt/luajit/lib"
-    export CPPFLAGS="-I/opt/homebrew/opt/luajit/include"
-    export PKG_CONFIG_PATH="/opt/homebrew/opt/luajit/lib/pkgconfig"
+    export LUA_DIR="/opt/homebrew/opt/luajit"
+    export PATH="$LUA_DIR/bin:$PATH"
+    export LDFLAGS="-L$LUA_DIR/lib"
+    export CPPFLAGS="-I$LUA_DIR/include"
+    export PKG_CONFIG_PATH="$LUA_DIR/lib/pkgconfig"
 fi
 
 alias setup='cd "$HOME/.dotfiles/" && ./workstation setup'

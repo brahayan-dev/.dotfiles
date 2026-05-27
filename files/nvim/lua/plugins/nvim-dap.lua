@@ -15,22 +15,40 @@ return {
       dap.listeners.before.event_terminated["dapui_config"] = function() dapui.close() end
       dap.listeners.before.event_exited["dapui_config"] = function() dapui.close() end
 
-      dap.configurations.scala = {
+      dap.adapters.ruby = function(callback, config)
+        callback({
+          type = "executable",
+          command = "rdbg",
+          args = { "--open", "--nonstop", "--cd", vim.fn.getcwd(), "--port", config.port },
+        })
+      end
+
+      dap.configurations.ruby = {
         {
-          type = "scala",
-          request = "launch",
-          name = "Run or test target",
-          metals = {
-            runType = "runOrTestFile",
-          },
+          type = "ruby",
+          name = "Debug current file",
+          request = "attach",
+          port = "3000",
+          cwd = "${workspaceFolder}",
         },
+      }
+
+      dap.adapters.lua = function(callback, config)
+        callback({
+          type = "executable",
+          command = vim.fn.exepath("lua-debug"),
+          args = { config.runtime, config.program },
+        })
+      end
+
+      dap.configurations.lua = {
         {
-          type = "scala",
+          type = "lua",
+          name = "Debug current file",
           request = "launch",
-          name = "Test target selection",
-          metals = {
-            runType = "testTarget",
-          },
+          program = "${file}",
+          runtime = "luajit",
+          cwd = "${workspaceFolder}",
         },
       }
 
@@ -38,6 +56,23 @@ return {
       vim.fn.sign_define("DapStopped", { text = "▶", texthl = "DiagnosticWarn" })
 
       require("keymaps").dap()
+    end,
+  },
+  {
+    "mfussenegger/nvim-dap-python",
+    ft = { "python" },
+    dependencies = { "mfussenegger/nvim-dap" },
+    config = function()
+      local dap_python = require("dap-python")
+      dap_python.setup(vim.fn.exepath("python3"))
+      dap_python.test_runner = "pytest"
+
+      vim.keymap.set("n", "<leader>dm", function()
+        require("dap-python").test_method()
+      end, { desc = "Debug test method" })
+      vim.keymap.set("n", "<leader>dM", function()
+        require("dap-python").test_class()
+      end, { desc = "Debug test class" })
     end,
   },
 }
