@@ -28,7 +28,6 @@
     - elm
     - elm-format
     - elm-test
-    - "@elm-tooling/elm-language-server"
     - http-server
     - js-beautify
     - bash-language-server
@@ -37,6 +36,7 @@
     - vscode-langservers-extracted
     - "@rescript/language-server"
     - "@github/copilot-language-server"
+    - "@elm-tooling/elm-language-server"
     - "@ansible/ansible-language-server"
 
 - name: Configure Luarocks For LuaJIT
