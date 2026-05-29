@@ -23,9 +23,11 @@ return {
         root_markers = { '.git', 'init.lua' },
         settings = {
           Lua = {
+            runtime = { version = "LuaJIT" },
             diagnostics = {
               globals = { "vim" },
             },
+            format = { enable = false },
             workspace = {
               checkThirdParty = false,
               library = vim.api.nvim_get_runtime_file("", true),
@@ -36,15 +38,41 @@ return {
       })
 
       vim.lsp.enable("sqls")
+      vim.lsp.enable("elmls")
       vim.lsp.enable("ts_ls")
       vim.lsp.enable("lua_ls")
       vim.lsp.enable("yamlls")
       vim.lsp.enable("bashls")
       vim.lsp.enable("jsonls")
       vim.lsp.enable("tofu_ls")
+      vim.lsp.config("ruby_lsp", {
+        root_markers = { "Gemfile", ".git" },
+      })
+
       vim.lsp.enable("ruby_lsp")
       vim.lsp.enable("ansiblels")
       vim.lsp.enable("rescriptls")
+
+      vim.lsp.config("ruff", {
+        root_markers = { "pyproject.toml", ".git" },
+      })
+
+      vim.lsp.enable("ruff")
+
+      vim.lsp.config("basedpyright", {
+        root_markers = { "pyproject.toml", ".git" },
+        settings = {
+          basedpyright = {
+            analysis = {
+              typeCheckingMode = "basic",
+              autoImportCompletions = true,
+            },
+            disableOrganizeImports = true,
+          },
+        },
+      })
+
+      vim.lsp.enable("basedpyright")
 
       require "keymaps".lsp()
 

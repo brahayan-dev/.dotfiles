@@ -1,11 +1,8 @@
 #!/usr/bin/env bash
 
 if [[ "$(uname)" == "Darwin" ]]; then
-  export JAVA_HOME="/Users/brahayanxavier/Library/Caches/Coursier/arc/https/github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.18%252B8/OpenJDK17U-jdk_aarch64_mac_hotspot_17.0.18_8.tar.gz/jdk-17.0.18+8/Contents/Home"
-
   # NOTE: Path to binaries on Brew
   export PATH="/opt/homebrew/bin:$PATH"
-  export PATH="$PATH:$HOME/.local/share/coursier/bin"
   export ANTHROPIC_AUTH_TOKEN=ollama
   export ANTHROPIC_API_KEY=""
   export ANTHROPIC_BASE_URL=http://localhost:11434

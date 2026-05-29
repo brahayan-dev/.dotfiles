@@ -9,7 +9,7 @@ Multi-environment dotfiles repository with a Lua CLI layer on top of Ansible. De
 ### Environments
 
 Three environments auto-detected by the `workstation` entry script:
-- **work** (macOS, triggered by `~/.nurc` existing) — Clojure/Java toolchain, Doom Emacs, Nu infrastructure
+- **work** (macOS, triggered by `~/.nurc` existing) — Clojure toolchain, Doom Emacs, Nu infrastructure
 - **life** (macOS, default) — Personal dev: SSH, git, API tokens, claude-code cask
 - **linux** (pacman-based Linux) — Similar to life with Linux-specific packages
 
@@ -32,7 +32,7 @@ The `workstation` script bootstraps ansible+lua, then delegates to `systems/<env
 | `refresh`| yes | no  | no   |
 
 - `setup` runs the Ansible playbook for the environment
-- `install <language>` runs a language toolchain installer (scala, java, ruby, dotnet, lua)
+- `install <language>` runs a language toolchain installer (python, ruby, lua, elm)
 - `connect github` authenticates with GitHub (SSH key + token)
 - `refresh nu` refreshes Nu work credentials (work only)
 
@@ -53,11 +53,11 @@ Playbooks run against `localhost` via `hosts.ini`. Vault and become passwords st
 
 ### Neovim
 
-Plugin manager: lazy.nvim. Leader: Space, local leader: comma. Config split across `init.lua` → `settings.lua` + `keymaps.lua` + `plugins/`. Each plugin is a separate file returning a lazy spec table. LSP uses the new `vim.lsp.config`/`vim.lsp.enable` API (not the old `lspconfig.setup`). Format-on-save is configured with Scala organize-imports.
+Plugin manager: lazy.nvim. Leader: Space, local leader: comma. Config split across `init.lua` → `settings.lua` + `keymaps.lua` + `plugins/`. Each plugin is a separate file returning a lazy spec table. LSP uses the new `vim.lsp.config`/`vim.lsp.enable` API (not the old `lspconfig.setup`). Formatting is handled by conform.nvim (ruff for Python, rubocop for Ruby, stylua for Lua, elm_format for Elm). LSP provides diagnostics and code actions. Python organizes imports on save via basedpyright.
 
 ### Profile System
 
-`.zprofile` sources up to four profile files in order: `~/.life_profile`, `~/.work_profile`, `~/.linux_profile`, `~/.private_profile`. Profiles are symlinked by Ansible and contain environment variables, PATH entries, and project aliases. The `work` profile adds Nu/Java/Flutter/Python/Ruby/Go/Node/Clojure paths.
+`.zprofile` sources up to four profile files in order: `~/.life_profile`, `~/.work_profile`, `~/.linux_profile`, `~/.private_profile`. Profiles are symlinked by Ansible and contain environment variables, PATH entries, and project aliases. The `work` profile adds Nu/Flutter/Python/Ruby/Go/Node/Clojure paths.
 
 ### Secrets
 
@@ -65,9 +65,10 @@ Ansible Vault encrypts `roles/life/vars/main.yml` and `roles/linux/vars/main.yml
 
 ## Key Conventions
 
+- Ansible task names use Title Case (e.g., `Install Dependencies`, `Configure Luarocks For LuaJIT`)
 - Config deployment is always via symlinks — never copy files into `$HOME`
 - Ghostty has three configs: `built-in` (work macOS), `external` (personal macOS), `linux`
 - Each environment's CLAUDE.md is symlinked to `~/.claude/CLAUDE.md`
 - The `workstation` script must be run from the repo root (`~/.dotfiles/`)
-- Language installers in `language.lua` use `mise` for Ruby, `coursier` for Scala/Java
+- Language installers in `language.lua` use `mise` for Ruby/Python, `npm` for elm/elm-format/elm-test/@elm-tooling/elm-language-server, `gem` for ruby-lsp/rubocop/debug, `pip` for basedpyright/debugpy/ruff/pytest, `luarocks` for busted/cjson/luaossl
 - `systems/library/common.lua` `shell()` joins a table with spaces and calls `os.execute` — arguments with spaces need quoting

@@ -65,13 +65,13 @@ Three environments, partitioned by host signal:
 
               ┌─────────┐
               │  life   │   macOS · default
-              ├─────────┤   Scala · Ruby · Neovim · Claude Code
+              ├─────────┤   Python · Ruby · Lua · Elm · Neovim · Claude Code
               │         │
               └─────────┘
 
               ┌─────────┐
               │  linux  │   Linux · pacman detected
-              ├─────────┤   Arch-family · life-equivalent toolchain
+              ├─────────┤   Python · Ruby · Lua · Elm · Neovim · Claude Code
               │         │
               └─────────┘
 ```
@@ -79,7 +79,7 @@ Three environments, partitioned by host signal:
 Intersection ─ what every vertex inherits:
 
 ```
-   work ∩ life ∩ linux  =  { Scala, Neovim, Claude Code, zsh, ~/.config }
+   work ∩ life ∩ linux  =  { Neovim, Claude Code, zsh, ~/.config }
 ```
 
 ---
@@ -104,8 +104,8 @@ The command × environment adjacency:
    │  setup   ──▶  run the Ansible playbook for the host              │
    │  ping    ──▶  sanity check (host reachable, deps installed)      │
    │  install ──▶  install a language toolchain                       │
-   │              ↳ install scala  │ install java                     │
-   │              ↳ install ruby   │ install dotnet  │ install lua    │
+   │              ↳ install python │ install ruby                     │
+   │              ↳ install lua   │ install elm                     │
    │  connect ──▶  authenticate with the remote forge                 │
    │  refresh ──▶  refresh work credentials                           │
    │                                                                  │
@@ -116,7 +116,7 @@ Usage:
 
 ```
    $ ./workstation <command> [entity]
-   $ ./workstation install scala
+   $ ./workstation install python
    $ ./workstation connect github
    $ ./workstation refresh nu
 ```

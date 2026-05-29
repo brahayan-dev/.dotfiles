@@ -25,6 +25,10 @@
     - prettier
     - stylelint
     - typescript
+    - elm
+    - elm-format
+    - elm-test
+    - "@elm-tooling/elm-language-server"
     - http-server
     - js-beautify
     - bash-language-server
@@ -34,3 +38,8 @@
     - "@rescript/language-server"
     - "@github/copilot-language-server"
     - "@ansible/ansible-language-server"
+
+- name: Configure Luarocks For LuaJIT
+  shell: luarocks config --local lua_version 5.1
+  args:
+    creates: "{{ ansible_facts['user_dir'] }}/.luarocks/config-5.1.lua"
