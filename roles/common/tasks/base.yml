@@ -31,5 +31,6 @@
     - yaml-language-server
     - typescript-language-server
     - vscode-langservers-extracted
+    - "@rescript/language-server"
     - "@github/copilot-language-server"
     - "@ansible/ansible-language-server"

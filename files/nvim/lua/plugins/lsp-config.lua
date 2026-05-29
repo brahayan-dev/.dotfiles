@@ -44,6 +44,7 @@ return {
       vim.lsp.enable("tofu_ls")
       vim.lsp.enable("ruby_lsp")
       vim.lsp.enable("ansiblels")
+      vim.lsp.enable("rescriptls")
 
       require "keymaps".lsp()
 
