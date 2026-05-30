@@ -35,3 +35,9 @@ alias __fengari-ops='cd "$HOME/Projects/fengari-ops/" && nvim .'
 
 alias _thalassa-box='cd "$HOME/Projects/thalassa-box/"'
 alias __thalassa-box='cd "$HOME/Projects/thalassa-box/" && nvim .'
+
+alias _thalassa-api='cd "$HOME/Projects/thalassa-api/"'
+alias __thalassa-api='cd "$HOME/Projects/thalassa-api/" && nvim .'
+
+alias _thalassa-app='cd "$HOME/Projects/thalassa-app/"'
+alias __thalassa-app='cd "$HOME/Projects/thalassa-app/" && nvim .'

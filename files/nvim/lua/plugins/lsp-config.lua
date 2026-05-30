@@ -51,7 +51,6 @@ return {
 
       vim.lsp.enable("ruby_lsp")
       vim.lsp.enable("ansiblels")
-      vim.lsp.enable("rescriptls")
 
       vim.lsp.config("ruff", {
         root_markers = { "pyproject.toml", ".git" },
