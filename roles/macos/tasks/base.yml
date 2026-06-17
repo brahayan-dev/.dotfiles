@@ -2,6 +2,7 @@
 - name: Install Dependencies
   community.general.homebrew:
     name:
+      - node
       - fd
       - gh
       - zsh
@@ -29,6 +30,14 @@
   notify:
     - event_download_ohmyzsh
     - event_install_ohmyzsh
+
+- name: Install Npm Dependencies
+  community.general.npm:
+    name: "{{ item }}"
+    global: true
+    force: true
+    state: latest
+  loop: "{{ npm_global_packages }}"
 
 - name: Install Common Cask Dependencies
   community.general.homebrew_cask:

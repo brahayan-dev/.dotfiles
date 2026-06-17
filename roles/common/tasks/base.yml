@@ -7,54 +7,12 @@
       - tree-sitter-cli
     state: latest
 
-- name: Install Dependencies (MacOS)
-  package:
-    name:
-      - node
-    state: latest
-  when: "ansible_facts['os_family'] == 'Darwin'"
-
-- name: Install Dependencies (Linux)
-  become: true
-  package:
-    name:
-      - npm
-      - nodejs
-    state: latest
-  when: "ansible_facts['os_family'] == 'Linux'"
-
 - name: Install Mise
   shell: curl https://mise.run | sh
   args:
     creates: "{{ ansible_facts['user_dir'] }}/.local/bin/mise"
 
-- name: Install Npm Dependencies
-  become: "{{ ansible_facts['os_family'] != 'Darwin' }}"
-  community.general.npm:
-    name: "{{ item }}"
-    global: true
-    force: true
-    state: latest
-  loop:
-    - prettier
-    - stylelint
-    - typescript
-    - http-server
-    - js-beautify
-    - bash-language-server
-    - yaml-language-server
-    - typescript-language-server
-    - vscode-langservers-extracted
-    - "@github/copilot-language-server"
-    - "@ansible/ansible-language-server"
-
 - name: Configure Luarocks For LuaJIT
   shell: luarocks config --local lua_version 5.1
   args:
     creates: "{{ ansible_facts['user_dir'] }}/.luarocks/config-5.1.lua"
-
-- name: Install DuckDB (Linux)
-  shell: curl https://install.duckdb.org | sh
-  args:
-    creates: "{{ ansible_facts['user_dir'] }}/.local/bin/duckdb"
-  when: "ansible_facts['os_family'] == 'Linux'"

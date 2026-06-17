@@ -39,20 +39,20 @@
     - event_download_ohmyzsh
     - event_install_ohmyzsh
 
+- name: Install Npm Dependencies
+  community.general.npm:
+    name: "{{ item }}"
+    global: true
+    force: true
+    state: latest
+  loop: "{{ npm_global_packages }}"
+
+- name: Install DuckDB
+  shell: curl https://install.duckdb.org | sh
+  args:
+    creates: "{{ ansible_facts['user_dir'] }}/.local/bin/duckdb"
+
 - name: Install Brave
   shell: curl -fsS https://dl.brave.com/install.sh | sh
   args:
     creates: "/usr/bin/brave-browser"
-
-- name: Install Ohmyzsh
-  block:
-    - name: Install Ohmyzsh - Download Installer
-      get_url:
-        url: https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
-        dest: /tmp/ohmyzsh.sh
-        mode: 0777
-    - name: Install Ohmyzsh - Run Installer
-      shell: |
-        echo "Y" | sh /tmp/ohmyzsh.sh
-      args:
-        creates: "{{ ansible_facts['user_dir'] }}/.oh-my-zsh"

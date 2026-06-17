@@ -1,0 +1,13 @@
+---
+npm_global_packages:
+  - prettier
+  - stylelint
+  - typescript
+  - http-server
+  - js-beautify
+  - bash-language-server
+  - yaml-language-server
+  - typescript-language-server
+  - vscode-langservers-extracted
+  - "@github/copilot-language-server"
+  - "@ansible/ansible-language-server"
