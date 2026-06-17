@@ -35,5 +35,11 @@ alias __fengari-box='cd "$HOME/Projects/fengari-box/" && nvim .'
 alias _fengari-ops='cd "$HOME/Projects/fengari-ops/" && llm'
 alias __fengari-ops='cd "$HOME/Projects/fengari-ops/" && nvim .'
 
+alias _thalassa-hub='cd "$HOME/Projects/thalassa-hub/"'
+alias __thalassa-hub='cd "$HOME/Projects/thalassa-hub/" && nvim .'
+
+alias _thalassa-air='cd "$HOME/Projects/thalassa-air/"'
+alias __thalassa-air='cd "$HOME/Projects/thalassa-air/" && nvim .'
+
 alias _thalassa-box='cd "$HOME/Projects/thalassa-box/"'
 alias __thalassa-box='cd "$HOME/Projects/thalassa-box/" && nvim .'
