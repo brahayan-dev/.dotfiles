@@ -5,7 +5,7 @@ local entity = arg[2]
 
 local paths = {
   ansible_cfg_file = "systems/linux.cfg",
-  setup_playbook_file = "systems/linux.yml"
+  setup_playbook_file = "systems/linux.yml",
 }
 
 local commands = {

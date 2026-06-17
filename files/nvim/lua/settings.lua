@@ -53,7 +53,8 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   desc = "Highlight when yanking text",
 })
 
-local organize_imports_group = vim.api.nvim_create_augroup("organize-imports-on-save", { clear = true })
+local organize_imports_group =
+  vim.api.nvim_create_augroup("organize-imports-on-save", { clear = true })
 
 vim.api.nvim_create_autocmd("BufWritePre", {
   group = organize_imports_group,

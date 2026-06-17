@@ -16,11 +16,11 @@ return {
 
       vim.lsp.config("lua_ls", {
         cmd = {
-          'lua-language-server',
-          '--logpath=' .. vim.fn.stdpath('cache') .. '/lua-ls/log',
-          '--metapath=' .. vim.fn.stdpath('cache') .. '/lua-ls/meta',
+          "lua-language-server",
+          "--logpath=" .. vim.fn.stdpath("cache") .. "/lua-ls/log",
+          "--metapath=" .. vim.fn.stdpath("cache") .. "/lua-ls/meta",
         },
-        root_markers = { '.git', 'init.lua' },
+        root_markers = { ".git", "init.lua" },
         settings = {
           Lua = {
             runtime = { version = "LuaJIT" },
@@ -67,9 +67,9 @@ return {
 
       vim.lsp.enable("basedpyright")
 
-      require "keymaps".lsp()
+      require("keymaps").lsp()
 
       vim.diagnostic.config({ virtual_text = true })
-    end
-  }
+    end,
+  },
 }

@@ -1,6 +1,6 @@
 local M = {}
 
-local shell = require "systems.library.common".shell
+local shell = require("systems.library.common").shell
 local interactive = require "systems.library.interactive"
 
 local nu_update_proj = function()
@@ -15,8 +15,12 @@ end
 
 local nu_creds_br = function()
   shell {
-    "nu", "aws", "shared-role-credentials", "refresh",
-    "--account-alias", "br-staging",
+    "nu",
+    "aws",
+    "shared-role-credentials",
+    "refresh",
+    "--account-alias",
+    "br-staging",
   }
 end
 
@@ -63,7 +67,7 @@ M.refresh = function(command)
       nu_certs()
       nu_jwt()
       nu_tokens_stg()
-    end
+    end,
   }
 
   (commands[command] or interactive.not_found(command))()

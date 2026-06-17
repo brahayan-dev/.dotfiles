@@ -1,12 +1,12 @@
 local interactive = require "systems.library.interactive"
-local refresh = require "systems.library.work".refresh
+local refresh = require("systems.library.work").refresh
 
 local command = arg[1]
 local entity = arg[2]
 
 local paths = {
   ansible_cfg_file = "systems/work.cfg",
-  setup_playbook_file = "systems/work.yml"
+  setup_playbook_file = "systems/work.yml",
 }
 
 local commands = {
