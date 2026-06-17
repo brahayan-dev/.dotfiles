@@ -59,9 +59,7 @@ local function install(package)
   local packages = {
     doom = doom,
     lua = require "systems.library.language".lua,
-    ruby = require "systems.library.language".ruby,
     python = require "systems.library.language".python,
-    elm = require "systems.library.language".elm,
   }
 
   (packages[package] or not_found(package))()

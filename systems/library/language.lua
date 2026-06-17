@@ -13,19 +13,9 @@ function M.lua()
   luarocks { "install", "luaossl" }
 end
 
-function M.ruby()
-  shell { "mise", "settings", "ruby.compile=false" }
-  shell { "mise", "use", "-g", "ruby@3" }
-  shell { "gem", "install", "ruby-lsp", "rubocop", "debug" }
-end
-
 function M.python()
   shell { "mise", "use", "-g", "python@3" }
   shell { "pip", "install", "basedpyright", "debugpy", "ruff", "pytest" }
-end
-
-function M.elm()
-  shell { "npm", "install", "-g", "elm", "elm-format", "elm-test", "@elm-tooling/elm-language-server" }
 end
 
 return M

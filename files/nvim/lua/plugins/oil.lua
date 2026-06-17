@@ -29,9 +29,7 @@ return {
             ".become_",
             ".parcel-cache",
             "dist",
-            "node_modules",
-            ".ruby-lsp",
-            "elm-stuff"
+            "node_modules"
           }
           for _, v in ipairs(exclude) do
             if name == v then

@@ -59,19 +59,19 @@ Three environments, partitioned by host signal:
 ```
               ┌─────────┐
               │  work   │   macOS · ~/.nurc exists
-              ├─────────┤   Scala · Clojure · Neovim/Emacs · Claude Code
+              ├─────────┤   Scala · Clojure · Neovim · Claude Code
               │         │
               └─────────┘
 
               ┌─────────┐
               │  life   │   macOS · default
-              ├─────────┤   Python · Ruby · Lua · Elm · Neovim · Claude Code
+              ├─────────┤   Python · ClojureScript · Neovim · Claude Code
               │         │
               └─────────┘
 
               ┌─────────┐
               │  linux  │   Linux · pacman detected
-              ├─────────┤   Python · Ruby · Lua · Elm · Neovim · Claude Code
+              ├─────────┤   Python · ClojureScript · Neovim · Claude Code
               │         │
               └─────────┘
 ```
@@ -79,7 +79,7 @@ Three environments, partitioned by host signal:
 Intersection ─ what every vertex inherits:
 
 ```
-   work ∩ life ∩ linux  =  { Neovim, Claude Code, zsh, ~/.config }
+   work ∩ life ∩ linux  =  { Neovim, Claude Code, Clojure, zsh, ~/.config }
 ```
 
 ---
@@ -104,8 +104,7 @@ The command × environment adjacency:
    │  setup   ──▶  run the Ansible playbook for the host              │
    │  ping    ──▶  sanity check (host reachable, deps installed)      │
    │  install ──▶  install a language toolchain                       │
-   │              ↳ install python │ install ruby                     │
-   │              ↳ install lua   │ install elm                     │
+   │              ↳ install python │ install lua                      │
    │  connect ──▶  authenticate with the remote forge                 │
    │  refresh ──▶  refresh work credentials                           │
    │                                                                  │
