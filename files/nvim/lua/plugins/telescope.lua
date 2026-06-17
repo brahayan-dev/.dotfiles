@@ -6,7 +6,7 @@ return {
     "nvim-telescope/telescope.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim",
-      { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' }
+      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
     },
     config = function()
       require("telescope").setup({
@@ -27,8 +27,8 @@ return {
         },
       })
 
-      require "keymaps".telescope()
+      require("keymaps").telescope()
       require("telescope").load_extension("ui-select")
     end,
-  }
+  },
 }

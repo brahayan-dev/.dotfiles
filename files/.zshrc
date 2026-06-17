@@ -35,8 +35,7 @@ alias lg='lazygit'
 export PATH="$HOME/.dotfiles/:$PATH"
 # NOTE: Editor
 export EDITOR=nvim
-export PATH="$HOME/.config/emacs/bin/:$PATH"
-# NOTE: Ruby
+# NOTE: Mise
 eval "$(~/.local/bin/mise activate zsh)"
 # NOTE: Direnv
 eval "$(direnv hook zsh)"

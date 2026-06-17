@@ -16,11 +16,11 @@ return {
 
       vim.lsp.config("lua_ls", {
         cmd = {
-          'lua-language-server',
-          '--logpath=' .. vim.fn.stdpath('cache') .. '/lua-ls/log',
-          '--metapath=' .. vim.fn.stdpath('cache') .. '/lua-ls/meta',
+          "lua-language-server",
+          "--logpath=" .. vim.fn.stdpath("cache") .. "/lua-ls/log",
+          "--metapath=" .. vim.fn.stdpath("cache") .. "/lua-ls/meta",
         },
-        root_markers = { '.git', 'init.lua' },
+        root_markers = { ".git", "init.lua" },
         settings = {
           Lua = {
             runtime = { version = "LuaJIT" },
@@ -38,20 +38,13 @@ return {
       })
 
       vim.lsp.enable("sqls")
-      vim.lsp.enable("elmls")
       vim.lsp.enable("ts_ls")
       vim.lsp.enable("lua_ls")
       vim.lsp.enable("yamlls")
       vim.lsp.enable("bashls")
       vim.lsp.enable("jsonls")
       vim.lsp.enable("tofu_ls")
-      vim.lsp.config("ruby_lsp", {
-        root_markers = { "Gemfile", ".git" },
-      })
-
-      vim.lsp.enable("ruby_lsp")
       vim.lsp.enable("ansiblels")
-      vim.lsp.enable("rescriptls")
 
       vim.lsp.config("ruff", {
         root_markers = { "pyproject.toml", ".git" },
@@ -74,9 +67,9 @@ return {
 
       vim.lsp.enable("basedpyright")
 
-      require "keymaps".lsp()
+      require("keymaps").lsp()
 
       vim.diagnostic.config({ virtual_text = true })
-    end
-  }
+    end,
+  },
 }

@@ -59,19 +59,19 @@ Three environments, partitioned by host signal:
 ```
               ┌─────────┐
               │  work   │   macOS · ~/.nurc exists
-              ├─────────┤   Scala · Clojure · Neovim/Emacs · Claude Code
+              ├─────────┤   Scala · Clojure · Neovim · Claude Code
               │         │
               └─────────┘
 
               ┌─────────┐
               │  life   │   macOS · default
-              ├─────────┤   Python · Ruby · Lua · Elm · Neovim · Claude Code
+              ├─────────┤   Python · Lua · Neovim · Claude Code
               │         │
               └─────────┘
 
               ┌─────────┐
               │  linux  │   Linux · pacman detected
-              ├─────────┤   Python · Ruby · Lua · Elm · Neovim · Claude Code
+              ├─────────┤   Python · Lua · Neovim · Claude Code
               │         │
               └─────────┘
 ```
@@ -104,8 +104,7 @@ The command × environment adjacency:
    │  setup   ──▶  run the Ansible playbook for the host              │
    │  ping    ──▶  sanity check (host reachable, deps installed)      │
    │  install ──▶  install a language toolchain                       │
-   │              ↳ install python │ install ruby                     │
-   │              ↳ install lua   │ install elm                     │
+   │              ↳ install python │ install lua                      │
    │  connect ──▶  authenticate with the remote forge                 │
    │  refresh ──▶  refresh work credentials                           │
    │                                                                  │
@@ -148,8 +147,7 @@ Usage:
    │   └── linux/                  pacman
    │
    └── files/                      ◀── managed dotfiles (symlinked)
-       ├── nvim/        ghostty/     doom/
-       ├── emacs-plus/  profiles/
+       ├── nvim/        ghostty/     profiles/
        └── .zshrc       .zprofile
 ```
 

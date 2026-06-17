@@ -1,7 +1,5 @@
-local M = {}
-
-local shell = require "systems.library.common".shell
-local set_ansible_cfg = require "systems.library.common".set_ansible_cfg
+local shell = require("systems.library.common").shell
+local set_ansible_cfg = require("systems.library.common").set_ansible_cfg
 
 local paths = {
   vault_file = "systems/.vault_",
@@ -19,9 +17,11 @@ end
 
 local set_repository_origin = function()
   shell {
-    "git", "remote",
-    "set-url", "origin",
-    "git@github.com:brahayan-dev/.dotfiles.git"
+    "git",
+    "remote",
+    "set-url",
+    "origin",
+    "git@github.com:brahayan-dev/.dotfiles.git",
   }
 end
 
@@ -31,37 +31,35 @@ end
 
 local refresh_token = function()
   shell {
-    "gh", "auth", "refresh",
-    "-h", "github.com",
-    "-s", "admin:ssh_signing_key"
+    "gh",
+    "auth",
+    "refresh",
+    "-h",
+    "github.com",
+    "-s",
+    "admin:ssh_signing_key",
   }
 end
 
 local set_ssh_key = function()
-  local home = os.getenv("HOME")
-  local host = os.getenv("HOST")
-  local user = os.getenv("USER")
+  local home = os.getenv "HOME"
+  local host = os.getenv "HOST"
+  local user = os.getenv "USER"
 
   shell {
-    "gh", "ssh-key", "add",
+    "gh",
+    "ssh-key",
+    "add",
     string.format("%s/.ssh/%s_rsa.pub", home, user),
     string.format("-t Ak %s", host),
   }
 end
 
-local function doom()
-  shell { "git", "clone", "--depth", "1", "https://github.com/doomemacs/doomemacs", "~/.config/emacs" }
-  shell { "~/.config/emacs/bin/doom", "install" }
-end
-
 local function install(package)
   print(string.format("Installing '%s'...\n", package))
   local packages = {
-    doom = doom,
-    lua = require "systems.library.language".lua,
-    ruby = require "systems.library.language".ruby,
-    python = require "systems.library.language".python,
-    elm = require "systems.library.language".elm,
+    lua = require("systems.library.language").lua,
+    python = require("systems.library.language").python,
   }
 
   (packages[package] or not_found(package))()
@@ -84,11 +82,13 @@ local function setup(file, playbook)
   return function(_)
     shell {
       set_ansible_cfg(file),
-      "ansible-playbook", "-c", "local",
+      "ansible-playbook",
+      "-c",
+      "local",
       string.format("-i %s", paths.hosts_file),
       string.format("--vault-password-file %s", paths.vault_file),
       string.format("--become-password-file %s", paths.become_file),
-      playbook
+      playbook,
     }
   end
 end
@@ -97,8 +97,12 @@ local function ping(file)
   return function()
     shell {
       set_ansible_cfg(file),
-      "ansible", "-c", "local", "-m", "ping",
-      string.format("-i %s Workstation", paths.hosts_file)
+      "ansible",
+      "-c",
+      "local",
+      "-m",
+      "ping",
+      string.format("-i %s Workstation", paths.hosts_file),
     }
   end
 end

@@ -1,6 +1,6 @@
 return {
   {
-    "hrsh7th/cmp-nvim-lsp"
+    "hrsh7th/cmp-nvim-lsp",
   },
   {
     "L3MON4D3/LuaSnip",
@@ -25,7 +25,7 @@ return {
           completion = cmp.config.window.bordered(),
           documentation = cmp.config.window.bordered(),
         },
-        mapping = cmp.mapping.preset.insert(require "keymaps".autocomplete(cmp)),
+        mapping = cmp.mapping.preset.insert(require("keymaps").autocomplete(cmp)),
         sources = cmp.config.sources({
           { name = "nvim_lsp" },
           { name = "luasnip" }, -- For luasnip users.

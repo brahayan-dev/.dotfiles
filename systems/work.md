@@ -9,8 +9,8 @@
 
 ## Language Stack
 
-| Language | Runtime | LSP | Formatter | Notes |
-|----------|---------|-----|-----------|-------|
-| Scala | coursier (JDK 17) | Metals (via nvim-metals) | — | Spark development |
-| Clojure | coursier (brew) | clojure-lsp-native | cljfmt | Nu infrastructure |
-| Java | coursier (temurin:17) | — | — | JDK via coursier |
+| Language | Runtime               | LSP                      | Formatter | Notes             |
+| -------- | --------------------- | ------------------------ | --------- | ----------------- |
+| Scala    | coursier (JDK 17)     | Metals (via nvim-metals) | —         | Spark development |
+| Clojure  | coursier (brew)       | clojure-lsp-native       | cljfmt    | Nu infrastructure |
+| Java     | coursier (temurin:17) | —                        | —         | JDK via coursier  |

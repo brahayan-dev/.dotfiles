@@ -1,7 +1,7 @@
 return {
   "stevearc/oil.nvim",
   config = function()
-    local oil = require "oil"
+    local oil = require("oil")
     oil.setup({
       delete_to_trash = false,
       skip_confirm_for_simple_edits = true,
@@ -30,8 +30,6 @@ return {
             ".parcel-cache",
             "dist",
             "node_modules",
-            ".ruby-lsp",
-            "elm-stuff"
           }
           for _, v in ipairs(exclude) do
             if name == v then
@@ -39,9 +37,9 @@ return {
             end
           end
         end,
-      }
+      },
     })
 
-    require "keymaps".oil(oil)
+    require("keymaps").oil(oil)
   end,
 }

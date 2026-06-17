@@ -5,11 +5,15 @@ function M.general()
   vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
   vim.keymap.set("n", "<leader>q", ":qa!<CR>", { desc = "Quit all" })
   vim.keymap.set("n", "<leader>;", ":wall<CR>", { desc = "Save all" })
-  vim.keymap.set("n", "<leader>of", vim.diagnostic.open_float,
-    { desc = "Open float on diagnostic" })
-  vim.keymap.set('n', '<leader>y', function()
-    vim.fn.setreg('+', vim.fn.expand('%:p'))
-  end, { desc = 'Copy file path to clipboard' })
+  vim.keymap.set(
+    "n",
+    "<leader>of",
+    vim.diagnostic.open_float,
+    { desc = "Open float on diagnostic" }
+  )
+  vim.keymap.set("n", "<leader>y", function()
+    vim.fn.setreg("+", vim.fn.expand("%:p"))
+  end, { desc = "Copy file path to clipboard" })
   vim.keymap.set("n", "<leader>hh", function()
     local enabled = vim.lsp.inlay_hint.is_enabled({ bufnr = 0 })
     vim.lsp.inlay_hint.enable(not enabled, { bufnr = 0 })
@@ -26,7 +30,9 @@ end
 
 function M.lsp()
   vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
-  vim.keymap.set("n", "<leader>cf", vim.lsp.buf.format, {})
+  vim.keymap.set("n", "<leader>cf", function()
+    require("conform").format({ async = true, lsp_format = "fallback" })
+  end, { desc = "Format buffer" })
   vim.keymap.set("n", "<leader>cr", vim.lsp.buf.rename, {})
   vim.keymap.set("n", "<leader>cg", vim.lsp.buf.references, {})
   vim.keymap.set("n", "<leader>cd", vim.lsp.buf.definition, {})

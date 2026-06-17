@@ -13,8 +13,6 @@ return {
         "yaml",
         "json",
         "html",
-        "ruby",
-        "elm",
         "python",
         "clojure",
         "javascript",

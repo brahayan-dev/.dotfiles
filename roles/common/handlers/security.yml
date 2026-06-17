@@ -5,6 +5,5 @@
     source "/{{ ansible_facts['user_dir'] }}/.zprofile"
     exit 0
   args:
-    executable: /bin/zsh 
+    executable: /bin/zsh
   listen: event_reload_zsh_files
-
