@@ -45,6 +45,3 @@
       - arc
       - ollama-app
     state: latest
-  notify:
-    - event_download_ohmyzsh
-    - event_install_ohmyzsh

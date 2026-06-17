@@ -1,7 +1,7 @@
 ---
 - name: Create Directories
   ansible.builtin.file:
-    path: "/{{ ansible_facts['user_dir'] }}/{{ item }}"
+    path: "{{ ansible_facts['user_dir'] }}/{{ item }}"
     state: directory
     mode: 0755
   loop:
@@ -12,8 +12,8 @@
 
 - name: Set Editor Symlinks
   ansible.builtin.file:
-    src: "/{{ ansible_facts['user_dir'] }}/.dotfiles/files/{{ item }}"
-    dest: "/{{ ansible_facts['user_dir'] }}/.config/{{ item }}"
+    src: "{{ ansible_facts['user_dir'] }}/.dotfiles/files/{{ item }}"
+    dest: "{{ ansible_facts['user_dir'] }}/.config/{{ item }}"
     state: link
     force: true
   loop:
@@ -22,8 +22,8 @@
 
 - name: Set Symlinks
   ansible.builtin.file:
-    src: "/{{ ansible_facts['user_dir'] }}/.dotfiles/files/{{ item }}"
-    dest: "/{{ ansible_facts['user_dir'] }}/{{ item }}"
+    src: "{{ ansible_facts['user_dir'] }}/.dotfiles/files/{{ item }}"
+    dest: "{{ ansible_facts['user_dir'] }}/{{ item }}"
     state: link
     force: true
   loop:

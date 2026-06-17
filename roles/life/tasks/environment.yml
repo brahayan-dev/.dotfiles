@@ -2,7 +2,7 @@
 - name: Render SSH Configuration
   template:
     src: "templates/config.j2"
-    dest: "/{{ ansible_facts['user_dir'] }}/.ssh/config"
+    dest: "{{ ansible_facts['user_dir'] }}/.ssh/config"
     owner: "{{ ansible_facts['user_id'] }}"
     mode: 0644
   notify:
@@ -10,8 +10,8 @@
 
 - name: Set Life Symlink
   ansible.builtin.file:
-    src: "/{{ ansible_facts['user_dir'] }}/.dotfiles/files/{{ item }}"
-    dest: "/{{ ansible_facts['user_dir'] }}/{{ item }}"
+    src: "{{ ansible_facts['user_dir'] }}/.dotfiles/files/{{ item }}"
+    dest: "{{ ansible_facts['user_dir'] }}/{{ item }}"
     state: link
     force: true
   loop:
@@ -20,8 +20,8 @@
 
 - name: Set Claude Configuration Symlink
   ansible.builtin.file:
-    src: "/{{ ansible_facts['user_dir'] }}/.dotfiles/systems/life.md"
-    dest: "/{{ ansible_facts['user_dir'] }}/.claude/CLAUDE.md"
+    src: "{{ ansible_facts['user_dir'] }}/.dotfiles/systems/life.md"
+    dest: "{{ ansible_facts['user_dir'] }}/.claude/CLAUDE.md"
     state: link
     force: true
   notify: event_reload_zsh_files

@@ -11,3 +11,5 @@ npm_global_packages:
   - vscode-langservers-extracted
   - "@github/copilot-language-server"
   - "@ansible/ansible-language-server"
+
+git_user_email: "bxsr@proton.me"

@@ -14,18 +14,27 @@
   failed_when: false
   changed_when: false
 
-- name: Add SSH Key To Agent
+- name: Add SSH Key To Agent (macOS)
+  shell: |
+    eval "$(ssh-agent -s)"
+    ssh-add --apple-use-keychain "{{ ansible_facts['user_dir'] }}/.ssh/{{ ansible_facts['user_id'] }}_rsa"
+  when:
+    - "'ansible-generated' not in ssh_keys_added.stdout"
+    - "ansible_facts['os_family'] == 'Darwin'"
+
+- name: Add SSH Key To Agent (Linux)
   shell: |
     eval "$(ssh-agent -s)"
     ssh-add "{{ ansible_facts['user_dir'] }}/.ssh/{{ ansible_facts['user_id'] }}_rsa"
   when:
     - "'ansible-generated' not in ssh_keys_added.stdout"
+    - "ansible_facts['os_family'] == 'Linux'"
 
 - name: Add Git Configuration
   community.general.git_config:
     name: user.email
     scope: global
-    value: bxsr@proton.me
+    value: "{{ git_user_email }}"
 
 - name: Set Default Git Branch Globally
   community.general.git_config:

@@ -1,8 +1,8 @@
 ---
 - name: Reload Zsh Files
   shell: |
-    source "/{{ ansible_facts['user_dir'] }}/.zshrc"
-    source "/{{ ansible_facts['user_dir'] }}/.zprofile"
+    source "{{ ansible_facts['user_dir'] }}/.zshrc"
+    source "{{ ansible_facts['user_dir'] }}/.zprofile"
     exit 0
   args:
     executable: /bin/zsh

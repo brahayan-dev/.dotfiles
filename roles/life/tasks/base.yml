@@ -20,6 +20,3 @@
     name:
       - claude-code
     state: latest
-  notify:
-    - event_download_ohmyzsh
-    - event_install_ohmyzsh
