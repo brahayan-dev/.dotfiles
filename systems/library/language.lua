@@ -2,15 +2,17 @@ local M = {}
 
 local shell = require "systems.library.common".shell
 
-local function luarocks(args)
+local function luarocks(pkg)
   local dir = os.getenv "LUA_DIR" or "/opt/homebrew/opt/luajit"
-  shell { "luarocks", "--local", "--lua-dir=" .. dir, unpack(args) }
+  shell { "luarocks", "--local", "--lua-dir=" .. dir, "install", pkg }
 end
 
 function M.lua()
-  luarocks { "install", "busted" }
-  luarocks { "install", "lua-cjson" }
-  luarocks { "install", "luaossl" }
+  luarocks "busted"
+  luarocks "luaossl"
+  luarocks "lua-cjson"
+  luarocks "luasql-duckdb"
+  luarocks "luasql-sqlite3"
 end
 
 function M.python()

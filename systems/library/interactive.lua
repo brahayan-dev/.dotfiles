@@ -1,5 +1,3 @@
-local M = {}
-
 local shell = require "systems.library.common".shell
 local set_ansible_cfg = require "systems.library.common".set_ansible_cfg
 
@@ -49,15 +47,9 @@ local set_ssh_key = function()
   }
 end
 
-local function doom()
-  shell { "git", "clone", "--depth", "1", "https://github.com/doomemacs/doomemacs", "~/.config/emacs" }
-  shell { "~/.config/emacs/bin/doom", "install" }
-end
-
 local function install(package)
   print(string.format("Installing '%s'...\n", package))
   local packages = {
-    doom = doom,
     lua = require "systems.library.language".lua,
     python = require "systems.library.language".python,
   }

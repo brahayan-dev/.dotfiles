@@ -1,13 +1,18 @@
 ---
-- name: Install Dependencies (MacOS)
+- name: Install Dependencies
   package:
     name:
-      - node
       - podman
       - podman-compose
       - tree-sitter-cli
     state: latest
-  when: "{{ ansible_facts['os_family'] == 'Darwin' }}"
+
+- name: Install Dependencies (MacOS)
+  package:
+    name:
+      - node
+    state: latest
+  when: "ansible_facts['os_family'] == 'Darwin'"
 
 - name: Install Dependencies (Linux)
   become: true
@@ -15,11 +20,8 @@
     name:
       - npm
       - nodejs
-      - podman
-      - podman-compose
-      - tree-sitter-cli
     state: latest
-  when: "{{ ansible_facts['os_family'] == 'Linux' }}"
+  when: "ansible_facts['os_family'] == 'Linux'"
 
 - name: Install Mise
   shell: curl https://mise.run | sh

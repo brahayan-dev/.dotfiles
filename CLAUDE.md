@@ -10,7 +10,7 @@ Multi-environment dotfiles repository with a Lua CLI layer on top of Ansible. De
 
 Three environments auto-detected by the `workstation` entry script:
 
-- **work** (macOS, triggered by `~/.nurc` existing) — Clojure toolchain, Doom Emacs, Nu infrastructure
+- **work** (macOS, triggered by `~/.nurc` existing) — Clojure toolchain, Nu infrastructure
 - **life** (macOS, default) — Personal dev: SSH, git, API tokens, claude-code cask
 - **linux** (pacman-based Linux) — Similar to life with Linux-specific packages
 
@@ -46,7 +46,7 @@ The `workstation` script bootstraps ansible+lua, then delegates to `systems/<env
 - `systems/library/language.lua` — Language toolchain installers
 - `systems/library/work.lua` — Work-specific `refresh` command for Nu infrastructure
 - `roles/` — Ansible roles: common (all), macos (brew), work, life, linux
-- `files/` — Managed dotfiles: nvim, ghostty, doom, emacs-plus, .zshrc, .zprofile, profiles
+- `files/` — Managed dotfiles: nvim, ghostty, .zshrc, .zprofile, profiles
 
 ### Ansible
 
