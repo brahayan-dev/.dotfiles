@@ -9,6 +9,7 @@ Multi-environment dotfiles repository with a Lua CLI layer on top of Ansible. De
 ### Environments
 
 Three environments auto-detected by the `workstation` entry script:
+
 - **work** (macOS, triggered by `~/.nurc` existing) — Clojure toolchain, Doom Emacs, Nu infrastructure
 - **life** (macOS, default) — Personal dev: SSH, git, API tokens, claude-code cask
 - **linux** (pacman-based Linux) — Similar to life with Linux-specific packages
@@ -23,13 +24,13 @@ The `workstation` script bootstraps ansible+lua, then delegates to `systems/<env
 
 ### Commands per environment
 
-| Command | work | life | linux |
-|---------|------|------|-------|
-| `setup`  | yes | yes | yes |
-| `ping`   | yes | yes | yes |
-| `install`| yes | yes | yes |
-| `connect`| no  | yes | yes |
-| `refresh`| yes | no  | no   |
+| Command   | work | life | linux |
+| --------- | ---- | ---- | ----- |
+| `setup`   | yes  | yes  | yes   |
+| `ping`    | yes  | yes  | yes   |
+| `install` | yes  | yes  | yes   |
+| `connect` | no   | yes  | yes   |
+| `refresh` | yes  | no   | no    |
 
 - `setup` runs the Ansible playbook for the environment
 - `install <language>` runs a language toolchain installer (python, lua)

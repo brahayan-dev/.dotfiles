@@ -7,10 +7,10 @@
 
 ## Language Stack
 
-| Language | Runtime | LSP | Formatter | DAP | Test Runner |
-|----------|---------|-----|-----------|-----|-------------|
-| Python | mise python@3 | basedpyright + ruff | conform → ruff | debugpy | neotest (pytest) |
-| Lua | LuaJIT (pacman) | lua_ls | conform → stylua | local-lua-debugger | neotest (busted) |
+| Language | Runtime         | LSP                 | Formatter        | DAP                | Test Runner      |
+| -------- | --------------- | ------------------- | ---------------- | ------------------ | ---------------- |
+| Python   | mise python@3   | basedpyright + ruff | conform → ruff   | debugpy            | neotest (pytest) |
+| Lua      | LuaJIT (pacman) | lua_ls              | conform → stylua | local-lua-debugger | neotest (busted) |
 
 ### Install commands
 
