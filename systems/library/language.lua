@@ -3,7 +3,7 @@ local M = {}
 local shell = require("systems.library.common").shell
 
 local function luarocks(pkg)
-  local dir = os.getenv "LUA_DIR" or "/opt/homebrew/opt/luajit"
+  local dir = os.getenv "LUA_DIR" or (os.getenv "HOMEBREW_PREFIX" or "/usr")
   shell { "luarocks", "--local", "--lua-dir=" .. dir, "install", pkg }
 end
 

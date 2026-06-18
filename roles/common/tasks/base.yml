@@ -1,6 +1,6 @@
 ---
 - name: Install Dependencies
-  become: "{{ ansible_facts['os_family'] == 'Linux' }}"
+  become: "{{ ansible_facts['os_family'] == 'Archlinux' }}"
   package:
     name:
       - podman
@@ -17,3 +17,4 @@
   shell: luarocks config --local lua_version 5.1
   args:
     creates: "{{ ansible_facts['user_dir'] }}/.luarocks/config-5.1.lua"
+

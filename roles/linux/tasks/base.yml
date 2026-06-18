@@ -17,8 +17,10 @@
       - pdftk
       - sqlite
       - neovim
+      - duckdb
       - rlwrap
       - direnv
+      - stylua
       - pandoc
       - dbeaver
       - ghostty
@@ -27,10 +29,10 @@
       - luajit
       - luarocks
       - opentofu
+      - python-pip
       - base-devel
       - github-cli
       - shellcheck
-      - stylua
       - ttf-fira-code
       - lua-language-server
     state: latest
@@ -40,12 +42,24 @@
     - event_install_ohmyzsh
 
 - name: Install Npm Dependencies
+  become: true
   community.general.npm:
     name: "{{ item }}"
     global: true
     force: true
     state: latest
   loop: "{{ npm_global_packages }}"
+
+- name: Install Ollama
+  become: true
+  shell: curl -fsSL https://ollama.com/install.sh | sh
+  args:
+    creates: "/usr/local/bin/ollama"
+
+- name: Install Claude Code
+  shell: curl -fsSL https://claude.ai/install.sh | bash
+  args:
+    creates: "{{ ansible_facts['user_dir'] }}/.local/bin/claude"
 
 - name: Install DuckDB
   shell: curl https://install.duckdb.org | sh
