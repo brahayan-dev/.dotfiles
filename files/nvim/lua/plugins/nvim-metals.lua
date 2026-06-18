@@ -12,9 +12,23 @@ return {
     local metals_config = metals.bare_config()
 
     metals_config.serverVersion = "latest.release"
+
+    -- Ensure Java is findable regardless of how Neovim was launched
+    local java_home = vim.fn.system("cs java-home --jvm temurin:17 2>/dev/null"):gsub("\n", "")
+    if java_home ~= "" then
+      -- Make java available to the Metals launcher script
+      vim.env.JAVA_HOME = java_home
+      vim.env.PATH = java_home .. "/bin:" .. vim.env.PATH
+
+      -- Tell Metals which JDK to use for the workspace
+      metals_config.settings = {
+        javaHome = java_home,
+      }
+    end
+
     metals_config.capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-    metals_config.settings = {
+    metals_config.settings = vim.tbl_deep_extend("force", metals_config.settings or {}, {
       showInferredType = false,
       showImplicitArguments = false,
       showImplicitConversionsAndClasses = false,
@@ -28,7 +42,7 @@ return {
         implicitConversions = { enable = false },
         hintsInPatternMatch = { enable = false },
       },
-    }
+    })
 
     metals_config.init_options.statusBarProvider = "on"
 
@@ -61,9 +75,8 @@ return {
     vim.lsp.handlers["client/registerCapability"] = function(err, result, ctx, config)
       for _, registration in ipairs(result.registrations or {}) do
         if registration.method == "workspace/didChangeWatchedFiles" then
-          local watchers = registration.registerOptions
-              and registration.registerOptions.watchers
-              or {}
+          local watchers = registration.registerOptions and registration.registerOptions.watchers
+            or {}
 
           for _, watcher in ipairs(watchers) do
             if type(watcher.globPattern) == "string" then
