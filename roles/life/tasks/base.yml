@@ -11,6 +11,7 @@
       - luarocks
       - opentofu
       - dbeaver-community
+      - coursier
       - lua-language-server
       - stylua
     state: latest

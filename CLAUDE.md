@@ -33,7 +33,7 @@ The `workstation` script bootstraps ansible+lua, then delegates to `systems/<env
 | `refresh` | yes  | no   | no    |
 
 - `setup` runs the Ansible playbook for the environment
-- `install <language>` runs a language toolchain installer (python, lua)
+- `install <language>` runs a language toolchain installer (python, lua, scala)
 - `connect github` authenticates with GitHub (SSH key + token)
 - `refresh nu` refreshes Nu work credentials (work only)
 
@@ -46,7 +46,7 @@ The `workstation` script bootstraps ansible+lua, then delegates to `systems/<env
 - `systems/library/language.lua` — Language toolchain installers
 - `systems/library/work.lua` — Work-specific `refresh` command for Nu infrastructure
 - `roles/` — Ansible roles: common (all), macos (brew), work, life, linux
-- `files/` — Managed dotfiles: nvim, ghostty, .zshrc, .zprofile, profiles
+- `files/` — Managed dotfiles: nvim, ghostty, profiles (.life_profile, .linux_profile, .work_profile), .zshrc, .zprofile
 
 ### Ansible
 
@@ -54,11 +54,15 @@ Playbooks run against `localhost` via `hosts.ini`. Vault and become passwords st
 
 ### Neovim
 
-Plugin manager: lazy.nvim. Leader: Space, local leader: comma. Config split across `init.lua` → `settings.lua` + `keymaps.lua` + `plugins/`. Each plugin is a separate file returning a lazy spec table. LSP uses the new `vim.lsp.config`/`vim.lsp.enable` API (not the old `lspconfig.setup`). Formatting is handled by conform.nvim (ruff for Python, stylua for Lua). LSP provides diagnostics and code actions. Python organizes imports on save via basedpyright.
+Plugin manager: lazy.nvim. Leader: Space, local leader: comma. Config split across `init.lua` → `settings.lua` + `keymaps.lua` + `plugins/`. Each plugin is a separate file returning a lazy spec table.
+
+LSP uses the new `vim.lsp.config`/`vim.lsp.enable` API (not the old `lspconfig.setup`), plus nvim-metals for Scala. Configured LSPs: basedpyright, ruff, lua_ls, sqls, ts_ls, yamlls, bashls, jsonls, tofu_ls, ansiblels, Metals. Formatting is handled by conform.nvim (ruff_format for Python, stylua for Lua, LSP fallback for others). LSP provides diagnostics and code actions. Python and Scala organize imports on save.
+
+Treesitter parsers: lua, sql, css, bash, yaml, json, html, python, scala, clojure, javascript, embedded_template. Completion via nvim-cmp with LuaSnip and cmp-nvim-lsp. Copilot integration via copilot.lua.
 
 ### Profile System
 
-`.zprofile` sources up to four profile files in order: `~/.life_profile`, `~/.work_profile`, `~/.linux_profile`, `~/.private_profile`. Profiles are symlinked by Ansible and contain environment variables, PATH entries, and project aliases. The `work` profile adds Nu/Flutter/Python/Ruby/Go/Node/Clojure paths.
+`.zprofile` sources up to four profile files in order: `~/.life_profile`, `~/.work_profile`, `~/.linux_profile`, `~/.private_profile`. Life, work, and linux profiles are symlinked by Ansible; `.private_profile` is written in-place by Ansible using `lineinfile`. Profiles contain environment variables, PATH entries, and project aliases. The `work` profile adds Nu/Flutter/Python/Ruby/Go/Node/Coursier paths.
 
 ### Secrets
 
@@ -68,8 +72,9 @@ Ansible Vault encrypts `roles/life/vars/main.yml` and `roles/linux/vars/main.yml
 
 - Ansible task names use Title Case (e.g., `Install Dependencies`, `Configure Luarocks For LuaJIT`)
 - Config deployment is always via symlinks — never copy files into `$HOME`
-- Ghostty has three configs: `built-in` (work macOS), `external` (personal macOS), `linux`
+- Ghostty has three configs: `built-in` (all macOS), `external` (unused), `linux`
 - Each environment's CLAUDE.md is symlinked to `~/.claude/CLAUDE.md`
 - The `workstation` script must be run from the repo root (`~/.dotfiles/`)
-- Language installers in `language.lua` use `mise` for Python, `pip` for basedpyright/debugpy/ruff/pytest, `luarocks` for busted/cjson/luaossl
+- Language installers in `language.lua` use `mise` for Python, `pip` for duckdb/basedpyright/debugpy/ruff/pytest, `luarocks` for busted, `cs` for coursier/metals/JDK
 - `systems/library/common.lua` `shell()` joins a table with spaces and calls `os.execute` — arguments with spaces need quoting
+- Use `prettier . --write` to format Markdown files, and `stylua .` for Lua, and `ruff . --fix` for Python.

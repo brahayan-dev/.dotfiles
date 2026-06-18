@@ -65,13 +65,13 @@ Three environments, partitioned by host signal:
 
               ┌─────────┐
               │  life   │   macOS · default
-              ├─────────┤   Python · Lua · Neovim · Claude Code
+              ├─────────┤   Python · Lua · Scala · Neovim · Claude Code
               │         │
               └─────────┘
 
               ┌─────────┐
               │  linux  │   Linux · pacman detected
-              ├─────────┤   Python · Lua · Neovim · Claude Code
+              ├─────────┤   Python · Lua · Scala · Neovim · Claude Code
               │         │
               └─────────┘
 ```
@@ -79,7 +79,7 @@ Three environments, partitioned by host signal:
 Intersection ─ what every vertex inherits:
 
 ```
-   work ∩ life ∩ linux  =  { Neovim, Claude Code, zsh, ~/.config }
+   work ∩ life ∩ linux  =  { Neovim, Claude Code, Scala, zsh, ~/.config }
 ```
 
 ---
@@ -104,7 +104,7 @@ The command × environment adjacency:
    │  setup   ──▶  run the Ansible playbook for the host              │
    │  ping    ──▶  sanity check (host reachable, deps installed)      │
    │  install ──▶  install a language toolchain                       │
-   │              ↳ install python │ install lua                      │
+   │              ↳ install python │ install lua │ install scala                      │
    │  connect ──▶  authenticate with the remote forge                 │
    │  refresh ──▶  refresh work credentials                           │
    │                                                                  │
@@ -147,8 +147,8 @@ Usage:
    │   └── linux/                  pacman
    │
    └── files/                      ◀── managed dotfiles (symlinked)
-       ├── nvim/        ghostty/     profiles/
-       └── .zshrc       .zprofile
+       ├── nvim/        ghostty/
+       └── .zshrc       .zprofile    .life_profile    .linux_profile
 ```
 
 Deployment invariant ─ files are **always** symlinked, never copied:

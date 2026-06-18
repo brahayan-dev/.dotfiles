@@ -72,6 +72,22 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   desc = "Organize Python imports on save",
 })
 
+vim.api.nvim_create_autocmd("BufWritePre", {
+  group = organize_imports_group,
+  pattern = "*.scala",
+  callback = function(args)
+    vim.lsp.buf.code_action({
+      bufnr = args.buf,
+      apply = true,
+      context = {
+        only = { "source.organizeImports" },
+        diagnostics = {},
+      },
+    })
+  end,
+  desc = "Organize Scala imports on save",
+})
+
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "python",
   callback = function()
@@ -81,6 +97,17 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.expandtab = true
     vim.opt_local.autoindent = true
     vim.opt_local.smartindent = true
+  end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "scala",
+  callback = function()
+    vim.opt_local.tabstop = 2
+    vim.opt_local.shiftwidth = 2
+    vim.opt_local.softtabstop = 2
+    vim.opt_local.expandtab = true
+    vim.opt_local.autoindent = true
   end,
 })
 

@@ -66,6 +66,17 @@
   args:
     creates: "{{ ansible_facts['user_dir'] }}/.local/bin/duckdb"
 
+- name: Download Coursier
+  get_url:
+    url: https://github.com/coursier/launchers/raw/master/cs-x86_64-pc-linux.gz
+    dest: "{{ ansible_facts['user_dir'] }}/.local/bin/cs.gz"
+    mode: "0755"
+
+- name: Install Coursier
+  command: gzip -d {{ ansible_facts['user_dir'] }}/.local/bin/cs.gz
+  args:
+    creates: "{{ ansible_facts['user_dir'] }}/.local/bin/cs"
+
 - name: Install Brave
   shell: curl -fsS https://dl.brave.com/install.sh | sh
   args:

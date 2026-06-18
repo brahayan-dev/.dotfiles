@@ -60,6 +60,7 @@ local function install(package)
   local packages = {
     lua = require("systems.library.language").lua,
     python = require("systems.library.language").python,
+    scala = require("systems.library.language").scala,
   }
 
   (packages[package] or not_found(package))()
