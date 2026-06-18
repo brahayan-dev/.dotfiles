@@ -19,9 +19,9 @@ end
 function M.scala()
   local dir = "~/.local/share/coursier/bin"
 
-  shell { "cs", "java", "--jvm", "temurin:17", "--setup" }
-  shell { "cs", "setup", "--yes" }
-  shell { "cs", "install", "metals", "--install-dir", dir }
+  shell { "coursier", "java", "--jvm", "temurin:17", "--setup" }
+  shell { "coursier", "setup", "--yes" }
+  shell { "coursier", "install", "metals", "--install-dir", dir }
 end
 
 return M
