@@ -9,7 +9,7 @@ if [[ "$(uname)" == "Linux" ]]; then
 fi
 
 llm() {
-  ollama launch claude --model glm-5.1:cloud --yes
+  ollama launch claude --model glm-5.2:cloud --yes
 }
 
 alias _dotfiles='cd "$HOME/.dotfiles/" && llm'
