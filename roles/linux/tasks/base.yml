@@ -17,8 +17,10 @@
       - pdftk
       - sqlite
       - neovim
+      - duckdb
       - rlwrap
       - direnv
+      - stylua
       - pandoc
       - dbeaver
       - ghostty
@@ -27,10 +29,10 @@
       - luajit
       - luarocks
       - opentofu
+      - python-pip
       - base-devel
       - github-cli
       - shellcheck
-      - stylua
       - ttf-fira-code
       - lua-language-server
     state: latest
@@ -39,20 +41,43 @@
     - event_download_ohmyzsh
     - event_install_ohmyzsh
 
+- name: Install Npm Dependencies
+  become: true
+  community.general.npm:
+    name: "{{ item }}"
+    global: true
+    force: true
+    state: latest
+  loop: "{{ npm_global_packages }}"
+
+- name: Install Ollama
+  become: true
+  shell: curl -fsSL https://ollama.com/install.sh | sh
+  args:
+    creates: "/usr/local/bin/ollama"
+
+- name: Install Claude Code
+  shell: curl -fsSL https://claude.ai/install.sh | bash
+  args:
+    creates: "{{ ansible_facts['user_dir'] }}/.local/bin/claude"
+
+- name: Install DuckDB
+  shell: curl https://install.duckdb.org | sh
+  args:
+    creates: "{{ ansible_facts['user_dir'] }}/.local/bin/duckdb"
+
+- name: Download Coursier
+  get_url:
+    url: https://github.com/coursier/launchers/raw/master/cs-x86_64-pc-linux.gz
+    dest: "{{ ansible_facts['user_dir'] }}/.local/bin/cs.gz"
+    mode: "0755"
+
+- name: Install Coursier
+  command: gzip -d {{ ansible_facts['user_dir'] }}/.local/bin/cs.gz
+  args:
+    creates: "{{ ansible_facts['user_dir'] }}/.local/bin/cs"
+
 - name: Install Brave
   shell: curl -fsS https://dl.brave.com/install.sh | sh
   args:
     creates: "/usr/bin/brave-browser"
-
-- name: Install Ohmyzsh
-  block:
-    - name: Install Ohmyzsh - Download Installer
-      get_url:
-        url: https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
-        dest: /tmp/ohmyzsh.sh
-        mode: 0777
-    - name: Install Ohmyzsh - Run Installer
-      shell: |
-        echo "Y" | sh /tmp/ohmyzsh.sh
-      args:
-        creates: "{{ ansible_facts['user_dir'] }}/.oh-my-zsh"

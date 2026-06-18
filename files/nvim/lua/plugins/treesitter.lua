@@ -14,6 +14,7 @@ return {
         "json",
         "html",
         "python",
+        "scala",
         "clojure",
         "javascript",
         "embedded_template",

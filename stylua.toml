@@ -1,10 +1,3 @@
-# Stylua configuration for the .dotfiles repository.
-# Matches the existing Lua style across files/nvim/ (Neovim config) and
-# systems/ (the Lua CLI): 2-space indentation, double quotes, call parentheses.
-# Resolved via --search-parent-directories, so it applies to every .lua file
-# in the repo (Neovim is opened through the ~/.config/nvim symlink, which nvim
-# resolves back to this repo).
-
 column_width = 120
 line_endings = "Unix"
 indent_type = "Spaces"

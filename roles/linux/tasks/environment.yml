@@ -1,15 +1,15 @@
 ---
 - name: Set Ghostty Symlink
   ansible.builtin.file:
-    src: "/{{ ansible_facts['user_dir'] }}/.dotfiles/files/ghostty/linux"
-    dest: "/{{ ansible_facts['user_dir'] }}/.config/ghostty/config"
+    src: "{{ ansible_facts['user_dir'] }}/.dotfiles/files/ghostty/linux"
+    dest: "{{ ansible_facts['user_dir'] }}/.config/ghostty/config"
     state: link
     force: true
 
 - name: Set Linux Symlink
   ansible.builtin.file:
-    src: "/{{ ansible_facts['user_dir'] }}/.dotfiles/files/{{ item }}"
-    dest: "/{{ ansible_facts['user_dir'] }}/{{ item }}"
+    src: "{{ ansible_facts['user_dir'] }}/.dotfiles/files/{{ item }}"
+    dest: "{{ ansible_facts['user_dir'] }}/{{ item }}"
     state: link
     force: true
   loop:
@@ -18,8 +18,8 @@
 
 - name: Set Claude Configuration Symlink
   ansible.builtin.file:
-    src: "/{{ ansible_facts['user_dir'] }}/.dotfiles/systems/linux.md"
-    dest: "/{{ ansible_facts['user_dir'] }}/.claude/CLAUDE.md"
+    src: "{{ ansible_facts['user_dir'] }}/.dotfiles/systems/linux.md"
+    dest: "{{ ansible_facts['user_dir'] }}/.claude/CLAUDE.md"
     state: link
     force: true
   notify: event_reload_zsh_files
