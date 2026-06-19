@@ -103,3 +103,9 @@ alias __data-quality-custom-checks='cd "$HOME/dev/nu/data-quality-custom-checks"
 
 alias _lending-claude-workspace='cd "$HOME/dev/nu/lending-claude-workspace" && claude'
 alias __lending-claude-workspace='cd "$HOME/dev/nu/lending-claude-workspace" && nvim .'
+
+alias _optimus-prime='cd "$HOME/dev/nu/optimus-prime" && claude'
+alias __optimus-prime='cd "$HOME/dev/nu/optimus-prime" && nvim .'
+
+alias _solar-wind='cd "$HOME/dev/nu/solar-wind" && claude'
+alias __solar-wind='cd "$HOME/dev/nu/solar-wind" && nvim .'
