@@ -24,4 +24,21 @@ function M.scala()
   shell { "coursier", "install", "metals", "--install-dir", dir }
 end
 
+function M.clojure()
+  local dir = "~/.local/bin"
+
+  shell { "coursier", "java", "--jvm", "temurin:17", "--setup" }
+  shell {
+    "curl",
+    "-s",
+    "https://raw.githubusercontent.com/clojure-lsp/clojure-lsp/master/install",
+    "|",
+    "bash",
+    "-s",
+    "--",
+    "--dir",
+    dir,
+  }
+end
+
 return M

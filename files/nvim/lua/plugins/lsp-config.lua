@@ -45,6 +45,7 @@ return {
       vim.lsp.enable("jsonls")
       vim.lsp.enable("tofu_ls")
       vim.lsp.enable("ansiblels")
+      vim.lsp.enable("clojure_lsp")
 
       vim.lsp.config("ruff", {
         root_markers = { "pyproject.toml", ".git" },

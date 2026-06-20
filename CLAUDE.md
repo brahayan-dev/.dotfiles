@@ -11,8 +11,8 @@ Multi-environment dotfiles repository with a Lua CLI layer on top of Ansible. De
 Three environments auto-detected by the `workstation` entry script:
 
 - **work** (macOS, triggered by `~/.nurc` existing) — Clojure toolchain, Nu infrastructure
-- **life** (macOS, default) — Personal dev: SSH, git, API tokens, claude-code cask
-- **linux** (pacman-based Linux) — Similar to life with Linux-specific packages
+- **life** (macOS, default) — Personal dev: SSH, git, API tokens, claude-code cask, ClojureScript
+- **linux** (pacman-based Linux) — Similar to life with Linux-specific packages, ClojureScript
 
 ### Entry Point
 
@@ -56,7 +56,7 @@ Playbooks run against `localhost` via `hosts.ini`. Vault and become passwords st
 
 Plugin manager: lazy.nvim. Leader: Space, local leader: comma. Config split across `init.lua` → `settings.lua` + `keymaps.lua` + `plugins/`. Each plugin is a separate file returning a lazy spec table.
 
-LSP uses the new `vim.lsp.config`/`vim.lsp.enable` API (not the old `lspconfig.setup`), plus nvim-metals for Scala. Configured LSPs: basedpyright, ruff, lua_ls, sqls, ts_ls, yamlls, bashls, jsonls, tofu_ls, ansiblels, Metals. Formatting is handled by conform.nvim (ruff_format for Python, stylua for Lua, LSP fallback for others). LSP provides diagnostics and code actions. Python and Scala organize imports on save.
+LSP uses the new `vim.lsp.config`/`vim.lsp.enable` API (not the old `lspconfig.setup`), plus nvim-metals for Scala. Configured LSPs: basedpyright, ruff, lua_ls, sqls, ts_ls, yamlls, bashls, jsonls, tofu_ls, ansiblels, clojure_lsp, Metals. Formatting is handled by conform.nvim (ruff_format for Python, stylua for Lua, cljfmt for Clojure, LSP fallback for others). LSP provides diagnostics and code actions. Python and Scala organize imports on save.
 
 Treesitter parsers: lua, sql, css, bash, yaml, json, html, python, scala, clojure, javascript, embedded_template. Completion via nvim-cmp with LuaSnip and cmp-nvim-lsp. Copilot integration via copilot.lua.
 

@@ -65,13 +65,13 @@ Three environments, partitioned by host signal:
 
               ┌─────────┐
               │  life   │   macOS · default
-              ├─────────┤   Python · Lua · Scala · Neovim · Claude Code
+              ├─────────┤   Python · Lua · Scala · Clojure · Neovim · Claude Code
               │         │
               └─────────┘
 
               ┌─────────┐
               │  linux  │   Linux · pacman detected
-              ├─────────┤   Python · Lua · Scala · Neovim · Claude Code
+              ├─────────┤   Python · Lua · Scala · Clojure · Neovim · Claude Code
               │         │
               └─────────┘
 ```
@@ -79,7 +79,7 @@ Three environments, partitioned by host signal:
 Intersection ─ what every vertex inherits:
 
 ```
-   work ∩ life ∩ linux  =  { Neovim, Claude Code, Scala, zsh, ~/.config }
+   work ∩ life ∩ linux  =  { Neovim, Claude Code, Scala, Clojure, zsh, ~/.config }
 ```
 
 ---

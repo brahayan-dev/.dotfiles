@@ -5,6 +5,7 @@ npm_global_packages:
   - typescript
   - http-server
   - js-beautify
+  - shadow-cljs
   - bash-language-server
   - yaml-language-server
   - typescript-language-server
@@ -13,3 +14,4 @@ npm_global_packages:
   - "@ansible/ansible-language-server"
 
 git_user_email: "bxsr@proton.me"
+
