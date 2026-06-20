@@ -27,7 +27,7 @@ end
 function M.clojure()
   local dir = "~/.local/bin"
 
-  shell { "coursier", "java", "--jvm", "temurin:17", "--setup" }
+  shell { "coursier", "java", "--jvm", "temurin:21", "--setup" }
   shell {
     "curl",
     "-s",

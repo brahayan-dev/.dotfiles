@@ -27,10 +27,16 @@ zsource() {
 # Alias
 # ------
 alias lg='lazygit'
+alias setup='cd "$HOME/.dotfiles/" && ./workstation setup'
+
+# NOTE: Repository
+alias _kiln='cd "$HOME/Projects/kiln/"'
+alias __kiln='cd "$HOME/Projects/kiln/" && nvim .'
 
 # ---------
 # Settings
 # ---------
+source ~/.zprofile
 # NOTE: Workstation CLI
 export PATH="$HOME/.dotfiles/:$PATH"
 # NOTE: Editor
@@ -49,10 +55,3 @@ if [[ "$(uname -a)" =~ Darwin ]]; then
     export CPPFLAGS="-I$LUA_DIR/include"
     export PKG_CONFIG_PATH="$LUA_DIR/lib/pkgconfig"
 fi
-
-alias setup='cd "$HOME/.dotfiles/" && ./workstation setup'
-
-# NOTE: Repository
-alias _kiln='cd "$HOME/Projects/kiln/"'
-alias __kiln='cd "$HOME/Projects/kiln/" && nvim .'
-
