@@ -37,21 +37,21 @@ return {
         },
       })
 
-      vim.lsp.enable("sqls")
-      vim.lsp.enable("ts_ls")
-      vim.lsp.enable("lua_ls")
-      vim.lsp.enable("yamlls")
-      vim.lsp.enable("bashls")
-      vim.lsp.enable("jsonls")
-      vim.lsp.enable("tofu_ls")
-      vim.lsp.enable("ansiblels")
-      vim.lsp.enable("clojure_lsp")
+      vim.lsp.config("clojure_lsp", {
+        root_dir = function(bufnr, on_dir)
+          local util = require("lspconfig.util")
+          local pattern = vim.api.nvim_buf_get_name(bufnr)
+          local fallback = vim.loop.cwd()
+          local patterns = { "project.clj", "deps.edn", "shadow-cljs.edn", ".git", "bb.edn" }
+          local root = util.root_pattern(patterns)(pattern)
+
+          return on_dir((root or fallback))
+        end,
+      })
 
       vim.lsp.config("ruff", {
         root_markers = { "pyproject.toml", ".git" },
       })
-
-      vim.lsp.enable("ruff")
 
       vim.lsp.config("basedpyright", {
         root_markers = { "pyproject.toml", ".git" },
@@ -66,6 +66,16 @@ return {
         },
       })
 
+      vim.lsp.enable("sqls")
+      vim.lsp.enable("ruff")
+      vim.lsp.enable("ts_ls")
+      vim.lsp.enable("lua_ls")
+      vim.lsp.enable("yamlls")
+      vim.lsp.enable("bashls")
+      vim.lsp.enable("jsonls")
+      vim.lsp.enable("tofu_ls")
+      vim.lsp.enable("ansiblels")
+      vim.lsp.enable("clojure_lsp")
       vim.lsp.enable("basedpyright")
 
       require("keymaps").lsp()
