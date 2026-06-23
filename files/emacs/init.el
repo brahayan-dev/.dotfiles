@@ -53,8 +53,8 @@
 (setq frame-resize-pixelwise t)
 
 ;; Transparency — 85% opaque background.
-(set-frame-parameter (selected-frame) 'alpha-background 60)
-(add-to-list 'default-frame-alist '(alpha-background . 60))
+(set-frame-parameter (selected-frame) 'alpha '(85 60))
+(add-to-list 'default-frame-alist '(alpha . (85 60)))
 
 ;; -----
 ;; Editing
