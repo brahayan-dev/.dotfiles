@@ -17,7 +17,7 @@
 - name: Add SSH Key To Agent (macOS)
   shell: |
     eval "$(ssh-agent -s)"
-    ssh-add --apple-use-keychain "{{ ansible_facts['user_dir'] }}/.ssh/{{ ansible_facts['user_id'] }}_rsa"
+    /usr/bin/ssh-add --apple-use-keychain "{{ ansible_facts['user_dir'] }}/.ssh/{{ ansible_facts['user_id'] }}_rsa"
   when:
     - "'ansible-generated' not in ssh_keys_added.stdout"
     - "ansible_facts['os_family'] == 'Darwin'"

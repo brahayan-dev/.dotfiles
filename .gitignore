@@ -1,3 +1,19 @@
 **/.vault_
 **/.become_
 **/.private_profile
+
+# Emacs runtime/compilation artifacts.
+# files/emacs/ is checked in for our config (init.el, early-init.el),
+# but Emacs writes a lot of derived state alongside it.
+files/emacs/eln-cache/
+files/emacs/elpa/
+files/emacs/auto-save/
+files/emacs/auto-save-list/
+files/emacs/history
+files/emacs/places.eld
+files/emacs/recentf
+files/emacs/tramp
+files/emacs/.emacs-config-migrate.el
+
+# Neovim plugin lockfile — regenerated on every plugin update.
+/files/nvim/lazy-lock.json
