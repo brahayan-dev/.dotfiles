@@ -11,7 +11,10 @@
 ;; -----
 
 (setq-default line-number-mode t)
+
+;; Relative line numbers in the buffer's left margin.
 (setq-default display-line-numbers-type 'relative)
+(global-display-line-numbers-mode 1)
 
 ;; Disable startup splash and message.
 (setq inhibit-startup-screen t)
@@ -50,8 +53,8 @@
 (setq frame-resize-pixelwise t)
 
 ;; Transparency — 85% opaque background.
-(set-frame-parameter (selected-frame) 'alpha-background 85)
-(add-to-list 'default-frame-alist '(alpha-background . 85))
+(set-frame-parameter (selected-frame) 'alpha-background 60)
+(add-to-list 'default-frame-alist '(alpha-background . 60))
 
 ;; -----
 ;; Editing
@@ -173,7 +176,7 @@
 (use-package ef-themes
   :demand t
   :config
-  (ef-themes-load-random))
+  (load-theme 'ef-bio t))
 
 ;; -----
 ;; Completion
@@ -545,7 +548,19 @@
 (use-package vterm
   :commands (vterm)
   :custom
-  (vterm-max-scrollback 100000))
+  (vterm-max-scrollback 100000)
+  :config
+  ;; vterm doesn't bind the mouse wheel, so it falls through to the
+  ;; global handler — pixel-scroll-precision-mode — which fights vterm's
+  ;; redraws and makes the wheel feel stuck. Bind the wheel locally to
+  ;; plain line scrolling through the scrollback; the local binding wins
+  ;; over the global pixel-scroll one.
+  (dolist (ev '([wheel-up] [double-wheel-up] [triple-wheel-up]))
+    (define-key vterm-mode-map ev
+                (lambda () (interactive) (scroll-down 3))))
+  (dolist (ev '([wheel-down] [double-wheel-down] [triple-wheel-down]))
+    (define-key vterm-mode-map ev
+                (lambda () (interactive) (scroll-up 3)))))
 
 ;; -----
 ;; MCP
