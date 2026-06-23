@@ -36,6 +36,7 @@
       - ttf-fira-code
       - lua-language-server
       - clojure
+      - emacs
     state: latest
     update_cache: true
   notify:

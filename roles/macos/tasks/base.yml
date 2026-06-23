@@ -6,6 +6,7 @@
   loop:
     - clojure/tools
     - weavejester/brew
+    - d12frosted/emacs-plus
 
 - name: Trust Non-Official Brew Taps
   ansible.builtin.command: "brew trust --tap {{ item }}"
@@ -13,6 +14,7 @@
   loop:
     - clojure/tools
     - weavejester/brew
+    - d12frosted/emacs-plus
 
 - name: Install Dependencies
   community.general.homebrew:
@@ -40,10 +42,11 @@
       - readline
       - openssl@3
       - shellcheck
-      - font-fira-code
       - cljfmt
       - clojure
       - coursier
+      - emacs-plus@32
+      - font-fira-code
     state: latest
   notify:
     - event_download_ohmyzsh

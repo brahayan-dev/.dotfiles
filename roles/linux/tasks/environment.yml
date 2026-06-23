@@ -16,6 +16,24 @@
     - .linux_profile
   notify: event_reload_zsh_files
 
+- name: Remove Previous Emacs Config
+  ansible.builtin.file:
+    path: "{{ ansible_facts['user_dir'] }}/.config/emacs"
+    state: absent
+
+- name: Remove Stale Doom Symlink
+  ansible.builtin.file:
+    path: "{{ ansible_facts['user_dir'] }}/.config/doom"
+    state: absent
+
+- name: Set Emacs Symlink
+  ansible.builtin.file:
+    src: "{{ ansible_facts['user_dir'] }}/.dotfiles/files/emacs"
+    dest: "{{ ansible_facts['user_dir'] }}/.config/emacs"
+    state: link
+    force: true
+  notify: event_reload_zsh_files
+
 - name: Set Claude Configuration Symlink
   ansible.builtin.file:
     src: "{{ ansible_facts['user_dir'] }}/.dotfiles/systems/linux.md"

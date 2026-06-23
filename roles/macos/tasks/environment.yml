@@ -5,3 +5,24 @@
     dest: "{{ ansible_facts['user_dir'] }}/.config/ghostty/config"
     state: link
     force: true
+
+- name: Remove Previous Emacs Config
+  ansible.builtin.file:
+    path: "{{ ansible_facts['user_dir'] }}/.config/emacs"
+    state: absent
+
+- name: Remove Stale Doom Symlink
+  ansible.builtin.file:
+    path: "{{ ansible_facts['user_dir'] }}/.config/doom"
+    state: absent
+
+- name: Set Emacs Symlinks
+  ansible.builtin.file:
+    src: "{{ ansible_facts['user_dir'] }}/.dotfiles/files/{{ item }}"
+    dest: "{{ ansible_facts['user_dir'] }}/.config/{{ item }}"
+    state: link
+    force: true
+  loop:
+    - emacs
+    - emacs-plus
+  notify: event_reload_zsh_files

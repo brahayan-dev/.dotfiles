@@ -46,7 +46,7 @@ The `workstation` script bootstraps ansible+lua, then delegates to `systems/<env
 - `systems/library/language.lua` — Language toolchain installers
 - `systems/library/work.lua` — Work-specific `refresh` command for Nu infrastructure
 - `roles/` — Ansible roles: common (all), macos (brew), work, life, linux
-- `files/` — Managed dotfiles: nvim, ghostty, profiles (.life_profile, .linux_profile, .work_profile), .zshrc, .zprofile
+- `files/` — Managed dotfiles: nvim, ghostty, emacs, emacs-plus (macOS-only icon), profiles (.life_profile, .linux_profile, .work_profile), .zshrc, .zprofile
 
 ### Ansible
 

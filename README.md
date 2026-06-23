@@ -147,7 +147,7 @@ Usage:
    │   └── linux/                  pacman
    │
    └── files/                      ◀── managed dotfiles (symlinked)
-       ├── nvim/        ghostty/
+       ├── nvim/        ghostty/     emacs/       emacs-plus/
        └── .zshrc       .zprofile    .life_profile    .linux_profile
 ```
 
