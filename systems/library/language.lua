@@ -54,12 +54,15 @@ function M.emacs()
 
   local packages = {
     "ef-themes", "corfu", "cape", "vertico", "marginalia", "orderless",
-    "paredit", "avy", "projectile",
+    "paredit", "avy", "projectile", "which-key", "xah-fly-keys",
+    "rainbow-delimiters", "aggressive-indent", "consult",
     "clojure-mode", "cider",
-    "geiser", "geiser-guile",
+    "clj-refactor", "flycheck-clj-kondo", "sesman",
+    "geiser", "geiser-guile", "macrostep", "macrostep-geiser",
     "flycheck",
     "markdown-mode", "yaml-mode", "sql-indent", "web-mode",
-    "magit", "forge", "vterm", "mcp",
+    "magit", "vterm",
+    "exec-path-from-shell",
   }
 
   -- Write Elisp to a temp file; shell() doesn't escape parens.
