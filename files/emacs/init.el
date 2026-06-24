@@ -1,6 +1,6 @@
-;;; init.el --- User Emacs configuration
+;;; init.el --- User Emacs configuration. -*- lexical-binding: t; -*-
 
-;; Author: brahayan-dev
+;; Author: Brahayan Xavier
 ;; Commentary: Minimal vanilla Emacs configuration. Managed by Ansible
 ;; via symlink from ~/.dotfiles/files/emacs/.
 
@@ -11,9 +11,6 @@
 ;; -----
 
 (setq-default line-number-mode t)
-
-;; Relative line numbers in the buffer's left margin.
-(setq-default display-line-numbers-type 'relative)
 (global-display-line-numbers-mode 1)
 
 ;; Disable startup splash and message.
@@ -115,12 +112,12 @@
 ;; -----
 
 ;; Keep auto-save files in one directory instead of next to originals.
-(defvar my-auto-save-directory
+(defvar auto-save-directory
   (expand-file-name "auto-save/" user-emacs-directory)
   "Directory where auto-save files are stored.")
-(make-directory my-auto-save-directory t)
+(make-directory auto-save-directory t)
 (setq auto-save-file-name-transforms
-      `((".*" ,my-auto-save-directory t)))
+      `((".*" ,auto-save-directory t)))
 
 ;; -----
 ;; Native compilation
@@ -132,7 +129,10 @@
            (native-comp-available-p))
   (setq native-comp-async-report-warnings-errors nil)
   (setq native-comp-jit-compilation t)
-  (setq package-native-compile t))
+  ;; Disabled — was making startup hang for minutes while Emacs
+  ;; recompiled MELPA packages to .eln on the main thread.
+  ;; Native-compiled packages from eln-cache/ still load fine.
+  (setq package-native-compile nil))
 
 ;; -----
 ;; Packages
@@ -140,8 +140,8 @@
 
 (require 'package)
 (setq package-archives
-      '(("melpa"  . "https://melpa.org/packages/")
-        ("gnu"    . "https://elpa.gnu.org/packages/")
+      '(("melpa" . "https://melpa.org/packages/")
+        ("gnu" . "https://elpa.gnu.org/packages/")
         ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
 
 ;; use-package is built-in on Emacs 29+. Always install declared packages.
@@ -149,30 +149,9 @@
 (setq use-package-always-ensure t)
 
 ;; -----
-;; Environment
-;; -----
-
-;; GUI Emacs (especially on macOS) doesn't inherit the shell's
-;; environment. Import the variables our dev tooling relies on. Only
-;; runs under a GUI or daemon; a terminal Emacs already has the shell
-;; environment.
-(use-package exec-path-from-shell
-  :if (or (daemonp) (display-graphic-p))
-  :config
-  (setq exec-path-from-shell-variables
-        '("PATH" "MANPATH"
-          "JAVA_HOME" "METALS_JAVA_OPTS" "METALS_JDK_PATH"
-          "SPARK_HOME"
-          "NU_HOME" "NUCLI_HOME" "NU_COUNTRY"))
-  (exec-path-from-shell-initialize))
-
-;; -----
 ;; Theme
 ;; -----
 
-;; ef-themes: colorful yet legible light/dark themes. Loads a random
-;; one on startup. To pin a specific theme instead, replace the
-;; `:config' line with e.g. (load-theme 'ef-dark t).
 (use-package ef-themes
   :demand t
   :config
@@ -242,7 +221,6 @@
          (clojurescript-mode . paredit-mode)
          (clojurec-mode . paredit-mode)
          (emacs-lisp-mode . paredit-mode)
-         (lisp-mode . paredit-mode)
          (scheme-mode . paredit-mode)))
 
 ;; -----
@@ -274,44 +252,15 @@
          ("\\.cljs\\'" . clojurescript-mode)
          ("\\.cljc\\'" . clojurec-mode))
   :config
-  (add-hook 'clojure-mode-hook #'subword-mode)
-  (define-clojure-indent
-   (assoc 1)
-   (match? 0)
-   (time! 1)
-   (fdef 1)
-   ;; cljs.test
-   (async 1)
-   ;; ClojureScript
-   (this-as 1)
-   ;; Compojure
-   (ANY 2)
-   (DELETE 2)
-   (GET 2)
-   (HEAD 2)
-   (POST 2)
-   (PUT 2)
-   (context 2)
-   (defroutes 'defun)
-   ;; algo.monads
-   (domonad 1)
-   ;; Om.next
-   (defui '(1 nil nil (1)))))
-
-(use-package clojure-mode-extra-font-locking
-  :after clojure-mode)
+  (add-hook 'clojure-mode-hook #'subword-mode))
 
 (use-package cider
   :commands (cider-jack-in cider-jack-in-clojurescript)
   :config
-  ;; Enable eldoc in Clojure buffers.
-  (add-hook 'cider-mode-hook #'eldoc-mode)
   ;; Pretty print in the REPL.
   (setq cider-repl-use-pretty-printing t)
   ;; Auto-download source artifacts for 3rd-party Java classes.
   (setq cider-download-java-sources t)
-  ;; CamelCase-aware editing in the REPL (handy for Java names).
-  (add-hook 'cider-repl-mode-hook #'subword-mode)
   ;; Auto-select the error buffer when displayed.
   (setq cider-auto-select-error-buffer t)
   ;; Don't pop to the REPL buffer on connect.
@@ -320,35 +269,6 @@
   (setq cider-repl-wrap-history t)
   ;; Don't show the test report buffer on passing tests.
   (setq cider-test-report-on-success nil))
-
-(use-package clj-refactor
-  :hook ((clojure-mode . clj-refactor-mode))
-  :config
-  (cljr-add-keybindings-with-prefix "C-c C-R")
-  ;; No newline after the `:require`/`:import` tokens.
-  (setq cljr-insert-newline-after-require nil)
-  ;; Don't use prefix notation when cleaning the ns form.
-  (setq cljr-favor-prefix-notation nil)
-  ;; Don't warn when running an AST op.
-  (setq cljr-warn-on-eval nil)
-  ;; Don't build ASTs on startup.
-  (setq cljr-eagerly-build-asts-on-startup nil))
-
-;; Insert a Clojure UUID tagged literal, e.g. #uuid "1111...-...".
-(defun insert-clj-uuid (n)
-  "Insert a Clojure UUID tagged literal padded with digit N (0-9)."
-  (interactive "P")
-  (let ((n (or n 1)))
-    (if (or (< n 0) (> n 9))
-        (error "Argument N must be between 0 and 9"))
-    (let ((n (string-to-char (number-to-string n))))
-      (insert
-       (format "#uuid \"%s-%s-%s-%s-%s\""
-               (make-string 8 n)
-               (make-string 4 n)
-               (make-string 4 n)
-               (make-string 4 n)
-               (make-string 12 n))))))
 
 ;; -----
 ;; Nubank
@@ -399,23 +319,10 @@
 ;; Emacs Lisp
 ;; -----
 
-;; Documentation for the symbol at point in the echo area.
-(use-package eldoc
-  :ensure nil
-  :hook ((emacs-lisp-mode . eldoc-mode)
-         (lisp-interaction-mode . eldoc-mode)
-         (scheme-mode . eldoc-mode)))
-
 ;; Render lambda and friends as pretty symbols.
 (use-package prog-mode
   :ensure nil
   :hook (emacs-lisp-mode . prettify-symbols-mode))
-
-;; Slime-style navigation: M-. jumps to a symbol's definition,
-;; M-, jumps back.
-(use-package elisp-slime-nav
-  :hook ((emacs-lisp-mode . elisp-slime-nav-mode)
-         (lisp-interaction-mode . elisp-slime-nav-mode)))
 
 ;; -----
 ;; LSP (Eglot)
@@ -534,8 +441,6 @@
   (setq magit-revision-insert-related-refs nil)
   (setq magit-diff-refine-hunk t))
 
-;; Work with GitHub/GitLab issues and pull requests from Magit.
-;; Needs a forge token in auth-source (~/.authinfo).
 (use-package forge
   :after magit
   :commands (forge-pull))
@@ -575,27 +480,14 @@
 ;; Warnings
 ;; -----
 
-;; Suppress the *Warnings* popup for low-severity messages. This is
-;; aggressive (:emergency hides almost everything); raise to :error if
-;; you want to see byte-compile / native-comp warnings.
+;; Surface warnings during diagnosis — :emergency was hiding real
+;; failures (flycheck/flymake crashes, package load errors) behind
+;; "Emacs appears hung". Keep at :warning; lower to :emergency once
+;; the config is known clean.
 (use-package warnings
   :ensure nil
   :custom
-  (warning-minimum-level :emergency))
-
-;; -----
-;; Server
-;; -----
-
-;; Run an Emacs server so `emacsclient' can open files in this running
-;; instance (set EDITOR=emacsclient to use it for git, etc.).
-(use-package server
-  :ensure nil
-  :if window-system
-  :defer 1
-  :config
-  (unless (server-running-p)
-    (server-start)))
+  (warning-minimum-level :warning))
 
 ;; -----
 ;; After init hook
@@ -615,7 +507,6 @@
    ;; Load system specific config.
    (load-if-exists (concat user-emacs-directory system-name ".el"))
    ;; Personal keybindings (placeholder — to be customized).
-   (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
    (global-set-key (kbd "C-c n") 'cleanup-buffer)
    (global-set-key (kbd "C-c r") 'rotate-buffers)))
 
