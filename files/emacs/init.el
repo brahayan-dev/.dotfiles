@@ -460,7 +460,7 @@
 ;; -----
 
 (use-package magit
-  :bind (("C-x C-g s" . magit-status))
+  :bind (("C-x C-g" . magit-status))
   :config
   (setq magit-stage-all-confirm nil
         magit-unstage-all-confirm nil
