@@ -189,7 +189,7 @@
 ;; -----
 
 ;; Defaults kept: C-s save, C-z undo, C-w close; meta key off (preserves
-;; M-j avy); C-x namespace intact. Register the leader with which-key.
+;; M-j avy); C-x and C-c namespaces are intact. Register the leader with which-key.
 (use-package xah-fly-keys
   :demand t
   :config
@@ -212,8 +212,6 @@
          :map isearch-mode-map
          ("C-'" . avy-isearch)))
 
-;; consult binds live under the user-reserved C-c <letter> prefix (safe
-;; with XFK, which does not claim C-c).
 (use-package consult
   :demand t
   :bind (("C-c i" . consult-imenu)
