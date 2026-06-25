@@ -36,9 +36,9 @@ ensure_deps_macos() {
     log_info "Installing Ansible"
     brew install ansible
   fi
-  if ! have luajit; then
-    log_info "Installing LuaJIT"
-    brew install luajit
+  if ! have guile; then
+    log_info "Installing Guile (Scheme)"
+    brew install guile
   fi
 }
 
@@ -71,7 +71,7 @@ main() {
   Darwin)
     ensure_deps_macos
     if [[ -e "$HOME/.nurc" ]]; then
-      script="systems/work.lua"
+      script="systems/work.scm"
     else
       script="systems/life.lua"
     fi
@@ -86,7 +86,7 @@ main() {
     ;;
   esac
 
-  exec luajit "$script" "$@"
+  exec guile -L systems "$script" "$@"
 }
 
 main "$@"

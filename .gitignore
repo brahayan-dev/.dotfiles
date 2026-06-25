@@ -7,5 +7,8 @@ files/emacs/*
 !files/emacs/init.el
 !files/emacs/early-init.el
 
-# Neovim plugin lockfile — regenerated on every plugin update.
+# Neovim
 /files/nvim/lazy-lock.json
+
+# Emacs
+*~
