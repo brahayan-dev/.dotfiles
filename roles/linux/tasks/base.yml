@@ -20,21 +20,16 @@
       - duckdb
       - rlwrap
       - direnv
-      - stylua
       - pandoc
       - dbeaver
       - ghostty
       - ripgrep
       - lazygit
-      - luajit
-      - luarocks
       - opentofu
-      - python-pip
       - base-devel
       - github-cli
       - shellcheck
       - ttf-fira-code
-      - lua-language-server
       - clojure
       - emacs
     state: latest
@@ -73,8 +68,3 @@
   command: gzip -d {{ ansible_facts['user_dir'] }}/.local/bin/cs.gz
   args:
     creates: "{{ ansible_facts['user_dir'] }}/.local/bin/cs"
-
-- name: Install Brave
-  shell: curl -fsS https://dl.brave.com/install.sh | sh
-  args:
-    creates: "/usr/bin/brave-browser"
