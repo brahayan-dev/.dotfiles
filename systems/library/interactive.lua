@@ -62,7 +62,6 @@ local function install(package)
     python = require("systems.library.language").python,
     scala = require("systems.library.language").scala,
     clojure = require("systems.library.language").clojure,
-    emacs = require("systems.library.language").emacs,
   }
 
   (packages[package] or not_found(package))()

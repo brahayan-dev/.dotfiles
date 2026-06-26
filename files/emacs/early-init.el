@@ -22,5 +22,6 @@
 
 (setq gc-cons-threshold 64000000)
 (add-hook 'after-init-hook (lambda () (setq gc-cons-threshold 100000000)))
+(setq load-prefer-newer t)
 
 ;;; early-init.el ends here

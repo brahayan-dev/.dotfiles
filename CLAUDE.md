@@ -78,3 +78,4 @@ Ansible Vault encrypts `roles/life/vars/main.yml` and `roles/linux/vars/main.yml
 - Language installers in `language.lua` use `mise` for Python, `pip` for duckdb/basedpyright/debugpy/ruff/pytest, `luarocks` for busted, `cs` for coursier/metals/JDK
 - `systems/library/common.lua` `shell()` joins a table with spaces and calls `os.execute` — arguments with spaces need quoting
 - Use `prettier . --write` to format Markdown files, and `stylua .` for Lua, and `ruff . --fix` for Python.
+- Don't write comments, if you do write comments then it should be breif.
