@@ -303,6 +303,29 @@
   :after cider)
 
 ;; -----
+;; ECA — Editor Code Assistant
+;; -----
+
+;; Native Ollama provider. ECA talks straight to Ollama's `/api/chat'
+;; endpoint. Both cloud models you currently use via `ollama launch'
+;; are listed explicitly so ECA's model picker shows them.
+(use-package eca
+  :vc (:url "https://github.com/editor-code-assistant/eca-emacs"
+            :rev :newest
+            :files ("*.el"))
+  :hook ((eca-chat-mode . (lambda ()
+                            (when (bound-and-true-p xah-fly-mode)
+                              (xah-fly-mode -1))))
+         (eca-chat-mode-exit . (lambda ()
+                                 (when (fboundp 'xah-fly-keys)
+                                   (xah-fly-keys 1)))))
+  :custom
+  (eca-server-download-method 'curl)
+  (eca-chat-auto-add-cursor t)
+  (eca-chat-auto-add-repomap t)
+  (eca-chat-read-only-history t))
+
+;; -----
 ;; Nubank
 ;; -----
 
@@ -331,10 +354,14 @@
 
 (use-package scheme
   :ensure nil
-  :mode (("\\.scm\\'" . scheme-mode)))
+  :mode (("\\.scm\\'" . scheme-mode))
+  :hook ((scheme-mode . geiser-mode)))
 
 (use-package geiser
-  :commands (geiser run-geiser))
+  :commands (geiser run-geiser)
+  :custom
+  (geiser-mode-autodoc-p t)
+  (geiser-mode-start-repl-p nil))
 
 (use-package geiser-guile
   :after geiser
@@ -342,7 +369,16 @@
   (geiser-default-implementation 'guile)
   :config
   (setq scheme-program-name "guile"
-        geiser-repl-history-filename "~/.config/emacs/geiser-history"))
+        geiser-repl-history-filename "~/.config/emacs/geiser-history"
+        ;; One REPL per project. `project-current' returns a cons cell
+        ;; (e.g. `(projectile . "/path/")` or `(vc Git "/path/")`),
+        ;; but Geiser feeds it directly to `file-name-nondirectory'
+        ;; (geiser-repl.el:381) which expects a string — extract the
+        ;; root path first.
+        geiser-repl-per-project-p t
+        geiser-repl-current-project-function
+        (lambda () (when-let* ((proj (project-current)))
+                     (project-root proj)))))
 
 ;; Stepwise Scheme macro expansion backed by Geiser.
 (use-package macrostep-geiser

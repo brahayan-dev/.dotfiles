@@ -36,15 +36,15 @@ ensure_deps_macos() {
     log_info "Installing Ansible"
     brew install ansible
   fi
-  if ! have luajit; then
-    log_info "Installing LuaJIT"
-    brew install luajit
+  if ! have guile; then
+    log_info "Installing Guile"
+    brew install guile
   fi
 }
 
 ensure_deps_linux() {
   if have pacman; then
-    if ! have ansible || ! have luajit; then
+    if ! have ansible || ! have guile; then
       log_info "Updating Pacman Index"
       sudo pacman-mirrors --fasttrack 5 && sudo pacman -Syu
     fi
@@ -53,9 +53,9 @@ ensure_deps_linux() {
       log_info "Installing Ansible"
       sudo pacman -S ansible
     fi
-    if ! have luajit; then
-      log_info "Installing LuaJIT"
-      sudo pacman -S luajit
+    if ! have guile; then
+      log_info "Installing Guile"
+      sudo pacman -S guile
     fi
   else
     log_error "Could Not Detect Package Manager To Install Dependencies"
@@ -71,9 +71,9 @@ main() {
   Darwin)
     ensure_deps_macos
     if [[ -e "$HOME/.nurc" ]]; then
-      script="systems/work.lua"
+      script="systems/work.scm"
     else
-      script="systems/life.lua"
+      script="systems/life.scm"
     fi
     ;;
   Linux)
@@ -86,7 +86,7 @@ main() {
     ;;
   esac
 
-  exec luajit "$script" "$@"
+  exec guile -L systems "$script" "$@"
 }
 
 main "$@"
