@@ -1,5 +1,3 @@
-(define-module (library common)
-  #:export (greeting))
+(define-module (systems library common))
 
-(define (greeting)
-  (display "Hello World!"))
+(display (symbol->string 'nu))
