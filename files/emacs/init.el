@@ -6,88 +6,88 @@
 ;;; Code:
 
 ;; -----
-;; UI
+;; Built-in tweaks — UI, editing, history & files, misc
 ;; -----
 
-(setq-default line-number-mode t)
-(global-display-line-numbers-mode 1)
+(use-package emacs
+  :ensure nil
+  :init
+  ;; UI
+  (setq-default line-number-mode t)
 
-(setq inhibit-startup-screen t
-      inhibit-startup-message t
-      initial-scratch-message nil
-      use-short-answers t)
+  (setq inhibit-startup-screen t
+        inhibit-startup-message t
+        initial-scratch-message nil
+        use-short-answers t)
 
-(when (fboundp 'pixel-scroll-precision-mode)
-  (pixel-scroll-precision-mode 1))
+  (when (fboundp 'pixel-scroll-precision-mode)
+    (pixel-scroll-precision-mode 1))
 
-(menu-bar-mode 0)
-(scroll-bar-mode 0)
-(tool-bar-mode 0)
-(tooltip-mode 0)
+  (menu-bar-mode 0)
+  (scroll-bar-mode 0)
+  (tool-bar-mode 0)
+  (tooltip-mode 0)
 
-(defun current-font ()
-  "Return the Fira Code font spec string for the current system."
-  (let ((size (cond ((eq system-type 'darwin) 18)
-                    ((eq system-type 'gnu/linux) 16)
-                    (t 14))))
-    (format "Fira Code-%d" size)))
+  (defun current-font ()
+    "Return the Fira Code font spec string for the current system."
+    (let ((size (cond ((eq system-type 'darwin) 18)
+                      ((eq system-type 'gnu/linux) 16)
+                      (t 14))))
+      (format "Fira Code-%d" size)))
 
-(add-to-list 'default-frame-alist (cons 'font (current-font)))
+  (add-to-list 'default-frame-alist (cons 'font (current-font)))
 
-;; Pixel-wise resizing avoids gap glitches under tiling WMs.
-(setq frame-resize-pixelwise t)
+  ;; Pixel-wise resizing avoids gap glitches under tiling WMs.
+  (setq frame-resize-pixelwise t)
 
-;; Transparency — 85% opaque background.
-(set-frame-parameter (selected-frame) 'alpha '(85 60))
-(add-to-list 'default-frame-alist '(alpha . (85 60)))
+  ;; Transparency — 85% opaque background.
+  (set-frame-parameter (selected-frame) 'alpha '(85 60))
+  (add-to-list 'default-frame-alist '(alpha . (85 60)))
 
-;; -----
-;; Editing
-;; -----
+  ;; Editing
+  (setq-default indent-tabs-mode nil
+                tab-width 2
+                fill-column 100)
 
-(setq-default indent-tabs-mode nil
-              tab-width 2
-              fill-column 100)
+  (show-paren-mode 1)
+  (delete-selection-mode 1)
 
-(show-paren-mode 1)
-(electric-pair-mode 1)
-(electric-indent-mode 1)
-(delete-selection-mode 1)
+  ;; History & files
+  (savehist-mode 1)
+  (save-place-mode 1)
+  (recentf-mode 1)
+  (setq recentf-max-menu-items 25
+        recentf-save-file (locate-user-emacs-file "recentf"))
 
-;; -----
-;; History & files
-;; -----
+  (setq uniquify-buffer-name-style 'forward
+        uniquify-separator "/"
+        uniquify-after-kill-buffer-flag t)
 
-(savehist-mode 1)
-(save-place-mode 1)
-(recentf-mode 1)
-(setq recentf-max-menu-items 25
-      recentf-save-file (locate-user-emacs-file "recentf"))
+  ;; Misc
+  (global-auto-revert-mode 1)
+  (setq create-lockfiles nil
+        auto-revert-avoid-polling t
+        auto-revert-interval 5)
 
-(setq uniquify-buffer-name-style 'forward
-      uniquify-separator "/"
-      uniquify-after-kill-buffer-flag t)
+  (set-language-environment "UTF-8")
+  (setq locale-coding-system 'utf-8
+        default-coding-systems 'utf-8
+        terminal-coding-system 'utf-8
+        keyboard-coding-system 'utf-8
+        selection-coding-system 'utf-8)
+  (prefer-coding-system 'utf-8)
 
-;; -----
-;; Misc
-;; -----
+  (setq scroll-step 1
+        scroll-conservatively 10000
+        scroll-preserve-screen-position t)
 
-(global-auto-revert-mode 1)
-(setq create-lockfiles nil
-      auto-revert-avoid-polling t
-      auto-revert-interval 5)
+  ;; Warnings — surface during diagnosis; :emergency hides real failures.
+  (setq warning-minimum-level :warning))
 
-(set-language-environment "UTF-8")
-(setq locale-coding-system 'utf-8)
-(set-default-coding-systems 'utf-8)
-(set-terminal-coding-system 'utf-8)
-(set-keyboard-coding-system 'utf-8)
-(set-selection-coding-system 'utf-8)
-(prefer-coding-system 'utf-8)
-
-(setq scroll-step 1
-      scroll-conservatively 10000
-      scroll-preserve-screen-position t)
+(use-package prog-mode
+  :ensure nil
+  :hook ((prog-mode . display-line-numbers-mode)
+         (prog-mode . prettify-symbols-mode)))
 
 ;; -----
 ;; Auto Save
@@ -99,6 +99,22 @@
 (make-directory auto-save-directory t)
 (setq auto-save-file-name-transforms
       `((".*" ,auto-save-directory t)))
+
+;; -----
+;; Backups
+;; -----
+
+(defvar backup-directory
+  (expand-file-name "backups/" user-emacs-directory)
+  "Directory where Emacs keeps backup files.")
+(make-directory backup-directory t)
+(setq backup-directory-alist
+      `((".*" ,backup-directory t))
+      make-backup-files t
+      backup-by-copying t
+      delete-old-versions t
+      kept-new-versions 5
+      kept-old-versions 2)
 
 ;; -----
 ;; Native compilation
@@ -151,9 +167,8 @@
   :custom
   (corfu-cycle t)
   (corfu-preselect 'first)
+  (tab-always-indent 'complete)
   :hook (after-init . global-corfu-mode))
-
-(setq tab-always-indent 'complete)
 
 (use-package cape
   :after corfu
@@ -188,8 +203,9 @@
 ;; Modal editing — xah-fly-keys
 ;; -----
 
-;; Defaults kept: C-s save, C-z undo, C-w close; meta key off (preserves
-;; M-j avy); C-x and C-c namespaces are intact. Register the leader with which-key.
+;; Defaults kept: C-s save, C-z undo, C-w close.
+;; Meta key, C-x and C-c namespaces are intact.
+;; Register the leader with which-key.
 (use-package xah-fly-keys
   :demand t
   :config
@@ -207,11 +223,6 @@
 ;; Navigation
 ;; -----
 
-(use-package avy
-  :bind (("M-j" . avy-goto-char-timer)
-         :map isearch-mode-map
-         ("C-'" . avy-isearch)))
-
 (use-package consult
   :demand t
   :bind (("C-c i" . consult-imenu)
@@ -220,6 +231,12 @@
          ("C-c r" . consult-recent-file)
          ("C-c o" . consult-outline)))
 
+;; Jump to any visible position: type a char, then the overlay label.
+(use-package avy
+  :bind (("M-j" . avy-goto-char-timer)
+         :map isearch-mode-map
+         ("C-'" . avy-isearch)))
+
 ;; -----
 ;; Structural editing (Lisps)
 ;; -----
@@ -227,14 +244,10 @@
 (use-package paredit
   ;; Unbind RET so it doesn't break eval in the CIDER REPL.
   :bind (:map paredit-mode-map ("RET" . nil))
-  :hook ((cider-repl-mode . paredit-mode)
-         (clojure-mode . paredit-mode)
-         (clojurescript-mode . paredit-mode)
-         (clojurec-mode . paredit-mode)
-         (emacs-lisp-mode . paredit-mode)
+  :hook ((clojure-mode . paredit-mode)
          (lisp-mode . paredit-mode)
-         (lisp-data-mode . paredit-mode)
          (scheme-mode . paredit-mode)
+         (cider-repl-mode . paredit-mode)
          (geiser-repl-mode . paredit-mode)
          (inferior-scheme-mode . paredit-mode)))
 
@@ -243,13 +256,10 @@
 
 ;; Keep indentation always correct — only in Lisps where it's a win.
 (use-package aggressive-indent
-  :hook ((emacs-lisp-mode . aggressive-indent-mode)
-         (lisp-mode . aggressive-indent-mode)
+  :hook ((lisp-mode . aggressive-indent-mode)
          (lisp-data-mode . aggressive-indent-mode)
          (scheme-mode . aggressive-indent-mode)
-         (clojure-mode . aggressive-indent-mode)
-         (clojurescript-mode . aggressive-indent-mode)
-         (clojurec-mode . aggressive-indent-mode)))
+         (clojure-mode . aggressive-indent-mode)))
 
 ;; -----
 ;; Project
@@ -265,9 +275,6 @@
 ;; -----
 
 (use-package clojure-mode
-  :mode (("\\.edn\\'" . clojure-mode)
-         ("\\.cljs\\'" . clojurescript-mode)
-         ("\\.cljc\\'" . clojurec-mode))
   :config
   (add-hook 'clojure-mode-hook #'subword-mode))
 
@@ -281,23 +288,42 @@
         cider-repl-wrap-history t
         cider-test-report-on-success nil))
 
-(use-package clj-refactor
-  :hook (clojure-mode . clj-refactor-mode)
-  :config
-  (cljr-add-keybindings-with-modifier "C-c"))
+;; clj-refactor removed — `C-c C-t', `C-c C-n', `C-c C-r' etc. are now
+;; free for ECA chat bindings, and the package is no longer pulled.
 
 ;; clj-kondo linter. Loading the package registers clj-kondo-clj/cljs/cljc/edn
 ;; flycheck checkers (auto-selected per major mode). Requires the `clj-kondo'
 ;; binary on PATH (`cs install clj-kondo' or `brew install clj-kondo').
 (use-package flycheck-clj-kondo
-  :after flycheck
-  :config
-  (require 'flycheck-clj-kondo))
+  :after flycheck)
 
 ;; CIDER auto-integrates with sesman once installed (registers its
 ;; session system + menu). Declaring it just ensures it's present.
 (use-package sesman
   :after cider)
+
+;; -----
+;; ECA — Editor Code Assistant
+;; -----
+
+;; Native Ollama provider. ECA talks straight to Ollama's `/api/chat'
+;; endpoint. Both cloud models you currently use via `ollama launch'
+;; are listed explicitly so ECA's model picker shows them.
+(use-package eca
+  :vc (:url "https://github.com/editor-code-assistant/eca-emacs"
+            :rev :newest
+            :files ("*.el"))
+  :hook ((eca-chat-mode . (lambda ()
+                            (when (bound-and-true-p xah-fly-mode)
+                              (xah-fly-mode -1))))
+         (eca-chat-mode-exit . (lambda ()
+                                 (when (fboundp 'xah-fly-keys)
+                                   (xah-fly-keys 1)))))
+  :custom
+  (eca-server-download-method 'curl)
+  (eca-chat-auto-add-cursor t)
+  (eca-chat-auto-add-repomap t)
+  (eca-chat-read-only-history t))
 
 ;; -----
 ;; Nubank
@@ -329,54 +355,43 @@
 (use-package scheme
   :ensure nil
   :mode (("\\.scm\\'" . scheme-mode))
-  :custom
-  (scheme-program-name "guile"))
+  :hook ((scheme-mode . geiser-mode)))
 
 (use-package geiser
-  :commands (geiser run-geiser))
+  :commands (geiser run-geiser)
+  :custom
+  (geiser-mode-autodoc-p t)
+  (geiser-mode-start-repl-p nil))
 
 (use-package geiser-guile
   :after geiser
   :custom
-  (geiser-default-implementation 'guile))
+  (geiser-default-implementation 'guile)
+  :config
+  (setq scheme-program-name "guile"
+        geiser-repl-history-filename "~/.config/emacs/geiser-history"
+        ;; One REPL per project. `project-current' returns a cons cell
+        ;; (e.g. `(projectile . "/path/")` or `(vc Git "/path/")`),
+        ;; but Geiser feeds it directly to `file-name-nondirectory'
+        ;; (geiser-repl.el:381) which expects a string — extract the
+        ;; root path first.
+        geiser-repl-per-project-p t
+        geiser-repl-current-project-function
+        (lambda () (when-let* ((proj (project-current)))
+                     (project-root proj)))))
 
 ;; Stepwise Scheme macro expansion backed by Geiser.
 (use-package macrostep-geiser
   :hook ((geiser-mode . macrostep-geiser-setup)
          (geiser-repl-mode . macrostep-geiser-setup)))
 
-;; -----
-;; Emacs Lisp
-;; -----
-
-(use-package prog-mode
-  :ensure nil
-  :hook ((emacs-lisp-mode . prettify-symbols-mode)
-         (scheme-mode . prettify-symbols-mode)))
-
 (use-package macrostep
   :bind (:map emacs-lisp-mode-map ("C-c e" . macrostep-expand)))
-
-;; -----
-;; LSP (Eglot)
-;; -----
-
-;; Clojure goes through CIDER; Eglot drives the rest (Scala via Metals).
-;; Use `M-x eglot' to start it manually elsewhere.
-(use-package eglot
-  :ensure nil
-  :hook (scala-mode . eglot-ensure)
-  :custom
-  (eglot-connect-timeout 120)
-  (eglot-extend-to-xref t)
-  :config
-  (add-to-list 'eglot-server-programs '(scala-mode "metals")))
 
 ;; -----
 ;; Flycheck
 ;; -----
 
-;; Eglot reports LSP diagnostics via Flymake, not Flycheck.
 (use-package flycheck
   :hook (after-init . global-flycheck-mode))
 
@@ -386,7 +401,6 @@
 
 (use-package css-mode
   :ensure nil
-  :mode ("\\.css\\'" . css-mode)
   :custom
   (css-indent-offset 2))
 
@@ -396,7 +410,6 @@
 
 (use-package js
   :ensure nil
-  :mode ("\\.js\\'" . js-mode)
   :custom
   (js-indent-level 2))
 
@@ -423,8 +436,7 @@
 ;; -----
 
 (use-package sql
-  :ensure nil
-  :mode ("\\.sql\\'" . sql-mode))
+  :ensure nil)
 
 (use-package sql-indent
   :hook (sql-mode . sqlind-minor-mode))
@@ -460,18 +472,15 @@
 (use-package magit
   :bind (("C-x C-g" . magit-status))
   :config
-  (setq magit-stage-all-confirm nil
-        magit-unstage-all-confirm nil
-        ediff-window-setup-function 'ediff-setup-windows-plain
-        magit-revision-insert-related-refs nil
+  (setq magit-revision-insert-related-refs nil
         magit-diff-refine-hunk t))
 
 ;; -----
 ;; Terminal
 ;; -----
 
-;; vterm compiles a native module on first use; needs cmake + libvterm.
 (use-package vterm
+  :ensure t
   :commands (vterm)
   :custom (vterm-max-scrollback 100000))
 
@@ -489,16 +498,10 @@
 ;; After init
 ;; -----
 
-(defun load-if-exists (f)
-  "Load the Emacs Lisp file F if it exists."
-  (when (file-exists-p f)
-    (load f)))
-
-(add-hook
- 'after-init-hook
- (lambda ()
-   ;; Per-system config: ~/.dotfiles/files/emacs/<system-name>.el
-   (load-if-exists (concat user-emacs-directory (system-name) ".el"))))
+;; Per-system config: ~/.dotfiles/files/emacs/<system-name>.el
+(let ((file (concat user-emacs-directory (system-name) ".el")))
+  (when (file-exists-p file)
+    (load file)))
 
 (provide 'init)
 ;;; init.el ends here

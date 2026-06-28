@@ -22,5 +22,11 @@
 
 (setq gc-cons-threshold 64000000)
 (add-hook 'after-init-hook (lambda () (setq gc-cons-threshold 100000000)))
+(setq load-prefer-newer t)
+
+;; Log async native-comp warnings instead of popping them. Some :vc
+;; packages (e.g. ECA) ship test/ dirs that require buttercup; the whole
+;; checkout gets compiled and those failures are harmless noise.
+(setq native-comp-async-report-warnings-errors 'silent)
 
 ;;; early-init.el ends here
