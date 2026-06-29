@@ -1,4 +1,5 @@
-(use-module (systems library common))
+(define-module (systems main)
+  #:use-module (systems library common))
 
 (command 'refresh 'nu
          #:alias 'refresh

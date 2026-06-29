@@ -1,3 +1,9 @@
-(define-module (systems library common))
+(define-module (systems library common)
+  #:export (command))
 
-(display (symbol->string 'nu))
+(define* (command action
+                  #:optional entity
+                  #:key (alias #f)
+                  handler
+                  environments)
+  (handler))
