@@ -109,3 +109,9 @@ alias __optimus-prime='cd "$HOME/dev/nu/optimus-prime" && nvim .'
 
 alias _solar-wind='cd "$HOME/dev/nu/solar-wind" && claude'
 alias __solar-wind='cd "$HOME/dev/nu/solar-wind" && nvim .'
+
+alias _babel='cd "$HOME/dev/nu/babel" && claude'
+alias __babel='cd "$HOME/dev/nu/babel" && nvim .'
+
+alias _two-face='cd "$HOME/dev/nu/two-face" && claude'
+alias __two-face='cd "$HOME/dev/nu/two-face" && nvim .'
