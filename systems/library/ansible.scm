@@ -2,4 +2,4 @@
   #:export (->ping))
 
 (define (->ping)
-  (system "ansible -c local -m ping"))
+  (system "ansible -c local -m ping -i systems/hosts.ini Workstation"))
