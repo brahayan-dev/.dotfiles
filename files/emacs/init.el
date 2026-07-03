@@ -12,7 +12,6 @@
 (use-package emacs
   :ensure nil
   :init
-  ;; UI
   (setq-default line-number-mode t)
 
   (setq inhibit-startup-screen t
@@ -260,15 +259,6 @@
          (lisp-data-mode . aggressive-indent-mode)
          (scheme-mode . aggressive-indent-mode)
          (clojure-mode . aggressive-indent-mode)))
-
-;; -----
-;; Project
-;; -----
-
-(use-package projectile
-  :custom
-  (projectile-completion-system 'default)
-  :hook (after-init . projectile-mode))
 
 ;; -----
 ;; Clojure

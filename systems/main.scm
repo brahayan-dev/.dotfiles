@@ -11,8 +11,8 @@
          #:handler (lambda () (display "Setting up your workstation!")))
 
 (command 'ping
-         #:handler ->ping
-         #:environments '(linux life work))
+         #:environments '(linux life work)
+         #:handler (->ping "systems/life.cfg") )
 
 (command 'install 'scala
          #:environments '(work)
