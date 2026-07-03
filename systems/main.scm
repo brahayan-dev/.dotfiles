@@ -1,10 +1,11 @@
 (define-module (systems main)
+  #:use-module (systems library ansible)
   #:use-module (systems library common)
-  #:use-module (systems library ansible))
+  #:use-module (systems library work))
 
 (command 'refresh 'nu
-         #:environments '(work)
-         #:handler (lambda () (display "Refreshing Nu credentials!")))
+         #:handler ->bom-dia
+         #:environments '(work))
 
 (command 'setup
          #:environments '(linux life work)

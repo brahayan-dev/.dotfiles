@@ -278,9 +278,6 @@
         cider-repl-wrap-history t
         cider-test-report-on-success nil))
 
-;; clj-refactor removed — `C-c C-t', `C-c C-n', `C-c C-r' etc. are now
-;; free for ECA chat bindings, and the package is no longer pulled.
-
 ;; clj-kondo linter. Loading the package registers clj-kondo-clj/cljs/cljc/edn
 ;; flycheck checkers (auto-selected per major mode). Requires the `clj-kondo'
 ;; binary on PATH (`cs install clj-kondo' or `brew install clj-kondo').
