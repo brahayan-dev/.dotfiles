@@ -58,8 +58,6 @@ end
 local function install(package)
   print(string.format("Installing '%s'...\n", package))
   local packages = {
-    lua = require("systems.library.language").lua,
-    python = require("systems.library.language").python,
     scala = require("systems.library.language").scala,
     clojure = require("systems.library.language").clojure,
   }

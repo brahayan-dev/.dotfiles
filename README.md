@@ -47,9 +47,6 @@
    $ ./workstation setup
 ```
 
-The entry script auto-detects the host and routes through the matching
-`systems/<env>.lua` dispatcher. No flags, no prompts ─ just the graph.
-
 ---
 
 ## §1 · V(G) · vertices
@@ -59,19 +56,19 @@ Three environments, partitioned by host signal:
 ```
               ┌─────────┐
               │  work   │   macOS · ~/.nurc exists
-              ├─────────┤   Scala · Clojure · Neovim · Claude Code
+              ├─────────┤   Scala · Guile · Clojure · Emacs · Claude Code
               │         │
               └─────────┘
 
               ┌─────────┐
               │  life   │   macOS · default
-              ├─────────┤   Python · Lua · Scala · Clojure · Neovim · Claude Code
+              ├─────────┤   Guile · Clojure · Emacs · Claude Code
               │         │
               └─────────┘
 
               ┌─────────┐
               │  linux  │   Linux · pacman detected
-              ├─────────┤   Python · Lua · Scala · Clojure · Neovim · Claude Code
+              ├─────────┤   Guile · Clojure · Emacs · Claude Code
               │         │
               └─────────┘
 ```
@@ -79,7 +76,7 @@ Three environments, partitioned by host signal:
 Intersection ─ what every vertex inherits:
 
 ```
-   work ∩ life ∩ linux  =  { Neovim, Claude Code, Scala, Clojure, zsh, ~/.config }
+   work ∩ life ∩ linux  =  { Guile, Emacs, Claude Code, Clojure, zsh, ~/.config }
 ```
 
 ---
@@ -104,7 +101,7 @@ The command × environment adjacency:
    │  setup   ──▶  run the Ansible playbook for the host              │
    │  ping    ──▶  sanity check (host reachable, deps installed)      │
    │  install ──▶  install a language toolchain                       │
-   │              ↳ install python │ install lua │ install scala                      │
+   │              ↳ install clojure │ install scala                   │
    │  connect ──▶  authenticate with the remote forge                 │
    │  refresh ──▶  refresh work credentials                           │
    │                                                                  │
@@ -115,7 +112,7 @@ Usage:
 
 ```
    $ ./workstation <command> [entity]
-   $ ./workstation install python
+   $ ./workstation install clojure
    $ ./workstation connect github
    $ ./workstation refresh nu
 ```
@@ -124,20 +121,26 @@ Usage:
 
 ## §3 · topology
 
+A single `main.scm` is the entry point; `common.scm` gates each command to
+its environments at runtime (via `uname` + `~/.nurc`). `workstation` only
+detects the OS to bootstrap deps, then hands off to Guile.
+
 ```
    ~/.dotfiles
    │
-   ├── workstation                 ◀── shell entry · OS detection
+   ├── workstation                 ◀── shell entry · OS detection · deps
    │
-   ├── systems/                    ◀── lua CLI · ansible config
-   │   ├── work.lua    work.cfg    work.yml
-   │   ├── life.lua    life.cfg    life.yml
-   │   ├── linux.lua   linux.cfg   linux.yml
+   ├── systems/                    ◀── guile CLI · ansible config
+   │   ├── main.scm                ◀── command registry · single entry
+   │   ├── work.cfg    work.yml    work.md
+   │   ├── life.cfg    life.yml    life.md
+   │   ├── linux.cfg   linux.yml   linux.md
    │   └── library/
-   │       ├── common.lua          shell() · set_ansible_cfg()
-   │       ├── interactive.lua     install · connect · ping · setup
-   │       ├── language.lua        toolchain installers
-   │       └── work.lua            refresh (work only)
+   │       ├── common.scm          command · environment gating
+   │       ├── ansible.scm         ->ping
+   │       ├── language.scm        install-scala · install-clojure
+   │       ├── work.scm            ->bom-dia · refresh (work only)
+   │       └── interactive.lua     install · connect        (legacy)
    │
    ├── roles/                      ◀── ansible roles
    │   ├── common/                 all environments
@@ -183,8 +186,8 @@ should never enter the graph above.
 ---
 
 ```
-                                   ┌────────────┐
-                                   │   fin.     │
-                                   └────────────┘
+                                   ┌─────────┐
+                                   │   END   │
+                                   └─────────┘
                           Q.E.D. · the graph is consistent
 ```
