@@ -12,7 +12,6 @@
 (use-package emacs
   :ensure nil
   :init
-  ;; UI
   (setq-default line-number-mode t)
 
   (setq inhibit-startup-screen t
@@ -262,15 +261,6 @@
          (clojure-mode . aggressive-indent-mode)))
 
 ;; -----
-;; Project
-;; -----
-
-(use-package projectile
-  :custom
-  (projectile-completion-system 'default)
-  :hook (after-init . projectile-mode))
-
-;; -----
 ;; Clojure
 ;; -----
 
@@ -287,9 +277,6 @@
         cider-repl-pop-to-buffer-on-connect nil
         cider-repl-wrap-history t
         cider-test-report-on-success nil))
-
-;; clj-refactor removed — `C-c C-t', `C-c C-n', `C-c C-r' etc. are now
-;; free for ECA chat bindings, and the package is no longer pulled.
 
 ;; clj-kondo linter. Loading the package registers clj-kondo-clj/cljs/cljc/edn
 ;; flycheck checkers (auto-selected per major mode). Requires the `clj-kondo'
