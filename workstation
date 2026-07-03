@@ -64,29 +64,7 @@ ensure_deps_linux() {
 }
 
 main() {
-  local os script
-  os="$(uname -s)"
-
-  case "$os" in
-  Darwin)
-    ensure_deps_macos
-    if [[ -e "$HOME/.nurc" ]]; then
-      script="systems/work.scm"
-    else
-      script="systems/life.scm"
-    fi
-    ;;
-  Linux)
-    ensure_deps_linux
-    script="systems/linux.lua"
-    ;;
-  *)
-    log_error "OS Not Supported: $os"
-    return 1
-    ;;
-  esac
-
-  exec guile -L systems "$script" "$@"
+  exec guile -L . systems/main.scm "$@"
 }
 
 main "$@"
