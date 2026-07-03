@@ -14,7 +14,7 @@
 
 (command 'ping
          #:environments '(linux life work)
-         #:handler (->ping "systems/life.cfg") )
+         #:handler ->ping)
 
 (command 'install 'scala
          #:environments '(work)

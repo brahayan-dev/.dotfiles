@@ -2,7 +2,7 @@
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-197)
   #:use-module (ice-9 match)
-  #:export (command))
+  #:export (command os))
 
 (define (valid? action entity)
   (let* ([params (cdr (command-line))]
@@ -21,12 +21,14 @@
     (life . "Darwin")
     (work . "Darwin.nurc")))
 
-(define exists?
+(define marked?
   (file-exists? (string-append (getenv "HOME") "/.nurc")))
 
+(define os
+  (chain (uname) (vector-ref _ 0)))
+
 (define (allowed? environments)
-  (let* ([os (chain (uname) (vector-ref _ 0))]
-         [mark (if exists? ".nurc" "")]
+  (let* ([mark (if marked? ".nurc" "")]
          [marked-os (string-append os mark)]
          [items (map (lambda (e) (assq-ref references e)) environments)])
     (any (lambda (i) (string=? marked-os i)) items)))
