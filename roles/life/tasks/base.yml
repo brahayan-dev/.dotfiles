@@ -2,17 +2,11 @@
 - name: Install Dependencies
   community.general.homebrew:
     name:
-      - entr
-      - lima
       - direnv
       - sqlite
       - tofu-ls
-      - luajit
-      - luarocks
       - opentofu
       - dbeaver-community
-      - lua-language-server
-      - stylua
     state: latest
 
 - name: Install Common Cask Dependencies
