@@ -64,6 +64,22 @@ ensure_deps_linux() {
 }
 
 main() {
+  local os
+  os="$(uname -s)"
+
+  case "$os" in
+  Darwin)
+    ensure_deps_macos
+    ;;
+  Linux)
+    ensure_deps_linux
+    ;;
+  *)
+    log_error "OS Not Supported: $os"
+    return 1
+    ;;
+  esac
+
   exec guile -L . systems/main.scm "$@"
 }
 
