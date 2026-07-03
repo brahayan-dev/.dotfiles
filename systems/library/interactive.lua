@@ -55,16 +55,6 @@ local set_ssh_key = function()
   }
 end
 
-local function install(package)
-  print(string.format("Installing '%s'...\n", package))
-  local packages = {
-    scala = require("systems.library.language").scala,
-    clojure = require("systems.library.language").clojure,
-  }
-
-  (packages[package] or not_found(package))()
-end
-
 local function connect(entity)
   local entities = {
     github = function()
@@ -93,24 +83,8 @@ local function setup(file, playbook)
   end
 end
 
-local function ping(file)
-  return function()
-    shell {
-      set_ansible_cfg(file),
-      "ansible",
-      "-c",
-      "local",
-      "-m",
-      "ping",
-      string.format("-i %s Workstation", paths.hosts_file),
-    }
-  end
-end
-
 return {
-  ping = ping,
   setup = setup,
-  install = install,
   connect = connect,
   not_found = not_found,
 }
