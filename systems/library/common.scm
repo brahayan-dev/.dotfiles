@@ -2,7 +2,7 @@
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-197)
   #:use-module (ice-9 match)
-  #:export (command os))
+  #:export (command os marked?))
 
 (define (valid? action entity)
   (let* ([params (cdr (command-line))]

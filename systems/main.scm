@@ -9,12 +9,12 @@
          #:environments '(work))
 
 (command 'setup
-         #:environments '(linux life work)
-         #:handler (lambda () (display "Setting up your workstation!")))
+         #:handler ->setup
+         #:environments '(linux life work))
 
 (command 'ping
-         #:environments '(linux life work)
-         #:handler ->ping)
+         #:handler ->ping
+         #:environments '(linux life work))
 
 (command 'install 'scala
          #:environments '(work)

@@ -68,23 +68,7 @@ local function connect(entity)
   (entities[entity] or not_found(entity))()
 end
 
-local function setup(file, playbook)
-  return function(_)
-    shell {
-      set_ansible_cfg(file),
-      "ansible-playbook",
-      "-c",
-      "local",
-      string.format("-i %s", paths.hosts_file),
-      string.format("--vault-password-file %s", paths.vault_file),
-      string.format("--become-password-file %s", paths.become_file),
-      playbook,
-    }
-  end
-end
-
 return {
-  setup = setup,
   connect = connect,
   not_found = not_found,
 }
