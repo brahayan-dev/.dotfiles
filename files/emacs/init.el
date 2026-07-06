@@ -290,6 +290,32 @@
   :after cider)
 
 ;; -----
+;; Scala — Eglot + Metals
+;; -----
+
+;; `metals' must be on PATH; `workstation install scala' installs it via
+;; coursier (`cs install metals'). `exec-path-from-shell' above inherits
+;; the shell PATH, so GUI Emacs finds it.
+(use-package scala-ts-mode
+  :ensure nil
+  :mode "\\.s\\(cala\\|bt\\|sc\\)$"
+  :config
+  (add-hook 'scala-ts-mode-hook #'eglot-ensure)
+  (add-hook 'scala-ts-mode-hook
+            (lambda ()
+              (add-hook 'before-save-hook #'eglot-format nil t))))
+
+;; Editing build.sbt; Eglot starts Metals for sbt files too.
+(use-package sbt-mode
+  :mode "\\.sbt\\'"
+  :config
+  (add-hook 'sbt-mode-hook #'eglot-ensure))
+
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs
+               '((scala-mode scala-ts-mode) . ("metals"))))
+
+;; -----
 ;; ECA — Editor Code Assistant
 ;; -----
 
