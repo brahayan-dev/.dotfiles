@@ -40,7 +40,7 @@ source ~/.zprofile
 # NOTE: Workstation CLI
 export PATH="$HOME/.dotfiles/:$PATH"
 # NOTE: Editor
-export EDITOR=nvim
+export EDITOR=emacs
 # NOTE: Mise
 eval "$(~/.local/bin/mise activate zsh)"
 # NOTE: Direnv
@@ -48,10 +48,4 @@ eval "$(direnv hook zsh)"
 if [[ "$(uname -a)" =~ Darwin ]]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
     export PATH="$PATH:$HOME/.local/bin"
-    # NOTE: LuaJIT
-    export LUA_DIR="/opt/homebrew/opt/luajit"
-    export PATH="$LUA_DIR/bin:$PATH"
-    export LDFLAGS="-L$LUA_DIR/lib"
-    export CPPFLAGS="-I$LUA_DIR/include"
-    export PKG_CONFIG_PATH="$LUA_DIR/lib/pkgconfig"
 fi

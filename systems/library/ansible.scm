@@ -1,17 +1,29 @@
 (define-module (systems library ansible)
   #:use-module (systems library common)
-  #:export (->ping))
+  #:use-module (ice-9 match)
+  #:export (->ping
+            ->setup))
 
-(define file
+(define setup-file
   (if (string=? os "Darwin")
       "systems/macos.cfg" "systems/linux.cfg"))
 
-(define (set-configuration)
-  (setenv "ANSIBLE_CONFIG" file))
+(define host-file " -i systems/hosts.ini")
 
 (define (->ping)
-  (set-configuration)
-  (system "ansible -c local -m ping -i systems/hosts.ini Workstation"))
+  (setenv "ANSIBLE_CONFIG" setup-file)
+  (system (string-append "ansible -c local -m ping" host-file " Workstation")))
+
+(define playbook
+  (match (list os marked?)
+    ['("Darwin" #t) " systems/work.yml"]
+    ['("Darwin" #f) " systems/life.yml"]
+    ['("Linux" _) " systems/linux.yml"]))
 
 (define (->setup)
-  (set-configuration))
+  (let* ([vault-file " --vault-password-file systems/.vault_"]
+         [become-file " --become-password-file systems/.become_"]
+         [command (string-append "ansible-playbook -c local"
+                                 host-file vault-file become-file playbook)])
+    (setenv "ANSIBLE_CONFIG" setup-file)
+    (system command)))
