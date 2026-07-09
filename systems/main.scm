@@ -1,6 +1,7 @@
 (define-module (systems main)
   #:use-module (systems library ansible)
   #:use-module (systems library common)
+  #:use-module (systems library github)
   #:use-module (systems library language)
   #:use-module (systems library work))
 
@@ -26,4 +27,4 @@
 
 (command 'connect 'github
          #:environments '(linux life)
-         #:handler (lambda () (display "Connecting to GitHub!")))
+         #:handler connect-github)

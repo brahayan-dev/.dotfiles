@@ -6,6 +6,12 @@
   (if (string=? os "Darwin")
       "systems/macos.cfg" "systems/linux.cfg"))
 
+(define (set-configuration)
+  (setenv "ANSIBLE_CONFIG" file))
+
 (define (->ping)
-  (setenv "ANSIBLE_CONFIG" file)
+  (set-configuration)
   (system "ansible -c local -m ping -i systems/hosts.ini Workstation"))
+
+(define (->setup)
+  (set-configuration))
