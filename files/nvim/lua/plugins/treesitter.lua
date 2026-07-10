@@ -8,7 +8,7 @@ return {
       vim.g.no_plugin_maps = true
 
       -- Or, disable per filetype (add as you like)
-      -- vim.g.no_python_maps = true
+      -- vim.g.no_clojure_maps = true
     end,
     config = function()
       -- put your config here
@@ -28,7 +28,6 @@ return {
         "yaml",
         "json",
         "html",
-        "python",
         "scala",
         "clojure",
         "javascript",

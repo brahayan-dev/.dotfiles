@@ -49,25 +49,7 @@ return {
         end,
       })
 
-      vim.lsp.config("ruff", {
-        root_markers = { "pyproject.toml", ".git" },
-      })
-
-      vim.lsp.config("basedpyright", {
-        root_markers = { "pyproject.toml", ".git" },
-        settings = {
-          basedpyright = {
-            analysis = {
-              typeCheckingMode = "basic",
-              autoImportCompletions = true,
-            },
-            disableOrganizeImports = true,
-          },
-        },
-      })
-
       vim.lsp.enable("sqls")
-      vim.lsp.enable("ruff")
       vim.lsp.enable("ts_ls")
       vim.lsp.enable("lua_ls")
       vim.lsp.enable("yamlls")
@@ -76,7 +58,6 @@ return {
       vim.lsp.enable("tofu_ls")
       vim.lsp.enable("ansiblels")
       vim.lsp.enable("clojure_lsp")
-      vim.lsp.enable("basedpyright")
 
       require("keymaps").lsp()
 
