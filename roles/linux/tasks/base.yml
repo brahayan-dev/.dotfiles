@@ -17,6 +17,8 @@
       - pdftk
       - sqlite
       - neovim
+      - stylua
+      - lua-language-server
       - duckdb
       - rlwrap
       - direnv

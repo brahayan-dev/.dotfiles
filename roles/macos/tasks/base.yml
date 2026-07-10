@@ -37,7 +37,9 @@
       - pandoc
       - duckdb
       - neovim
+      - stylua
       - libtool
+      - lua-language-server
       - lazygit
       - ripgrep
       - ghostty
