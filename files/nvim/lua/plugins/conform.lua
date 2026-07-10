@@ -8,6 +8,7 @@ return {
         formatters_by_ft = {
           lua = { "stylua" },
           clojure = { "cljfmt" },
+          go = { "goimports", "gofmt" },
         },
         format_on_save = {
           timeout_ms = 500,
