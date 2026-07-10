@@ -22,7 +22,7 @@
          #:handler install-scala)
 
 (command 'install 'clojure
-         #:environments '(linux)
+         #:environments '(work)
          #:handler install-clojure)
 
 (command 'connect 'github

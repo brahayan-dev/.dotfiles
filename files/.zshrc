@@ -37,8 +37,6 @@ alias __kiln='cd "$HOME/Projects/kiln/" && nvim .'
 # Settings
 # ---------
 source ~/.zprofile
-# NOTE: Workstation CLI
-export PATH="$HOME/.dotfiles/:$PATH"
 # NOTE: Editor
 export EDITOR=nvim
 # NOTE: Mise

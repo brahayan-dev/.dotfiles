@@ -18,15 +18,7 @@
     force: true
   loop:
     - nvim
-    - emacs
   notify: event_reload_zsh_files
-
-- name: Set ECA Configuration Symlink
-  ansible.builtin.file:
-    src: "{{ ansible_facts['user_dir'] }}/.dotfiles/files/eca"
-    dest: "{{ ansible_facts['user_dir'] }}/.config/eca"
-    state: link
-    force: true
 
 - name: Set Symlinks
   ansible.builtin.file:

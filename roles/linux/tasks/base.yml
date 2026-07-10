@@ -32,8 +32,6 @@
       - github-cli
       - shellcheck
       - ttf-fira-code
-      - clojure
-      - emacs
     state: latest
     update_cache: true
   notify:
@@ -59,14 +57,3 @@
   shell: curl -fsSL https://claude.ai/install.sh | bash
   args:
     creates: "{{ ansible_facts['user_dir'] }}/.local/bin/claude"
-
-- name: Download Coursier
-  get_url:
-    url: https://github.com/coursier/launchers/raw/master/cs-x86_64-pc-linux.gz
-    dest: "{{ ansible_facts['user_dir'] }}/.local/bin/cs.gz"
-    mode: "0755"
-
-- name: Install Coursier
-  command: gzip -d {{ ansible_facts['user_dir'] }}/.local/bin/cs.gz
-  args:
-    creates: "{{ ansible_facts['user_dir'] }}/.local/bin/cs"

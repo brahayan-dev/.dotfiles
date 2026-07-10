@@ -21,6 +21,10 @@ return {
     config = function()
       require("nvim-treesitter").setup()
       require("nvim-treesitter").install({
+        "go",
+        "gomod",
+        "gowork",
+        "gosum",
         "lua",
         "sql",
         "css",

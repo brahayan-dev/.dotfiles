@@ -1,23 +1,4 @@
 ---
-- name: Enable Repositories On Brew
-  community.general.homebrew_tap:
-    name: "{{ item }}"
-    state: present
-  loop:
-    - clojure/tools
-    - weavejester/brew
-    - d12frosted/emacs-plus
-    - borkdude/brew
-
-- name: Trust Non-Official Brew Taps
-  ansible.builtin.command: "brew trust --tap {{ item }}"
-  changed_when: false
-  loop:
-    - clojure/tools
-    - weavejester/brew
-    - d12frosted/emacs-plus
-    - borkdude/brew
-
 - name: Install Dependencies
   community.general.homebrew:
     name:
@@ -46,11 +27,6 @@
       - readline
       - openssl@3
       - shellcheck
-      - clj-kondo
-      - cljfmt
-      - clojure
-      - coursier
-      - emacs-plus@32
       - font-fira-code
     state: latest
   notify:

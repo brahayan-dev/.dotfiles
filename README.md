@@ -56,19 +56,19 @@ Three environments, partitioned by host signal:
 ```
               ┌─────────┐
               │  work   │   macOS · ~/.nurc exists
-              ├─────────┤   Scala · Guile · Clojure · Emacs · Claude Code
+              ├─────────┤   Scala · Golang · Clojure · Neovim · Claude Code
               │         │
               └─────────┘
 
               ┌─────────┐
               │  life   │   macOS · default
-              ├─────────┤   Guile · Clojure · Emacs · Claude Code
+              ├─────────┤   Golang · Neovim · Claude Code
               │         │
               └─────────┘
 
               ┌─────────┐
               │  linux  │   Linux · pacman detected
-              ├─────────┤   Guile · Clojure · Emacs · Claude Code
+              ├─────────┤   Golang · Neovim · Claude Code
               │         │
               └─────────┘
 ```
@@ -76,7 +76,7 @@ Three environments, partitioned by host signal:
 Intersection ─ what every vertex inherits:
 
 ```
-   work ∩ life ∩ linux  =  { Guile, Emacs, Claude Code, Clojure, zsh, ~/.config }
+   work ∩ life ∩ linux  =  { Golang, Neovim, Claude Code, zsh, ~/.config }
 ```
 
 ---
@@ -123,7 +123,7 @@ Usage:
 
 A single `main.scm` is the entry point; `common.scm` gates each command to
 its environments at runtime (via `uname` + `~/.nurc`). `workstation` only
-detects the OS to bootstrap deps, then hands off to Guile.
+detects the OS to bootstrap deps, then hands off to Golang.
 
 ```
    ~/.dotfiles
@@ -137,7 +137,7 @@ detects the OS to bootstrap deps, then hands off to Guile.
    │   ├── linux.cfg   linux.yml   linux.md
    │   └── library/
    │       ├── common.scm          command · environment gating
-   │       ├── ansible.scm         ->ping
+   │       ├── ansible.scm         ->ping · ->setup
    │       ├── language.scm        install-scala · install-clojure
    │       ├── work.scm            ->bom-dia · refresh (work only)
    │       └── interactive.lua     install · connect        (legacy)
@@ -150,7 +150,7 @@ detects the OS to bootstrap deps, then hands off to Guile.
    │   └── linux/                  pacman
    │
    └── files/                      ◀── managed dotfiles (symlinked)
-       ├── nvim/        ghostty/     emacs/       emacs-plus/
+       ├── nvim/        ghostty/     nvim/
        └── .zshrc       .zprofile    .life_profile    .linux_profile
 ```
 
@@ -183,11 +183,3 @@ The profile chain, sourced in order by `.zprofile`:
 Each profile is environment-scoped; the private one holds anything that
 should never enter the graph above.
 
----
-
-```
-                                   ┌─────────┐
-                                   │   END   │
-                                   └─────────┘
-                          Q.E.D. · the graph is consistent
-```

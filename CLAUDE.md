@@ -11,8 +11,8 @@ Multi-environment dotfiles repository with a Guile Scheme CLI layer on top of An
 Three environments, gated at runtime by host signal (`uname` + `~/.nurc`):
 
 - **work** (macOS, triggered by `~/.nurc` existing) — Clojure toolchain, Nu infrastructure
-- **life** (macOS, default) — Personal dev: SSH, git, API tokens, claude-code cask, ClojureScript
-- **linux** (pacman-based Linux) — Similar to life with Linux-specific packages, ClojureScript
+- **life** (macOS, default) — Personal dev: SSH, git, API tokens, claude-code cask
+- **linux** (pacman-based Linux) — Similar to life with Linux-specific packages
 
 ### Entry Point
 
@@ -48,7 +48,7 @@ The `workstation` script detects the OS to bootstrap deps (ansible + guile), the
 - `systems/library/work.scm` — `->bom-dia`: the work-only `refresh nu` flow (updates nu projects, refreshes AWS creds, certs, JWTs, and tokens)
 - `systems/library/interactive.lua` — Legacy Lua (install/connect dispatch) not yet ported to Scheme
 - `roles/` — Ansible roles: common (all), macos (brew), work, life, linux
-- `files/` — Managed dotfiles: nvim, ghostty, emacs, emacs-plus (macOS-only icon), profiles (.life_profile, .linux_profile, .work_profile), .zshrc, .zprofile
+- `files/` — Managed dotfiles: nvim, ghostty, profiles (.life_profile, .linux_profile, .work_profile), .zshrc, .zprofile
 
 ### Ansible
 

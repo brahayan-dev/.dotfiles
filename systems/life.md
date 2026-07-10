@@ -7,18 +7,14 @@
 
 ## Language Stack
 
-| Language | Runtime                      | LSP                 | Formatter              |
-| -------- | ---------------------------- | ------------------- | ---------------------- |
-| Python   | mise python@3                | basedpyright + ruff | conform → ruff_format  |
-| Lua      | LuaJIT (homebrew)            | lua_ls              | conform → stylua       |
-| Scala    | coursier (JDK 17)            | Metals              | conform → LSP fallback |
-| Clojure  | homebrew + coursier (JDK 17) | clojure-lsp         | conform → cljfmt       |
+| Language | Runtime           | LSP                 | Formatter             |
+| -------- | ----------------- | ------------------- | --------------------- |
+| Python   | mise python@3     | basedpyright + ruff | conform → ruff_format |
+| Lua      | LuaJIT (homebrew) | lua_ls              | conform → stylua      |
 
 ### Install commands
 
 ```
 ./workstation install python   # mise use -g python@3 + pip install duckdb basedpyright debugpy ruff pytest
 ./workstation install lua      # luarocks install busted
-./workstation install scala    # cs java --jvm temurin:17 --setup + cs setup --yes + cs install metals
-./workstation install clojure  # cs java --jvm temurin:17 --setup + clojure-lsp install script
 ```

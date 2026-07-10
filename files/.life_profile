@@ -3,11 +3,11 @@
 if [[ "$(uname)" == "Darwin" ]]; then
   # NOTE: Path to binaries on Brew
   export PATH="/opt/homebrew/bin:$PATH"
-  export PATH="$HOME/.local/share/coursier/bin:$PATH"
-  export JAVA_HOME="$(cs java-home --jvm temurin:21 2>/dev/null || echo '')"
-  if [[ -n "$JAVA_HOME" ]]; then
-    export PATH="$JAVA_HOME/bin:$PATH"
-  fi
+  # NOTE: Golang
+  export GOPATH="$HOME/.go"
+  export GOMODCACHE="$GOPATH/pkg/mod"
+  export PATH="$PATH:$GOPATH/bin"
+  # NOTE: Anthropic
   export ANTHROPIC_AUTH_TOKEN=ollama
   export ANTHROPIC_API_KEY=""
   export ANTHROPIC_BASE_URL=http://localhost:11434

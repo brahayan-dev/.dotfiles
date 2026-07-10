@@ -41,8 +41,9 @@ export ANDROID_SDK="$ANDROID_HOME"
 export PATH="$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME:$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator"
 # {mark} END IT-ENG JAMF SETUP MOBILE ZSHRC
 
-# Monocli needed config
-export GOPATH="${NU_HOME}/go" && export PATH=$GOPATH/bin:$PATH
+# Golang
+export GOPATH="${NU_HOME}/go"
+export PATH=$GOPATH/bin:$PATH
 export PATH="$PATH:/Users/xavier.ramirez/Library/Application Support/Coursier/bin"
 
 # {mark} START IT-ENG JAMF SETUP - ~/.nurc File

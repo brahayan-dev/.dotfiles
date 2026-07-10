@@ -2,13 +2,5 @@
 **/.become_
 **/.private_profile
 
-files/emacs/*
-!files/emacs/.gitkeep
-!files/emacs/init.el
-!files/emacs/early-init.el
-
 # Neovim
 /files/nvim/lazy-lock.json
-
-# Emacs
-*~
