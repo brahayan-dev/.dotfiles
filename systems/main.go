@@ -5,7 +5,25 @@ import (
 	"os"
 )
 
+type callback = func()
+
+func greet(txt string) callback {
+	return func() {
+		fmt.Println(txt)
+	}
+}
+
+func runCommand(k string) {
+	model := map[string]func(){
+		"ping":    greet("pong!"),
+		"setup":   greet("ok!"),
+		"install": greet("done!"),
+		"connect": greet("done!"),
+	}
+
+	model[k]()
+}
+
 func main() {
-	flags := os.Args[1:]
-	fmt.Println(flags)
+	runCommand(os.Args[1])
 }
