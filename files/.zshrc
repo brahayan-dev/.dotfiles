@@ -37,10 +37,8 @@ alias __kiln='cd "$HOME/Projects/kiln/" && nvim .'
 # Settings
 # ---------
 source ~/.zprofile
-# NOTE: Workstation CLI
-export PATH="$HOME/.dotfiles/:$PATH"
 # NOTE: Editor
-export EDITOR=emacs
+export EDITOR=nvim
 # NOTE: Mise
 eval "$(~/.local/bin/mise activate zsh)"
 # NOTE: Direnv

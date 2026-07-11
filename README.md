@@ -1,193 +1,132 @@
-```
-╔══════════════════════════════════════════════════════════════════════╗
-║                                                                      ║
-║   ~/.dotfiles  ▸  DAG  ▸  a directed acyclic deployment              ║
-║                                                                      ║
-║                                                                      ║
-║                        ╔═════════╗                                   ║
-║                        ║ workstn ║  ◀── entry point                  ║
-║                        ╚════╤════╝                                   ║
-║                             │                                        ║
-║                      ┌──────┼──────┐                                 ║
-║                      ▼      ▼      ▼                                 ║
-║                   ┌────┐ ┌────┐ ┌─────┐                              ║
-║                   │work│ │life│ │linux│   ◀── V(G), |V| = 3          ║
-║                   └─┬──┘ └─┬──┘ └──┬──┘                              ║
-║                     │      │       │                                 ║
-║                     └──────┼───────┘                                 ║
-║                            ▼                                         ║
-║                      ╔═══════════╗                                   ║
-║                      ║  Ansible  ║   ◀── orchestrator                ║
-║                      ╚═════╤═════╝                                   ║
-║                            ▼                                         ║
-║                      ╔═══════════╗                                   ║
-║                      ║ symlinks  ║ ──▶ $HOME · ~/.config             ║
-║                      ╚═══════════╝                                   ║
-║                                                                      ║
-║         nodes: 5     edges: 7     χ(G) = 3     acyclic: ✓            ║
-║                                                                      ║
-╚══════════════════════════════════════════════════════════════════════╝
-```
+# `~/.dotfiles`
+
+Multi-environment dotfiles repository. A small Go CLI dispatches to environment-specific Ansible playbooks that deploy configs via symlinks.
 
 ```
-   §0  bootstrap         ▸  one-line ignition
-   §1  V(G) · vertices   ▸  environments
-   §2  E(G) · edges      ▸  commands
-   §3  topology          ▸  directory layout
-   §4  Σ secrets         ▸  vault & profile chain
+$ git clone <repo> ~/.dotfiles
+$ cd ~/.dotfiles
+$ ./workstation setup
 ```
-
----
 
 ## §0 · bootstrap
 
 ```
-   $ git clone <repo> ~/.dotfiles
-   $ cd ~/.dotfiles
-   $ ./workstation setup
+$ ./workstation setup
 ```
 
----
+The `workstation` shell script detects the OS, installs `go` and `ansible` if missing (brew on macOS, pacman on Linux), then `exec`s `go run systems/main.go` with the rest of the args. All dispatch lives in Go from that point on.
 
-## §1 · V(G) · vertices
+## §1 · environments
 
 Three environments, partitioned by host signal:
 
-```
-              ┌─────────┐
-              │  work   │   macOS · ~/.nurc exists
-              ├─────────┤   Scala · Guile · Clojure · Emacs · Claude Code
-              │         │
-              └─────────┘
+| env     | host signal              | toolchain                                  |
+| ------- | ------------------------ | ------------------------------------------ |
+| `work`  | macOS, `~/.nurc` exists  | Scala, Clojure, Nu infrastructure          |
+| `life`  | macOS, default           | Personal dev (SSH, git, API tokens)        |
+| `linux` | Linux, `pacman` detected | Similar to `life` with Linux-specific pkgs |
 
-              ┌─────────┐
-              │  life   │   macOS · default
-              ├─────────┤   Guile · Clojure · Emacs · Claude Code
-              │         │
-              └─────────┘
-
-              ┌─────────┐
-              │  linux  │   Linux · pacman detected
-              ├─────────┤   Guile · Clojure · Emacs · Claude Code
-              │         │
-              └─────────┘
-```
-
-Intersection ─ what every vertex inherits:
+Intersection — what every environment inherits:
 
 ```
-   work ∩ life ∩ linux  =  { Guile, Emacs, Claude Code, Clojure, zsh, ~/.config }
+work ∩ life ∩ linux = { Golang, Neovim, Claude Code, zsh, ~/.config }
 ```
 
----
+## §2 · commands
 
-## §2 · E(G) · edges
+The dispatcher is a `map[string]Entry` in `systems/main.go`. Each entry pairs a handler with a list of allowed environments.
 
-The command × environment adjacency:
-
-```
-            │ work    life    linux
-   ─────────┼──────────────────────────
-    setup   │  ●       ●       ●
-    ping    │  ●       ●       ●
-    install │  ●       ●       ●
-    connect │  ·       ●       ●
-    refresh │  ●       ·       ·
-```
+| command           | work | life | linux |
+| ----------------- | :--: | :--: | :---: |
+| `setup`           |  ●   |  ●   |   ●   |
+| `ping`            |  ●   |  ●   |   ●   |
+| `install scala`   |  ●   |  ·   |   ·   |
+| `install clojure` |  ●   |  ·   |   ·   |
+| `connect github`  |  ·   |  ●   |   ●   |
+| `refresh nu`      |  ●   |  ·   |   ·   |
 
 ```
-   ┌─ edges ──────────────────────────────────────────────────────────┐
-   │                                                                  │
-   │  setup   ──▶  run the Ansible playbook for the host              │
-   │  ping    ──▶  sanity check (host reachable, deps installed)      │
-   │  install ──▶  install a language toolchain                       │
-   │              ↳ install clojure │ install scala                   │
-   │  connect ──▶  authenticate with the remote forge                 │
-   │  refresh ──▶  refresh work credentials                           │
-   │                                                                  │
-   └──────────────────────────────────────────────────────────────────┘
+setup    ──▶  run the ansible playbook for the host
+ping     ──▶  ansible -m ping (sanity check)
+install  ──▶  install a language toolchain (scala or clojure)
+connect  ──▶  authenticate with the remote forge (github only, today)
+refresh  ──▶  refresh work credentials (work only)
 ```
 
 Usage:
 
 ```
-   $ ./workstation <command> [entity]
-   $ ./workstation install clojure
-   $ ./workstation connect github
-   $ ./workstation refresh nu
+$ ./workstation <command> [entity]
+$ ./workstation install clojure
+$ ./workstation connect github
+$ ./workstation refresh nu
 ```
 
----
+When a command is run in an environment that is not in its allowlist, the dispatcher exits 0 silently.
 
 ## §3 · topology
 
-A single `main.scm` is the entry point; `common.scm` gates each command to
-its environments at runtime (via `uname` + `~/.nurc`). `workstation` only
-detects the OS to bootstrap deps, then hands off to Guile.
+```
+~/.dotfiles
+├── workstation                  ◀── shell entry · OS detection · dep bootstrap
+│
+├── systems/                     ◀── Go CLI · ansible config
+│   ├── main.go                  ◀── entrypoint + command registry
+│   ├── hosts.ini                ◀── ansible inventory
+│   ├── .vault_  .become_        ◀── gitignored password files
+│   ├── command/
+│   │   ├── guard.go             ◀── Allowed() · Valid() — pure gating logic
+│   │   └── guard_test.go
+│   ├── ansible/ansible.go       ◀── Ping() · Setup()
+│   ├── github/connect.go        ◀── Connect()
+│   ├── language/install.go      ◀── Install(scala|clojure)
+│   ├── work/bom_dia.go          ◀── BomDia() — work-only refresh
+│   ├── macos/ansible.cfg
+│   ├── linux/
+│   │   ├── ansible.cfg
+│   │   ├── playbook.yml
+│   │   └── CLAUDE.md
+│   ├── life/
+│   │   ├── playbook.yml
+│   │   └── CLAUDE.md
+│   └── work/
+│       ├── playbook.yml
+│       └── CLAUDE.md
+│
+├── roles/                       ◀── ansible roles
+│   ├── common/                  all environments
+│   ├── macos/                   brew
+│   ├── work/                    internal toolchain
+│   ├── life/                    personal
+│   └── linux/                   pacman
+│
+└── files/                       ◀── managed dotfiles (symlinked)
+    ├── nvim/        ghostty/
+    └── .zshrc  .zprofile  .life_profile  .linux_profile  .work_profile
+```
+
+Deployment invariant — files are **always** symlinked, never copied:
 
 ```
-   ~/.dotfiles
-   │
-   ├── workstation                 ◀── shell entry · OS detection · deps
-   │
-   ├── systems/                    ◀── guile CLI · ansible config
-   │   ├── main.scm                ◀── command registry · single entry
-   │   ├── work.cfg    work.yml    work.md
-   │   ├── life.cfg    life.yml    life.md
-   │   ├── linux.cfg   linux.yml   linux.md
-   │   └── library/
-   │       ├── common.scm          command · environment gating
-   │       ├── ansible.scm         ->ping
-   │       ├── language.scm        install-scala · install-clojure
-   │       ├── work.scm            ->bom-dia · refresh (work only)
-   │       └── interactive.lua     install · connect        (legacy)
-   │
-   ├── roles/                      ◀── ansible roles
-   │   ├── common/                 all environments
-   │   ├── macos/                  brew
-   │   ├── work/                   internal toolchain
-   │   ├── life/                   personal
-   │   └── linux/                  pacman
-   │
-   └── files/                      ◀── managed dotfiles (symlinked)
-       ├── nvim/        ghostty/     emacs/       emacs-plus/
-       └── .zshrc       .zprofile    .life_profile    .linux_profile
+~/.dotfiles/files/X    ◂─────── ln -s ───────▸    $HOME/X
 ```
 
-Deployment invariant ─ files are **always** symlinked, never copied:
+## §4 · secrets
 
 ```
-   ~/.dotfiles/files/X    ◂─────── ln -s ───────▸    $HOME/X
-```
-
----
-
-## §4 · Σ secrets
-
-```
-   ╭─ ansible vault ──────────────────────────────────────────────╮
-   │                                                              │
-   │   encrypted role vars  ◀── ansible-vault                     │
-   │   vault password file  ◀── gitignored                        │
-   │   become password file ◀── gitignored                        │
-   │                                                              │
-   ╰──────────────────────────────────────────────────────────────╯
+╭─ ansible vault ──────────────────────────────────────────────╮
+│                                                              │
+│   encrypted role vars  ◀── ansible-vault                     │
+│   vault password file  ◀── gitignored                        │
+│   become password file ◀── gitignored                        │
+│                                                              │
+╰──────────────────────────────────────────────────────────────╯
 ```
 
 The profile chain, sourced in order by `.zprofile`:
 
 ```
-   ~/.life_profile  ▸  ~/.work_profile  ▸  ~/.linux_profile  ▸  ~/.private_profile
+~/.life_profile  ▸  ~/.work_profile  ▸  ~/.linux_profile  ▸  ~/.private_profile
 ```
 
-Each profile is environment-scoped; the private one holds anything that
-should never enter the graph above.
-
----
-
-```
-                                   ┌─────────┐
-                                   │   END   │
-                                   └─────────┘
-                          Q.E.D. · the graph is consistent
-```
+Each profile is environment-scoped; the private one holds anything that should never enter the graph above.
