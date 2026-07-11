@@ -80,10 +80,12 @@ main() {
     ;;
   esac
 
-  if [[ ! -f "systems/main" ]]; then
-    exec go build systems/main.go
+  if [[ -z "${GOPATH:-}" ]]; then
+    export GOPATH="$HOME/.go"
+    export GOMODCACHE="$GOPATH/pkg/mod"
+    export PATH="$PATH:$GOPATH/bin"
   fi
-  exec ./systems/main "$@"
+  exec go run systems/main.go "$@"
 }
 
 main "$@"
