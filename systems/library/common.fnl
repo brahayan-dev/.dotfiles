@@ -4,6 +4,9 @@
                      answer (raw:gsub "%s+$" "")]
                  answer))
 
-(local working-day? false)
+(local working-day? (let [home (os.getenv :HOME)
+                          path (.. home :/.nurc)
+                          answer (os.rename path path)]
+                      (not= nil answer)))
 
 {: os-name : working-day?}
