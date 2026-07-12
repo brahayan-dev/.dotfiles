@@ -1,10 +1,9 @@
-(fn os-name []
-  (let [handler (io.popen "uname -s")
-        raw (handler:read :*a)
-        _ (handler:close)
-        answer (raw:gsub "%s+$" "")]
-    answer))
+(local os-name (let [handler (io.popen "uname -s")
+                     raw (handler:read :*a)
+                     _ (handler:close)
+                     answer (raw:gsub "%s+$" "")]
+                 answer))
 
-(local marked? false)
+(local working-day? false)
 
-{: os-name : marked?}
+{: os-name : working-day?}
