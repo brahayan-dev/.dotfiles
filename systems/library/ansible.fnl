@@ -14,19 +14,28 @@
         envar (.. :ANSIBLE_CONFIG= config-file " ")]
     (os.execute (.. envar str-cmd))))
 
-(fn ping []
-  (run [:ansible :-c :local :-m :ping :-i host-file :Workstation]))
+(fn ping [{: environments}]
+  (common.allowed-on environments
+                     (run [:ansible
+                           :-c
+                           :local
+                           :-m
+                           :ping
+                           :-i
+                           host-file
+                           :Workstation])))
 
-(fn setup []
-  (run [:ansible-playbook
-        :-c
-        :local
-        :-i
-        host-file
-        :--vault-password-file
-        :systems/.vault_
-        :--become-password-file
-        :systems/.become_
-        playbook]))
+(fn setup [{: environments}]
+  (common.allowed-on environments
+                     (run [:ansible-playbook
+                           :-c
+                           :local
+                           :-i
+                           host-file
+                           :--vault-password-file
+                           :systems/.vault_
+                           :--become-password-file
+                           :systems/.become_
+                           playbook])))
 
 {: setup : ping}

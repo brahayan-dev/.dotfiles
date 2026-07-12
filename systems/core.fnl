@@ -2,8 +2,8 @@
 
 (fn main [{: command : entity}]
   (case [command entity]
-    [:ping _] (ansible.ping)
-    [:setup _] (ansible.setup)
+    [:ping _] (ansible.ping {:environments [:work :life :linux]})
+    [:setup _] (ansible.setup {:environments [:work :life :linux]})
     [:install :clojure] (print :ok!)
     [:install :scala] (print :done!)
     [:connect :github] (print :connected!)

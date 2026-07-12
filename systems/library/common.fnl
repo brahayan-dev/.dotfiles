@@ -9,4 +9,7 @@
                           answer (os.rename path path)]
                       (not= nil answer)))
 
-{: os-name : working-day?}
+(fn allowed-on [_environments command]
+  command)
+
+{: allowed-on : os-name : working-day?}

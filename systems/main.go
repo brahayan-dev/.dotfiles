@@ -69,8 +69,6 @@ func osName() string {
 func usage() {
 	fmt.Fprintln(os.Stderr, "usage: workstation <command> [entity]")
 	fmt.Fprintln(os.Stderr, "commands:")
-	fmt.Fprintln(os.Stderr, "  setup")
-	fmt.Fprintln(os.Stderr, "  ping")
 	fmt.Fprintln(os.Stderr, "  install {scala|clojure}")
 	fmt.Fprintln(os.Stderr, "  connect github")
 	fmt.Fprintln(os.Stderr, "  refresh nu")
