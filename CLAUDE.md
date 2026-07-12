@@ -75,7 +75,7 @@ files/                       managed dotfiles (symlinked into $HOME / ~/.config)
 
 ### Ansible
 
-Playbooks run against `localhost` via `hosts.ini`. The Go dispatcher sets `ANSIBLE_CONFIG=systems/macos/ansible.cfg` (Darwin) or `ANSIBLE_CONFIG=systems/linux/ansible.cfg` (Linux), picks the playbook by host signal (`work`/`life`/`linux`), and passes `systems/.vault_` and `systems/.become_` as password files. The `common` role creates directories (`~/.ssh`, `~/.config`, `~/.claude`), symlinks nvim/.zprofile/.zshrc, and installs mise + global npm packages. Environment-specific roles add their own packages and symlinks.
+Playbooks run against `localhost` via `hosts.ini`. The Go dispatcher sets `ANSIBLE_CONFIG=systems/macos/ansible.cfg` (Darwin) or `ANSIBLE_CONFIG=systems/linux/ansible.cfg` (Linux), picks the playbook by host signal (`work`/`life`/`linux`), and passes `systems/.vault_` and `systems/.become_` as password files. The `common` role creates directories (`~/.ssh`, `~/.config`, `~/.claude`), symlinks nvim/.zprofile/.zshrc, and installs global npm packages. Environment-specific roles add their own packages and symlinks.
 
 `roles_path = ../../roles` in each `ansible.cfg` is relative to the `.cfg` location; ansible resolves it back to the repo's top-level `roles/` directory.
 
@@ -85,7 +85,7 @@ Plugin manager: lazy.nvim. Leader: Space, local leader: comma. Config split acro
 
 LSP uses the new `vim.lsp.config`/`vim.lsp.enable` API (not the old `lspconfig.setup`), plus nvim-metals for Scala. Configured LSPs: basedpyright, ruff, lua_ls, sqls, ts_ls, yamlls, bashls, jsonls, tofu_ls, ansiblels, clojure_lsp, Metals. Formatting is handled by conform.nvim (ruff_format for Python, stylua for Lua, cljfmt for Clojure, LSP fallback for others). LSP provides diagnostics and code actions. Python and Scala organize imports on save.
 
-Treesitter parsers: lua, sql, css, bash, yaml, json, html, python, scala, clojure, javascript, embedded_template. Completion via nvim-cmp with LuaSnip and cmp-nvim-lsp. Copilot integration via copilot.lua.
+Treesitter parsers: lua, sql, css, bash, yaml, json, html, python, scala, clojure, javascript, embedded_template. Completion via nvim-cmp with LuaSnip and cmp-nvim-lsp.
 
 ### Profile System
 

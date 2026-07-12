@@ -39,8 +39,6 @@ alias __kiln='cd "$HOME/Projects/kiln/" && nvim .'
 source ~/.zprofile
 # NOTE: Editor
 export EDITOR=nvim
-# NOTE: Mise
-eval "$(~/.local/bin/mise activate zsh)"
 # NOTE: Direnv
 eval "$(direnv hook zsh)"
 if [[ "$(uname -a)" =~ Darwin ]]; then

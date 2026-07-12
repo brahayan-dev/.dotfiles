@@ -33,6 +33,7 @@ return {
         "json",
         "html",
         "scala",
+        "fennel",
         "clojure",
         "javascript",
         "embedded_template",

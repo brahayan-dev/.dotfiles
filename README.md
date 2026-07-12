@@ -110,23 +110,3 @@ Deployment invariant — files are **always** symlinked, never copied:
 ```
 ~/.dotfiles/files/X    ◂─────── ln -s ───────▸    $HOME/X
 ```
-
-## §4 · secrets
-
-```
-╭─ ansible vault ──────────────────────────────────────────────╮
-│                                                              │
-│   encrypted role vars  ◀── ansible-vault                     │
-│   vault password file  ◀── gitignored                        │
-│   become password file ◀── gitignored                        │
-│                                                              │
-╰──────────────────────────────────────────────────────────────╯
-```
-
-The profile chain, sourced in order by `.zprofile`:
-
-```
-~/.life_profile  ▸  ~/.work_profile  ▸  ~/.linux_profile  ▸  ~/.private_profile
-```
-
-Each profile is environment-scoped; the private one holds anything that should never enter the graph above.

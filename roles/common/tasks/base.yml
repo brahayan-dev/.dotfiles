@@ -4,6 +4,12 @@
   package:
     name:
       - go
+      - lua
+      - luajit
+      - luarocks
+      - fnlfmt
+      - fennel
+      - fennel-ls
       - tree-sitter-cli
     state: latest
 
@@ -21,8 +27,3 @@
   shell: go install golang.org/x/tools/cmd/goimports@latest
   args:
     creates: "{{ ansible_facts['env']['GOPATH'] }}/bin/goimports"
-
-- name: Install Mise
-  shell: curl https://mise.run | sh
-  args:
-    creates: "{{ ansible_facts['user_dir'] }}/.local/bin/mise"
