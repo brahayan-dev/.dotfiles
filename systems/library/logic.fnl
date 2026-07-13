@@ -16,7 +16,7 @@
     :string (check-string allowed-on)))
 
 (fn dispatch [{: allowed-on : handler}]
-  (if (allowed? allowed-on)
-      (handler)))
+  (when (allowed? allowed-on)
+    (handler)))
 
 {: dispatch}
