@@ -30,15 +30,14 @@ The command registry is the `register` function in `systems/core.fnl`. Each entr
 | ----------------- | :--: | :--: | :---: | ------------------------------ |
 | `setup`           |  ●   |  ●   |   ●   | `systems/library/ansible.fnl`  |
 | `ping`            |  ●   |  ●   |   ●   | `systems/library/ansible.fnl`  |
-| `install scala`   |  ●   |  ·   |   ·   | `systems/language/install.go` _(deprecated Go)_ |
-| `install clojure` |  ●   |  ·   |   ·   | `systems/language/install.go` _(deprecated Go)_ |
-| `connect github`  |  ·   |  ●   |   ●   | `systems/github/connect.go` _(deprecated Go)_ |
+| `install scala`   |  ●   |  ·   |   ·   | `systems/library/interactive.fnl` |
+| `connect github`  |  ·   |  ●   |   ●   | `systems/library/interactive.fnl` |
 | `refresh nu`      |  ●   |  ·   |   ·   | `systems/library/work.fnl`     |
 
 - `setup` runs the Ansible playbook for the host's environment (`library/ansible.fnl:setup`).
 - `ping` runs `ansible -m ping` against localhost as a sanity check (`library/ansible.fnl:ping`).
-- `install <lang>` installs a toolchain (scala or clojure) via coursier. _Currently still implemented in `systems/language/install.go`; Fennel port (`systems/library/language.fnl`) pending._
-- `connect github` authenticates with GitHub (SSH key + token + origin). _Currently still implemented in `systems/github/connect.go`; Fennel port (`systems/library/github.fnl`) pending._
+- `install <lang>` installs a toolchain (scala) via coursier (`library/interactive.fnl:install-scala`).
+- `connect github` authenticates with GitHub (SSH key + token + origin) (`library/interactive.fnl:connect-github`).
 - `refresh nu` runs the seven-step Nu refresh sequence (`library/work.fnl:bom-dia`, work only).
 
 When a command is run in an environment not in its `:allowed-on` list, `systems/library/logic.fnl`'s `dispatch` exits silently without invoking the handler.
@@ -53,9 +52,10 @@ systems/
   .vault_ .become_             vault and become password files (gitignored)
 
   library/                     Fennel libraries
-    common.fnl                 os-name · working-day? · environment
+    common.fnl                 os-name · working-day? · environment · run
     logic.fnl                  allowed? · dispatch  (gating primitive)
     ansible.fnl                ping · setup
+    interactive.fnl            install-scala · connect-github
     work.fnl                   bom-dia  (Nu refresh sequence)
 
   macos/ansible.cfg            Darwin ansible config (python3, roles_path)
@@ -73,13 +73,10 @@ systems/
 roles/                         ansible roles: common, macos, life, work, linux
 files/                         managed dotfiles (symlinked into $HOME / ~/.config)
 
-# deprecated — Go module, slated for removal once Fennel replacements land
-go.mod                         module manifest
-systems/main.go                was the Go entrypoint; superseded by systems/core.fnl
-systems/command/guard.go       gating primitive; superseded by systems/library/logic.fnl
-systems/command/guard_test.go  table-driven tests for the deprecated guard
-systems/language/install.go    install scala|clojure (Fennel port pending)
-systems/github/connect.go      connect github (Fennel port pending)
+# deprecated — Go module, slated for removal
+go.mod                         module manifest; not needed once remaining .go files are deleted
+systems/language/install.go    install scala; superseded by systems/library/interactive.fnl (orphaned)
+systems/github/connect.go      connect github; superseded by systems/library/interactive.fnl (orphaned)
 ```
 
 ### Ansible
@@ -116,7 +113,7 @@ Ansible Vault encrypts `roles/life/vars/main.yml` and `roles/linux/vars/main.yml
 - The Fennel command registry in `systems/core.fnl` is the source of truth for which command runs in which environment. Update both `systems/core.fnl` and `CLAUDE.md` together when changing it.
 - Gating logic lives in `systems/library/logic.fnl` (`allowed?` + `dispatch`); keep it side-effect-free.
 - Host signal (OS name + `~/.nurc` presence) resolves to a Fennel keyword (`:work` / `:life` / `:linux`) in `systems/library/common.fnl`.
-- The deprecated Go module (`go.mod` + `systems/main.go` + `systems/command/guard*.go` + `systems/language/install.go` + `systems/github/connect.go`) is slated for removal once Fennel replacements land. Do not reference it from new code.
+- The deprecated Go module (`go.mod` + `systems/language/install.go` + `systems/github/connect.go`) is orphaned — no runtime path references it. Slated for removal. Do not reference it from new code.
 - Use `prettier . --write` to format Markdown files, `stylua .` for Lua, `ruff . --fix` for Python, and `fnlfmt` for Fennel (handled by `conform.nvim` in the editor).
 - Don't write comments. If you do, keep them brief.
 
@@ -124,7 +121,7 @@ Ansible Vault encrypts `roles/life/vars/main.yml` and `roles/linux/vars/main.yml
 
 End state: Fennel + sh across the board, including the Neovim config. Remaining work:
 
-- Port `systems/language/install.go` → `systems/library/language.fnl` (scala + clojure install via coursier).
-- Port `systems/github/connect.go` → `systems/library/github.fnl` (origin + gh auth + ssh key).
 - Rewrite `files/nvim/init.lua` and `files/nvim/lua/plugins/*.lua` in Fennel.
-- Remove the deprecated Go module (`go.mod` + the four Go files) once the Fennel ports are verified end-to-end.
+- Remove the orphaned Go module (`go.mod` + `systems/language/install.go` + `systems/github/connect.go`).
+
+`install scala` and `connect github` have been ported to `systems/library/interactive.fnl`.

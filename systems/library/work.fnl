@@ -1,5 +1,5 @@
+(local {: run} (require :systems/library/common))
 (local clis [:nu-co :nu-mx :nu-ist :nu-data])
-(local run #(-> $ (table.concat " ") os.execute))
 
 (fn nu-update-proj []
   (run [:nu :proj :update :nudev])

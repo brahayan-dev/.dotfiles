@@ -14,4 +14,6 @@
                      [:Darwin true] :work
                      [:Darwin false] :life))
 
-{: os-name : working-day? : environment}
+(local run #(-> $ (table.concat " ") os.execute))
+
+{: run : os-name : environment}

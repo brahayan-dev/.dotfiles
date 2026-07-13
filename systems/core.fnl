@@ -1,21 +1,33 @@
 (local ansible (require :systems.library.ansible))
 (local {: dispatch} (require :systems.library.logic))
+(local work (require :systems.library.work))
+(local interactive (require :systems.library.interactive))
+
+(local usage
+       ["usage: ./workstation <command> [entity]"
+        ""
+        "commands:"
+        "    ping              ansible -m ping (sanity check)"
+        "    setup             run the ansible playbook for the host"
+        "    install scala     install the scala toolchain via coursier"
+        "    connect github    authenticate with the remote forge"
+        "    refresh nu        refresh work credentials (work only)"])
 
 (local ->ping {:allowed-on :all :handler ansible.ping})
 (local ->setup {:allowed-on :all :handler ansible.setup})
-(local ->default {:allowed-on :all :handler #(print :cli!)})
-(local ->refresh-nu {:allowed-on :work :handler #(print :working!)})
-(local ->install-clojure {:allowed-on :work :handler #(print :installed!)})
-(local ->install-scala {:allowed-on :work :handler #(print :installed!)})
+(local ->refresh-nu {:allowed-on :work :handler work.bom-dia})
+(local ->install-scala {:allowed-on :work :handler interactive.install-scala})
 (local ->connect-github {:allowed-on [:life :linux]
-                         :handler #(print :connected!)})
+                         :handler interactive.connect-github})
+
+(local ->default
+       {:allowed-on :all :handler #(each [_ line (ipairs usage)] (print line))})
 
 (fn register [{: command : entity}]
   (case [command entity]
     [:ping _] ->ping
     [:setup _] ->setup
     [:install :scala] ->install-scala
-    [:install :clojure] ->install-clojure
     [:connect :github] ->connect-github
     [:refresh :nu] ->refresh-nu
     [_ _] ->default))
