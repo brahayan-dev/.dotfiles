@@ -111,21 +111,6 @@ Deployment invariant — files are **always** symlinked, never copied:
 ~/.dotfiles/files/X    ◂─────── ln -s ───────▸    $HOME/X
 ```
 
-## §4 · deprecated
-
-The Go module is the previous runtime. It is no longer on the runtime path — `workstation` does not invoke `go run`. The following files were removed during the Fennel migration:
-
-- `systems/main.go` — was the Go entrypoint; superseded by `systems/core.fnl`.
-- `systems/command/guard.go` + `guard_test.go` — gating primitive; superseded by `systems/library/logic.fnl`.
-
-The following files remain on disk but are orphaned (no runtime path references them) and are slated for removal:
-
-- `go.mod` — module manifest; no longer needed once the remaining `.go` files are deleted.
-- `systems/language/install.go` — `install scala` Go handler; superseded by `systems/library/interactive.fnl`.
-- `systems/github/connect.go` — `connect github` Go handler; superseded by `systems/library/interactive.fnl`.
-
-Do not reference these files from new code.
-
-## §5 · direction
+## §4 · direction
 
 End state: Fennel + sh across the board, including the Neovim config (`files/nvim/init.lua` and `lua/plugins/*.lua` → Fennel). The Neovim substrate is already in place — `fennel_ls` LSP, `fnlfmt` via `conform.nvim`, `treesitter-fennel`, and `paredit` for `clojure` / `fennel` filetypes — so the rewrite is a translation, not a new toolchain.

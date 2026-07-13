@@ -72,11 +72,6 @@ systems/
 
 roles/                         ansible roles: common, macos, life, work, linux
 files/                         managed dotfiles (symlinked into $HOME / ~/.config)
-
-# deprecated — Go module, slated for removal
-go.mod                         module manifest; not needed once remaining .go files are deleted
-systems/language/install.go    install scala; superseded by systems/library/interactive.fnl (orphaned)
-systems/github/connect.go      connect github; superseded by systems/library/interactive.fnl (orphaned)
 ```
 
 ### Ansible
@@ -113,7 +108,6 @@ Ansible Vault encrypts `roles/life/vars/main.yml` and `roles/linux/vars/main.yml
 - The Fennel command registry in `systems/core.fnl` is the source of truth for which command runs in which environment. Update both `systems/core.fnl` and `CLAUDE.md` together when changing it.
 - Gating logic lives in `systems/library/logic.fnl` (`allowed?` + `dispatch`); keep it side-effect-free.
 - Host signal (OS name + `~/.nurc` presence) resolves to a Fennel keyword (`:work` / `:life` / `:linux`) in `systems/library/common.fnl`.
-- The deprecated Go module (`go.mod` + `systems/language/install.go` + `systems/github/connect.go`) is orphaned — no runtime path references it. Slated for removal. Do not reference it from new code.
 - Use `prettier . --write` to format Markdown files, `stylua .` for Lua, `ruff . --fix` for Python, and `fnlfmt` for Fennel (handled by `conform.nvim` in the editor).
 - Don't write comments. If you do, keep them brief.
 
@@ -122,6 +116,3 @@ Ansible Vault encrypts `roles/life/vars/main.yml` and `roles/linux/vars/main.yml
 End state: Fennel + sh across the board, including the Neovim config. Remaining work:
 
 - Rewrite `files/nvim/init.lua` and `files/nvim/lua/plugins/*.lua` in Fennel.
-- Remove the orphaned Go module (`go.mod` + `systems/language/install.go` + `systems/github/connect.go`).
-
-`install scala` and `connect github` have been ported to `systems/library/interactive.fnl`.
