@@ -1,6 +1,6 @@
 # `~/.dotfiles`
 
-Multi-environment dotfiles repository. A small Go CLI dispatches to environment-specific Ansible playbooks that deploy configs via symlinks.
+Multi-environment dotfiles repository. A small Fennel entrypoint (`systems/core.fnl`) dispatches to environment-specific Ansible playbooks that deploy configs via symlinks from `~/.dotfiles/files/` into `$HOME` and `~/.config/`.
 
 ```
 $ git clone <repo> ~/.dotfiles
@@ -14,11 +14,11 @@ $ ./workstation setup
 $ ./workstation setup
 ```
 
-The `workstation` shell script detects the OS, installs `go` and `ansible` if missing (brew on macOS, pacman on Linux), then `exec`s `go run systems/main.go` with the rest of the args. All dispatch lives in Go from that point on.
+The `workstation` shell script detects the OS, installs `fennel` and `ansible` if missing (brew on macOS, pacman on Linux), then `exec`s `fennel systems/core.fnl "$@"`. All dispatch lives in Fennel from that point on.
 
 ## §1 · environments
 
-Three environments, partitioned by host signal:
+Three environments, partitioned by host signal (see `systems/library/common.fnl`):
 
 | env     | host signal              | toolchain                                  |
 | ------- | ------------------------ | ------------------------------------------ |
@@ -29,21 +29,21 @@ Three environments, partitioned by host signal:
 Intersection — what every environment inherits:
 
 ```
-work ∩ life ∩ linux = { Golang, Neovim, Claude Code, zsh, ~/.config }
+work ∩ life ∩ linux = { Fennel, Neovim, Claude Code, zsh, ~/.config }
 ```
 
 ## §2 · commands
 
-The dispatcher is a `map[string]Entry` in `systems/main.go`. Each entry pairs a handler with a list of allowed environments.
+The dispatcher is the `register` function in `systems/core.fnl`. Each entry pairs a handler with an `:allowed-on` list (`:all`, `:work`, or `[:life :linux]`).
 
-| command           | work | life | linux |
-| ----------------- | :--: | :--: | :---: |
-| `setup`           |  ●   |  ●   |   ●   |
-| `ping`            |  ●   |  ●   |   ●   |
-| `install scala`   |  ●   |  ·   |   ·   |
-| `install clojure` |  ●   |  ·   |   ·   |
-| `connect github`  |  ·   |  ●   |   ●   |
-| `refresh nu`      |  ●   |  ·   |   ·   |
+| command           | work | life | linux | handler                        |
+| ----------------- | :--: | :--: | :---: | ------------------------------ |
+| `setup`           |  ●   |  ●   |   ●   | `systems/library/ansible.fnl`  |
+| `ping`            |  ●   |  ●   |   ●   | `systems/library/ansible.fnl`  |
+| `install scala`   |  ●   |  ·   |   ·   | `systems/language/install.go` _(deprecated Go)_ |
+| `install clojure` |  ●   |  ·   |   ·   | `systems/language/install.go` _(deprecated Go)_ |
+| `connect github`  |  ·   |  ●   |   ●   | `systems/github/connect.go` _(deprecated Go)_ |
+| `refresh nu`      |  ●   |  ·   |   ·   | `systems/library/work.fnl`     |
 
 ```
 setup    ──▶  run the ansible playbook for the host
@@ -62,25 +62,25 @@ $ ./workstation connect github
 $ ./workstation refresh nu
 ```
 
-When a command is run in an environment that is not in its allowlist, the dispatcher exits 0 silently.
+When a command is run in an environment that is not in its `:allowed-on` list, `systems/library/logic.fnl`'s `dispatch` exits silently without invoking the handler.
 
 ## §3 · topology
 
 ```
 ~/.dotfiles
-├── workstation                  ◀── shell entry · OS detection · dep bootstrap
+├── workstation                  ◀── bash entry · OS detection · dep bootstrap
 │
-├── systems/                     ◀── Go CLI · ansible config
-│   ├── main.go                  ◀── entrypoint + command registry
+├── systems/                     ◀── Fennel CLI · ansible config
+│   ├── core.fnl                 ◀── entrypoint + register table
 │   ├── hosts.ini                ◀── ansible inventory
 │   ├── .vault_  .become_        ◀── gitignored password files
-│   ├── command/
-│   │   ├── guard.go             ◀── Allowed() · Valid() — pure gating logic
-│   │   └── guard_test.go
-│   ├── ansible/ansible.go       ◀── Ping() · Setup()
-│   ├── github/connect.go        ◀── Connect()
-│   ├── language/install.go      ◀── Install(scala|clojure)
-│   ├── work/bom_dia.go          ◀── BomDia() — work-only refresh
+│   │
+│   ├── library/                 ◀── Fennel libraries
+│   │   ├── common.fnl           ◀── os-name · working-day? · environment
+│   │   ├── logic.fnl            ◀── allowed? · dispatch  (gating primitive)
+│   │   ├── ansible.fnl          ◀── ping · setup
+│   │   └── work.fnl             ◀── bom-dia  (Nu refresh sequence)
+│   │
 │   ├── macos/ansible.cfg
 │   ├── linux/
 │   │   ├── ansible.cfg
@@ -111,22 +111,18 @@ Deployment invariant — files are **always** symlinked, never copied:
 ~/.dotfiles/files/X    ◂─────── ln -s ───────▸    $HOME/X
 ```
 
-## §4 · secrets
+## §4 · deprecated
 
-```
-╭─ ansible vault ──────────────────────────────────────────────╮
-│                                                              │
-│   encrypted role vars  ◀── ansible-vault                     │
-│   vault password file  ◀── gitignored                        │
-│   become password file ◀── gitignored                        │
-│                                                              │
-╰──────────────────────────────────────────────────────────────╯
-```
+The Go module is the previous runtime. It is kept in the tree during the Fennel migration but is no longer on the runtime path — `workstation` does not invoke `go run`. Files slated for removal:
 
-The profile chain, sourced in order by `.zprofile`:
+- `go.mod` — module manifest, kept until Fennel replacements land.
+- `systems/main.go` — was the Go entrypoint; superseded by `systems/core.fnl`.
+- `systems/command/guard.go` + `guard_test.go` — gating primitive; superseded by `systems/library/logic.fnl`.
+- `systems/language/install.go` — `install scala|clojure` Go handlers; will be rewritten as `systems/library/language.fnl`.
+- `systems/github/connect.go` — `connect github` Go handler; will be rewritten as `systems/library/github.fnl`.
 
-```
-~/.life_profile  ▸  ~/.work_profile  ▸  ~/.linux_profile  ▸  ~/.private_profile
-```
+Do not reference these files from new code.
 
-Each profile is environment-scoped; the private one holds anything that should never enter the graph above.
+## §5 · direction
+
+End state: Fennel + sh across the board, including the Neovim config (`files/nvim/init.lua` and `lua/plugins/*.lua` → Fennel). The Neovim substrate is already in place — `fennel_ls` LSP, `fnlfmt` via `conform.nvim`, `treesitter-fennel`, and `paredit` for `clojure` / `fennel` filetypes — so the rewrite is a translation, not a new toolchain.

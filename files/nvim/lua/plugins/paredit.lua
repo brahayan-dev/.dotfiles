@@ -9,7 +9,7 @@ return {
   {
     "julienvincent/nvim-paredit",
     lazy = true,
-    ft = { "clojure" },
+    ft = { "clojure", "fennel" },
     config = function()
       require("nvim-paredit").setup()
     end,

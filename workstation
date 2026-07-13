@@ -36,15 +36,15 @@ ensure_deps_macos() {
     log_info "Installing Ansible"
     brew install ansible
   fi
-  if ! have go; then
-    log_info "Installing Golang"
-    brew install go
+  if ! have fennel; then
+    log_info "Installing Fennel"
+    brew install fennel
   fi
 }
 
 ensure_deps_linux() {
   if have pacman; then
-    if ! have ansible || ! have go; then
+    if ! have ansible || ! have fennel; then
       log_info "Updating Pacman Index"
       sudo pacman-mirrors --fasttrack 5 && sudo pacman -Syu
     fi
@@ -53,9 +53,9 @@ ensure_deps_linux() {
       log_info "Installing Ansible"
       sudo pacman -S ansible
     fi
-    if ! have go; then
-      log_info "Installing Golang"
-      sudo pacman -S go
+    if ! have fennel; then
+      log_info "Installing Fennel"
+      sudo pacman -S fennel
     fi
   else
     log_error "Could Not Detect Package Manager To Install Dependencies"
@@ -80,12 +80,7 @@ main() {
     ;;
   esac
 
-  if [[ -z "${GOPATH:-}" ]]; then
-    export GOPATH="$HOME/.go"
-    export GOMODCACHE="$GOPATH/pkg/mod"
-    export PATH="$PATH:$GOPATH/bin"
-  fi
-  exec go run systems/main.go "$@"
+  exec fennel systems/core.fnl "$@"
 }
 
 main "$@"

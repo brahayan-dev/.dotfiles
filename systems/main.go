@@ -5,11 +5,9 @@ import (
 	"os"
 	"runtime"
 
-	"github.com/brahayan-dev/.dotfiles/systems/ansible"
 	"github.com/brahayan-dev/.dotfiles/systems/command"
 	"github.com/brahayan-dev/.dotfiles/systems/github"
 	"github.com/brahayan-dev/.dotfiles/systems/language"
-	"github.com/brahayan-dev/.dotfiles/systems/work"
 )
 
 type Handler func(args []string) error
@@ -21,11 +19,8 @@ type Entry struct {
 }
 
 var registry = map[string]Entry{
-	"setup":   {Handler: setupHandler, Environments: []string{"linux", "life", "work"}},
-	"ping":    {Handler: pingHandler, Environments: []string{"linux", "life", "work"}},
 	"install": {Handler: installHandler, Environments: []string{"work"}},
 	"connect": {Handler: connectHandler, Entity: "github", Environments: []string{"linux", "life"}},
-	"refresh": {Handler: refreshHandler, Entity: "nu", Environments: []string{"work"}},
 }
 
 func main() {
@@ -72,15 +67,9 @@ func osName() string {
 func usage() {
 	fmt.Fprintln(os.Stderr, "usage: workstation <command> [entity]")
 	fmt.Fprintln(os.Stderr, "commands:")
-	fmt.Fprintln(os.Stderr, "  setup")
-	fmt.Fprintln(os.Stderr, "  ping")
 	fmt.Fprintln(os.Stderr, "  install {scala|clojure}")
 	fmt.Fprintln(os.Stderr, "  connect github")
-	fmt.Fprintln(os.Stderr, "  refresh nu")
 }
 
-func setupHandler(args []string) error   { return ansible.Setup(osName(), marked()) }
-func pingHandler(args []string) error    { return ansible.Ping(osName()) }
 func installHandler(args []string) error { return language.Install(args[1]) }
 func connectHandler(args []string) error { return github.Connect() }
-func refreshHandler(args []string) error { return work.BomDia() }

@@ -57,6 +57,7 @@ return {
       vim.lsp.enable("bashls")
       vim.lsp.enable("jsonls")
       vim.lsp.enable("tofu_ls")
+      vim.lsp.enable("fennel_ls")
       vim.lsp.enable("ansiblels")
       vim.lsp.enable("clojure_lsp")
 
