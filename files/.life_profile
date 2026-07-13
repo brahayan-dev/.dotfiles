@@ -3,10 +3,6 @@
 if [[ "$(uname)" == "Darwin" ]]; then
   # NOTE: Path to binaries on Brew
   export PATH="/opt/homebrew/bin:$PATH"
-  # NOTE: Golang
-  export GOPATH="$HOME/.go"
-  export GOMODCACHE="$GOPATH/pkg/mod"
-  export PATH="$PATH:$GOPATH/bin"
   # NOTE: Anthropic
   export ANTHROPIC_AUTH_TOKEN=ollama
   export ANTHROPIC_API_KEY=""
