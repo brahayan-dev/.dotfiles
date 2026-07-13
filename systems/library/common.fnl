@@ -9,7 +9,9 @@
                           answer (os.rename path path)]
                       (not= nil answer)))
 
-(fn allowed-on [_environments command]
-  command)
+(local environment (case [os-name working-day?]
+                     [:Linux _] :linux
+                     [:Darwin true] :work
+                     [:Darwin false] :life))
 
-{: allowed-on : os-name : working-day?}
+{: os-name : working-day? : environment}
