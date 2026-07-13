@@ -3,7 +3,6 @@
   become: "{{ ansible_facts['os_family'] == 'Archlinux' }}"
   package:
     name:
-      - go
       - lua
       - luajit
       - luarocks
@@ -12,18 +11,3 @@
       - fennel-ls
       - tree-sitter-cli
     state: latest
-
-- name: Install Golang Staticcheck
-  shell: go install honnef.co/go/tools/cmd/staticcheck@latest
-  args:
-    creates: "{{ ansible_facts['env']['GOPATH'] }}/bin/staticcheck"
-
-- name: Install Golang LSP
-  shell: go install golang.org/x/tools/gopls@latest
-  args:
-    creates: "{{ ansible_facts['env']['GOPATH'] }}/bin/gopls"
-
-- name: Install Golang Imports
-  shell: go install golang.org/x/tools/cmd/goimports@latest
-  args:
-    creates: "{{ ansible_facts['env']['GOPATH'] }}/bin/goimports"

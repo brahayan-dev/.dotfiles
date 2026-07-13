@@ -2,7 +2,6 @@
 - name: Install Dependencies
   community.general.homebrew:
     name:
-      - node
       - fd
       - gh
       - zsh
@@ -12,6 +11,7 @@
       - curl
       - grip
       - tree
+      - node
       - cmake
       - shfmt
       - unzip
@@ -20,7 +20,6 @@
       - neovim
       - stylua
       - libtool
-      - lua-language-server
       - lazygit
       - ripgrep
       - ghostty
@@ -28,6 +27,7 @@
       - openssl@3
       - shellcheck
       - font-fira-code
+      - lua-language-server
     state: latest
   notify:
     - event_download_ohmyzsh
