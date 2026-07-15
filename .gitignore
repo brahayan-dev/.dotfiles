@@ -3,4 +3,6 @@
 **/.private_profile
 
 # Neovim
-/files/nvim/lazy-lock.json
+/files/nvim/lua/*
+!/files/nvim/lua/
+!/files/nvim/lua/plugins.lua

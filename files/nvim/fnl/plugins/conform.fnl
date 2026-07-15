@@ -1,0 +1,14 @@
+(local formatters_by_ft {:lua [:stylua]
+                         :json [:prettier]
+                         :fennel [:fnlfmt]
+                         :clojure [:cljfmt]
+                         :markdown [:prettier]})
+
+(local format_on_save {:timeout_ms 500 :lsp_format :fallback})
+
+[{1 :stevearc/conform.nvim
+  :event [:BufWritePre]
+  :cmd [:ConformInfo]
+  :config (fn []
+            (let [{: setup} (require :conform)]
+              (setup {: formatters_by_ft : format_on_save})))}]
