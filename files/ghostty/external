@@ -3,4 +3,4 @@ font-family = "Fira Code"
 cursor-style = bar
 adjust-cursor-thickness = "300%"
 
-theme = dark:TokyoNight Storm,light:TokyoNight Day
+theme = dark:Rose Pine,light:Rose Pine Dawn
