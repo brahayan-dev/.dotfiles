@@ -20,6 +20,16 @@
     - nvim
   notify: event_reload_zsh_files
 
+- name: Transpile Fennel
+  shell: >
+    nvim --headless
+    -c "lua vim.secure.trust({action='allow', path='.nfnl.fnl'})"
+    -c "lua require('nfnl.api')['compile-all-files'](vim.fn.getcwd())"
+    -c "qa"
+  args:
+    chdir: "{{ ansible_facts['user_dir'] }}/.config/nvim"
+    creates: "{{ ansible_facts['user_dir'] }}/.config/nvim/lua/plugins"
+
 - name: Set Symlinks
   ansible.builtin.file:
     src: "{{ ansible_facts['user_dir'] }}/.dotfiles/files/{{ item }}"
