@@ -9,18 +9,7 @@
              :ansiblels
              :clojure_lsp])
 
-(local lua_ls_cmd
-       [:lua-language-server
-        (.. :--logpath= (vim.fn.stdpath :cache) :/lua-ls/log)
-        (.. :--metapath= (vim.fn.stdpath :cache) :/lua-ls/meta)])
-
-(local lua_ls_settings
-       {:Lua {:runtime {:version :LuaJIT}
-              :diagnostics {:globals [:vim]}
-              :format {:enable false}
-              :workspace {:checkThirdParty false
-                          :library (vim.api.nvim_get_runtime_file "" true)}
-              :telemetry {:enable false}}})
+(local lua_ls_settings {:Lua {:diagnostics {:globals [:vim]}}})
 
 (local capabilities_with_encoding
        (fn []
@@ -34,16 +23,7 @@
   :dependencies [:hrsh7th/cmp-nvim-lsp]
   :config (fn []
             (vim.lsp.config "*" {:capabilities (capabilities_with_encoding)})
-            (vim.lsp.config :lua_ls
-                            {:cmd lua_ls_cmd
-                             :root_markers [:.git :init.lua]
-                             :settings lua_ls_settings})
-            (vim.lsp.config :clojure_lsp
-                            {:root_markers [:project.clj
-                                            :deps.edn
-                                            :shadow-cljs.edn
-                                            :.git
-                                            :bb.edn]})
+            (vim.lsp.config :lua_ls {:settings lua_ls_settings})
             (each [_ lsp (ipairs lsps)]
               (vim.lsp.enable lsp))
             ((. (require :mappings) :lsp))
