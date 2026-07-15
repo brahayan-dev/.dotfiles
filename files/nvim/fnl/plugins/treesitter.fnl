@@ -25,4 +25,5 @@
               (vim.api.nvim_create_autocmd :FileType
                                            {:callback (fn [args]
                                                         (pcall vim.treesitter.start
-                                                               args.buf))})))}]
+                                                               args.buf)
+                                                        nil)})))}]
