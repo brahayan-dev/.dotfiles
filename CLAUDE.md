@@ -99,7 +99,7 @@ Standards observed in `files/nvim/fnl/` (use these for any new `.fnl` file):
 - 2-space indentation (matches `stylua`).
 - Destructure with keywords: `(local {: setup} (require :foo))`.
 - Top-level `(local ...)` for data tables and for `require` of in-repo modules (`:mappings`, `:nfnl.module`) only. **Do not** `require` lazy plugins at the top of a spec file — they are not on the runtimepath when lazy loads the spec.
-- Assignment: `(set vim.opt.X val)` for plain keys, `(tset t "key" val)` for keys that contain `/`, `-`, `#`, `.`, or any other character the formatter would mangle as a keyword.
+- Assignment: `(set t.field val)` works even when `field` contains `/`, `-`, `#`, `.`, or other special characters — Fennel compiles that segment to bracket-string indexing automatically (e.g. `(set vim.g.conjure#mapping#doc_word :K)` compiles to `vim.g["conjure#mapping#doc_word"] = "K"`). Reach for `tset` only when the key is computed at runtime rather than a static symbol chain, or to patch several nested keys in one call.
 - `:config` is always a `(fn [] ...)` lambda; do not use `#()` read-time lambdas for plugin config (they bind eagerly).
 - Method calls on a freshly-required module need a double paren: `((. (require :foo) :method) args)`. `((require :foo) :method args)` compiles to a broken call.
 - Property access: `(. tbl :field)`. Function call on a value: `(. obj :method args)`.
@@ -111,7 +111,7 @@ Gotchas — these cost real time during the migration, watch for them:
 
 1. **Top-level `require` of a lazy plugin fails** with `module 'X' not found` when lazy loads the spec. The plugin is not on the runtimepath yet. Move the `require` inside the `:config` lambda, or declare the spec with `:dependencies` so lazy loads it first.
 2. **`cmp_nvim_lsp.default_capabilities` is a function, not a value.** Pass the result of calling it (`(require :cmp_nvim_lsp).default_capabilities()`), not the field. Otherwise `vim.tbl_deep_extend` raises `expected table, got function`.
-3. **String keys with special chars** (e.g. `".git/"`, `"ui-select"`, `"client/registerCapability"`) must be written as strings. A keyword like `:.git/` compiles to a table (the `.` is method-access syntax), not a string, and silently breaks lookups. Keys that are bare words like `"file_ignore_patterns"`, `"enabled"`, `"cwd"` are fine as keywords.
+3. **Never drop the leading `:` on a keyword.** A keyword like `:.git/` or `:ui-select` always compiles to the string `".git/"` / `"ui-select"`, special characters included — there's no need to write it as a quoted string. The real danger is *omitting* the colon: a bare symbol like `ui-select` (no `:`) compiles to a reference to an undefined global variable instead of a string, and silently breaks lookups.
 4. **Wildcard LSP config** — `(vim.lsp.config "*" {...})` applies to every LSP. When it touches `capabilities`, wrap the value in a function so it is computed lazily (otherwise `cmp_nvim_lsp` is required at load time and may not be ready).
 5. **Empty function body** — `(fn [])` does not compile. Use `(fn [] nil)`.
 6. **Keymaps defined in `mappings.fnl` are not registered automatically.** `M.general` etc. are just functions; `settings.fnl` must call them. Forgetting this silently breaks `<leader>q` and friends.

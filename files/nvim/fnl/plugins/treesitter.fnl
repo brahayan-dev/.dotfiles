@@ -13,7 +13,7 @@
 
 [{1 :nvim-treesitter/nvim-treesitter-textobjects
   :branch :main
-  :init (fn [] (tset vim.g :no_plugin_maps true))
+  :init (fn [] (set vim.g.no_plugin_maps true))
   :config (fn [] nil)}
  {1 :nvim-treesitter/nvim-treesitter
   :branch :main

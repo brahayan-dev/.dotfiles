@@ -44,12 +44,10 @@
   (vim.keymap.set :n :q oil.close {}))
 
 (fn autocomplete [cmp]
-  (let [t {}]
-    (tset t :<C-e> (cmp.mapping.abort))
-    (tset t :<C-Space> (cmp.mapping.complete))
-    (tset t :<C-f> (cmp.mapping.scroll_docs 4))
-    (tset t :<C-b> (cmp.mapping.scroll_docs -4))
-    (tset t :<CR> (cmp.mapping.confirm {:select true}))
-    t))
+  {:<C-e> (cmp.mapping.abort)
+   :<C-Space> (cmp.mapping.complete)
+   :<C-f> (cmp.mapping.scroll_docs 4)
+   :<C-b> (cmp.mapping.scroll_docs -4)
+   :<CR> (cmp.mapping.confirm {:select true})})
 
 {: general : window : lsp : telescope : oil : autocomplete}

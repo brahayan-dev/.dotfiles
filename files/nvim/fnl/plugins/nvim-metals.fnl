@@ -65,8 +65,8 @@
                   group (vim.api.nvim_create_augroup :nvim-metals {:clear true})
                   original_register (. vim.lsp.handlers
                                        :client/registerCapability)]
-              (tset vim.lsp.handlers :client/registerCapability
-                    (fix_watcher_glob original_register))
+              (set vim.lsp.handlers.client/registerCapability
+                   (fix_watcher_glob original_register))
               (vim.api.nvim_create_autocmd :FileType
                                            {:pattern [:scala :sbt :java]
                                             : group
