@@ -72,7 +72,6 @@ When a command is run in an environment that is not in its `:allowed-on` list, `
 ├── systems/                     ◀── Fennel CLI · ansible config
 │   ├── core.fnl                 ◀── entrypoint + register table
 │   ├── hosts.ini                ◀── ansible inventory
-│   ├── .vault_  .become_        ◀── gitignored password files
 │   │
 │   ├── library/                 ◀── Fennel libraries
 │   │   ├── common.fnl           ◀── os-name · working-day? · environment · run
@@ -110,7 +109,3 @@ Deployment invariant — files are **always** symlinked, never copied:
 ```
 ~/.dotfiles/files/X    ◂─────── ln -s ───────▸    $HOME/X
 ```
-
-## §4 · direction
-
-End state: Fennel + sh across the board. Three first-class languages — **Scala, Clojure, Fennel** — drive day-to-day work. The Neovim config is now fully in Fennel under `files/nvim/fnl/` (`settings.fnl` + `mappings.fnl` + `plugins/*.fnl`), compiled to `lua/` by nfnl on save. The substrate that made the rewrite possible (`fennel_ls` LSP, `fnlfmt` via `conform.nvim`, `treesitter-fennel`, `paredit` for `clojure` / `fennel` filetypes) is in production, not aspirational.
