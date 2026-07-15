@@ -1,7 +1,4 @@
-(set vim.g.mapleader " ")
-(set vim.g.maplocalleader ",")
 (set vim.g.have_nerd_font true)
-
 (set vim.opt.expandtab true)
 (set vim.opt.tabstop 2)
 (set vim.opt.shiftwidth 2)
