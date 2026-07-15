@@ -22,7 +22,7 @@ Three environments, partitioned by host signal (see `systems/library/common.fnl`
 
 | env     | host signal              | toolchain                                  |
 | ------- | ------------------------ | ------------------------------------------ |
-| `work`  | macOS, `~/.nurc` exists  | Scala, Clojure, Nu infrastructure          |
+| `work`  | macOS, `~/.nurc` exists  | Scala, Clojure, Fennel, Nu infrastructure  |
 | `life`  | macOS, default           | Personal dev (SSH, git, API tokens)        |
 | `linux` | Linux, `pacman` detected | Similar to `life` with Linux-specific pkgs |
 
@@ -36,13 +36,13 @@ work ∩ life ∩ linux = { Fennel, Neovim, Claude Code, zsh, ~/.config }
 
 The dispatcher is the `register` function in `systems/core.fnl`. Each entry pairs a handler with an `:allowed-on` list (`:all`, `:work`, or `[:life :linux]`).
 
-| command           | work | life | linux | handler                        |
-| ----------------- | :--: | :--: | :---: | ------------------------------ |
-| `setup`           |  ●   |  ●   |   ●   | `systems/library/ansible.fnl`  |
-| `ping`            |  ●   |  ●   |   ●   | `systems/library/ansible.fnl`  |
-| `install scala`   |  ●   |  ·   |   ·   | `systems/library/interactive.fnl` |
-| `connect github`  |  ·   |  ●   |   ●   | `systems/library/interactive.fnl` |
-| `refresh nu`      |  ●   |  ·   |   ·   | `systems/library/work.fnl`     |
+| command          | work | life | linux | handler                           |
+| ---------------- | :--: | :--: | :---: | --------------------------------- |
+| `setup`          |  ●   |  ●   |   ●   | `systems/library/ansible.fnl`     |
+| `ping`           |  ●   |  ●   |   ●   | `systems/library/ansible.fnl`     |
+| `install scala`  |  ●   |  ·   |   ·   | `systems/library/interactive.fnl` |
+| `connect github` |  ·   |  ●   |   ●   | `systems/library/interactive.fnl` |
+| `refresh nu`     |  ●   |  ·   |   ·   | `systems/library/work.fnl`        |
 
 ```
 setup    ──▶  run the ansible playbook for the host
@@ -113,4 +113,4 @@ Deployment invariant — files are **always** symlinked, never copied:
 
 ## §4 · direction
 
-End state: Fennel + sh across the board, including the Neovim config (`files/nvim/init.lua` and `lua/plugins/*.lua` → Fennel). The Neovim substrate is already in place — `fennel_ls` LSP, `fnlfmt` via `conform.nvim`, `treesitter-fennel`, and `paredit` for `clojure` / `fennel` filetypes — so the rewrite is a translation, not a new toolchain.
+End state: Fennel + sh across the board. Three first-class languages — **Scala, Clojure, Fennel** — drive day-to-day work. The Neovim config is now fully in Fennel under `files/nvim/fnl/` (`settings.fnl` + `mappings.fnl` + `plugins/*.fnl`), compiled to `lua/` by nfnl on save. The substrate that made the rewrite possible (`fennel_ls` LSP, `fnlfmt` via `conform.nvim`, `treesitter-fennel`, `paredit` for `clojure` / `fennel` filetypes) is in production, not aspirational.
