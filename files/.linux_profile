@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 if [[ "$(uname)" == "Linux" ]]; then
   # NOTE: Other configurations

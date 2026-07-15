@@ -20,11 +20,11 @@ The `workstation` shell script detects the OS, installs `fennel` and `ansible` i
 
 Three environments, partitioned by host signal (see `systems/library/common.fnl`):
 
-| env     | host signal              | toolchain                                  |
-| ------- | ------------------------ | ------------------------------------------ |
-| `work`  | macOS, `~/.nurc` exists  | Scala, Clojure, Fennel, Nu infrastructure  |
-| `life`  | macOS, default           | Personal dev (SSH, git, API tokens)        |
-| `linux` | Linux, `pacman` detected | Similar to `life` with Linux-specific pkgs |
+| env     | host signal              | toolchain                                   |
+| ------- | ------------------------ | ------------------------------------------- |
+| `work`  | macOS, `~/.nurc` exists  | Scala, Clojure, Fennel, Work infrastructure |
+| `life`  | macOS, default           | Personal dev (SSH, git, API tokens)         |
+| `linux` | Linux, `pacman` detected | Similar to `life` with Linux-specific pkgs  |
 
 Intersection — what every environment inherits:
 
@@ -78,7 +78,7 @@ When a command is run in an environment that is not in its `:allowed-on` list, `
 │   │   ├── logic.fnl            ◀── allowed? · dispatch  (gating primitive)
 │   │   ├── ansible.fnl          ◀── ping · setup
 │   │   ├── interactive.fnl      ◀── install-scala · connect-github
-│   │   └── work.fnl             ◀── bom-dia  (Nu refresh sequence)
+│   │   └── work.fnl             ◀── bom-dia  (Work refresh sequence)
 │   │
 │   ├── macos/ansible.cfg
 │   ├── linux/

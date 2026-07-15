@@ -1,11 +1,11 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 if [[ "$(uname)" == "Darwin" ]]; then
   # NOTE: Path to binaries on Brew
   export PATH="/opt/homebrew/bin:$PATH"
   # NOTE: Anthropic
-  export ANTHROPIC_AUTH_TOKEN=ollama
   export ANTHROPIC_API_KEY=""
+  export ANTHROPIC_AUTH_TOKEN=ollama
   export ANTHROPIC_BASE_URL=http://localhost:11434
 fi
 

@@ -2,7 +2,6 @@
 
 # BASIC CONFIGURATION
 # -------------------
-export WORKSPACE="work"
 export NU_HOME="${HOME}/dev/nu"
 export NUCLI_HOME="${NU_HOME}/nucli"
 export MONOREPO_ROOT="$NU_HOME/mini-meta-repo"
