@@ -11,10 +11,13 @@
               :javascript
               :embedded_template])
 
+(fn ->callback [args]
+  (pcall vim.treesitter.start args.buf)
+  nil)
+
 [{1 :nvim-treesitter/nvim-treesitter-textobjects
   :branch :main
-  :init (fn [] (set vim.g.no_plugin_maps true))
-  :config (fn [] nil)}
+  :init #(set vim.g.no_plugin_maps true)}
  {1 :nvim-treesitter/nvim-treesitter
   :branch :main
   :build ":TSUpdate"
@@ -22,8 +25,4 @@
             (let [ts (require :nvim-treesitter)]
               (ts.setup)
               (ts.install langs)
-              (vim.api.nvim_create_autocmd :FileType
-                                           {:callback (fn [args]
-                                                        (pcall vim.treesitter.start
-                                                               args.buf)
-                                                        nil)})))}]
+              (vim.api.nvim_create_autocmd :FileType {:callback ->callback})))}]

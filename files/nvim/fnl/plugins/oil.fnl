@@ -1,3 +1,5 @@
+(local mappings (require :mappings))
+
 (fn hidden? [name _]
   (var result false)
   (each [_ v (ipairs [".."
@@ -22,4 +24,4 @@
   :config (fn []
             (let [oil (require :oil)]
               (oil.setup setup)
-              ((. (require :mappings) :oil) oil)))}]
+              (mappings.oil oil)))}]
