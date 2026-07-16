@@ -15,7 +15,7 @@
 
 (fn capabilities_with_encoding []
   (let [{: default_capabilities} (require :cmp_nvim_lsp)]
-    (vim.tbl_deep_extend :force default_capabilities
+    (vim.tbl_deep_extend :force (default_capabilities)
                          {:general {:positionEncodings [:utf-16]}})))
 
 [{1 :neovim/nvim-lspconfig
