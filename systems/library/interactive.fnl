@@ -7,8 +7,11 @@
 (fn install-scala []
   (let [dir (.. home :/.local/share/coursier/bin)]
     (run [:coursier :java :--jvm "temurin:17" :--setup])
-    (run [:coursier :setup :--yes])
-    (run [:coursier :install :metals :--install-dir dir])))
+    (run [:coursier :java :--jvm "temurin:11" :--setup])
+    (run [:coursier :install "sbt:1.9.9"])
+    (run [:coursier :install "scalafmt:2.7.5"])
+    (run [:coursier :install :metals :--install-dir dir])
+    (run [:coursier :install "scala:2.12.19" "scalac:2.12.19"])))
 
 (fn connect-github []
   (let [ssh-key-path (.. home :/.ssh/ user :_rsa.pub)
