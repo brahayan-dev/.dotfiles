@@ -21,3 +21,8 @@
 ./workstation install scala    # cs java --jvm temurin:17 --setup + cs setup --yes + cs install metals
 ./workstation install clojure  # cs java --jvm temurin:17 --setup + clojure-lsp install script
 ```
+
+
+## Wingman — Rollout Investigations
+
+Use the wingman skill for any rollout investigation or failure diagnosis.

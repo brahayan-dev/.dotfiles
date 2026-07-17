@@ -17,11 +17,6 @@
         :--account-alias
         :br-staging]))
 
-(fn nu-certs []
-  (each [_ cli (ipairs clis)]
-    (run [cli :certs :setup :--env :prod])
-    (run [cli :certs :setup :--env :staging])))
-
 (fn nu-jwt []
   (each [_ cli (ipairs clis)]
     (run [cli :auth :jwt :--env :prod])
@@ -32,12 +27,7 @@
     (run [cli :auth :get-refresh-token :--env :staging :--force])
     (run [cli :auth :get-access-token :--env :staging])))
 
-(local steps [nu-update-proj
-              nu-dev-bd
-              nu-creds-br
-              nu-certs
-              nu-jwt
-              nu-tokens-stg])
+(local steps [nu-update-proj nu-dev-bd nu-creds-br nu-jwt nu-tokens-stg])
 
 (fn bom-dia []
   (each [_ step (ipairs steps)]

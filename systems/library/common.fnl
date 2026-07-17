@@ -14,6 +14,8 @@
                      [:Darwin true] :work
                      [:Darwin false] :life))
 
-(local run #(-> $ (table.concat " ") os.execute))
+(fn run [cmd]
+  (print "-->>" (table.concat cmd " "))
+  (-> cmd (table.concat " ") os.execute))
 
 {: run : os-name : environment}

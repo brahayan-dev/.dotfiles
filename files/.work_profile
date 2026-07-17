@@ -46,7 +46,7 @@ export PATH=$GOPATH/bin:$PATH
 export PATH="$PATH:/Users/xavier.ramirez/Library/Application Support/Coursier/bin"
 
 # {mark} START IT-ENG JAMF SETUP - ~/.nurc File
-export GITHUB_TOKEN=$GITHUBTOKEN
+export GITHUB_TOKEN=$(gh auth token)
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export NUCLI_HOME=~/dev/nu/nucli
