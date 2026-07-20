@@ -10,5 +10,6 @@
       - fennel
       - fennel-ls
       - podman
+      - ripgrep
       - tree-sitter-cli
     state: latest

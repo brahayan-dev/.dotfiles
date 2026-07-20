@@ -3,7 +3,7 @@
 ;; TODO: Add support for nvim-dap and telescope
 
 (local settings {:excludedPackages {}
-                 :serverVersion :1.6.7
+                 :serverVersion :1.6.4
                  :showInferredType true
                  :javaHome (os.getenv :JHFM)
                  :showImplicitArguments false})
