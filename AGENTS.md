@@ -93,24 +93,9 @@ LSP uses the new `vim.lsp.config`/`vim.lsp.enable` API (not the old `lspconfig.s
 
 Treesitter parsers: lua, sql, css, bash, yaml, json, html, scala, clojure, javascript, embedded_template, **fennel**. Completion via nvim-cmp with LuaSnip and cmp-nvim-lsp. Paredit is enabled for `clojure` and `fennel` filetypes.
 
-#### Fennel style
+#### Fennel gotchas
 
-Fennel conventions for the Neovim config. Use these for any new `.fnl` file.
-
-Standards observed in `files/nvim/fnl/` (use these for any new `.fnl` file):
-
-- 2-space indentation (matches `stylua`).
-- Destructure with keywords: `(local {: setup} (require :foo))`.
-- Top-level `(local ...)` for data tables and for `require` of in-repo modules (`:mappings`, `:nfnl.module`) only. **Do not** `require` lazy plugins at the top of a spec file — they are not on the runtimepath when lazy loads the spec.
-- Assignment: `(set t.field val)` works even when `field` contains `/`, `-`, `#`, `.`, or other special characters — Fennel compiles that segment to bracket-string indexing automatically (e.g. `(set vim.g.conjure#mapping#doc_word :K)` compiles to `vim.g["conjure#mapping#doc_word"] = "K"`). Reach for `tset` only when the key is computed at runtime rather than a static symbol chain, or to patch several nested keys in one call.
-- `:config` may use `#()` short lambdas or `(fn [] ...)`; nfnl compiles `#(a b c)` to a function that runs all statements and returns the last, so multi-statement bodies are safe. Prefer `#()` for single-expression bodies and `(fn [] ...)` when you want the multi-statement form to be visually distinct.
-- Method calls on a freshly-required module need a double paren: `((. (require :foo) :method) args)`. `((require :foo) :method args)` compiles to a broken call.
-- Property access: `(. tbl :field)`. Function call on a value: `(. obj :method args)`.
-- Blocks: `(let [bindings...] body)`, `(when c ...)`, `(each [_ v (ipairs t)] ...)`, `(.. "a" b "c")`.
-- No comments. If a comment is unavoidable, keep it to one short line.
-- Format with `fnlfmt --fix <file>`. The formatter rewrites strings to keywords (and vice versa) and rewraps forms — let it, don't fight it.
-
-Gotchas — these cost real time during the migration, watch for them:
+These cost real time during the migration, watch for them:
 
 1. **Top-level `require` of a lazy plugin fails** with `module 'X' not found` when lazy loads the spec. The plugin is not on the runtimepath yet. Move the `require` inside the `:config` lambda, or declare the spec with `:dependencies` so lazy loads it first.
 2. **`cmp_nvim_lsp.default_capabilities` is a function, not a value.** Pass the result of calling it (`(require :cmp_nvim_lsp).default_capabilities()`), not the field. Otherwise `vim.tbl_deep_extend` raises `expected table, got function`.
