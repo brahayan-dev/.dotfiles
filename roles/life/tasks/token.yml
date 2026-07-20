@@ -1,0 +1,10 @@
+---
+- name: Propagate API Tokens
+  ansible.builtin.lineinfile:
+    create: true
+    line: "export {{ item.name }}={{ item.value }}"
+    path: "{{ ansible_facts['user_dir'] }}/.dotfiles/files/.private_profile"
+  loop:
+    - { name: "GITHUB_TOKEN", value: "{{ github_token }}" }
+    - { name: "ANTHROPIC_API_KEY", value: "{{ anthropic_api_key }}" }
+  notify: event_reload_zsh_files

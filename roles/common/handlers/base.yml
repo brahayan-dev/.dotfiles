@@ -1,0 +1,15 @@
+---
+- name: Install Ohmyzsh
+  block:
+    - name: Install Ohmyzsh - Download Installer
+      get_url:
+        url: https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+        dest: /tmp/ohmyzsh.sh
+        mode: 0777
+      listen: event_download_ohmyzsh
+    - name: Install Ohmyzsh - Run Installer
+      shell: |
+        echo "Y" | sh /tmp/ohmyzsh.sh
+      args:
+        creates: "{{ ansible_facts['user_dir'] }}/.oh-my-zsh"
+      listen: event_install_ohmyzsh

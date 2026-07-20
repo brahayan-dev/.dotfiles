@@ -1,0 +1,14 @@
+---
+- name: Install Dependencies
+  become: "{{ ansible_facts['os_family'] == 'Archlinux' }}"
+  package:
+    name:
+      - lua
+      - luajit
+      - luarocks
+      - fnlfmt
+      - fennel
+      - fennel-ls
+      - podman
+      - tree-sitter-cli
+    state: latest

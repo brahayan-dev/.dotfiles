@@ -1,0 +1,7 @@
+---
+- hosts: Workstation
+
+  roles:
+    - common
+    - macos
+    - work

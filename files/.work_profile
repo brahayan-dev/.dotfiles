@@ -1,0 +1,77 @@
+#!/usr/bin/env zsh
+
+# BASIC CONFIGURATION
+# -------------------
+export NU_HOME="${HOME}/dev/nu"
+export NUCLI_HOME="${NU_HOME}/nucli"
+export MONOREPO_ROOT="$NU_HOME/mini-meta-repo"
+export FLUTTER_SDK_HOME="$HOME/sdk-flutter"
+export FLUTTER_ROOT="$FLUTTER_SDK_HOME"
+export ANDROID_HOME="$HOME/Library/Android/sdk"
+export ANDROID_SDK="$ANDROID_HOME"
+
+export PATH="/usr/local/bin:$PATH"
+export PATH="/usr/local/sbin:$PATH"
+export PATH="/opt/homebrew/bin:$PATH"
+export PATH="/opt/homebrew/sbin:$PATH"
+export PATH="/usr/local/opt/curl/bin:$PATH"
+export PATH="/usr/local/opt/file-formula/bin:$PATH"
+export PATH="${NUCLI_HOME}:${PATH}"
+export GPG_TTY=$(tty)
+export PINENTRY_USER_DATA="USE_CURSES=1"
+
+if [ -d "$(brew --prefix)/opt/grep/libexec/gnubin" ]; then
+  PATH="$(brew --prefix)/opt/grep/libexec/gnubin:$PATH"
+fi
+
+# NOTE: Python setup
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init - zsh)"
+
+# {mark} START IT-ENG JAMF SETUP MOBILE ZSHRC
+export MONOREPO_ROOT="$NU_HOME/mini-meta-repo"
+export PATH="$PATH:$MONOREPO_ROOT/monocli/bin"
+export FLUTTER_SDK_HOME="$HOME/sdk-flutter"
+export FLUTTER_ROOT="$FLUTTER_SDK_HOME"
+export PATH="$PATH:$FLUTTER_SDK_HOME/bin:$NU_HOME/.pub-cache/bin:$FLUTTER_ROOT/bin/cache/dart-sdk/bin"
+export ANDROID_HOME="$HOME/Library/Android/sdk"
+export ANDROID_SDK="$ANDROID_HOME"
+export PATH="$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME:$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator"
+# {mark} END IT-ENG JAMF SETUP MOBILE ZSHRC
+
+# Golang
+export GOPATH="${NU_HOME}/go"
+export PATH=$GOPATH/bin:$PATH
+export PATH="$PATH:/Users/xavier.ramirez/Library/Application Support/Coursier/bin"
+
+# {mark} START IT-ENG JAMF SETUP - ~/.nurc File
+export GITHUB_TOKEN=$(gh auth token)
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export NUCLI_HOME=~/dev/nu/nucli
+export IOS_CLI_HOME=~/dev/nu/ios-cli
+export PATH="$NUCLI_HOME:$PATH"
+export PATH="$IOS_CLI_HOME:$PATH"
+# {mark} END IT-ENG JAMF SETUP - ~/.nurc File
+
+# Node.js PATH (added by devtools)
+export PATH="$HOME/.local/node/bin:$PATH"
+
+# NVM (added by devtools)
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+export NU_COUNTRY=data
+eval "$(rbenv init -)"
+
+[ -f ~/.nurc ] && source $HOME/.nurc
+
+# NOTE: Java
+export PATH="$PATH:/Users/xavier.ramirez/.local/share/coursier/bin"
+export JHFM="/Users/xavier.ramirez/Library/Caches/Coursier/arc/https/github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.19%252B10/OpenJDK17U-jdk_aarch64_mac_hotspot_17.0.19_10.tar.gz/jdk-17.0.19+10/Contents/Home"
+export JAVA_HOME="/Users/xavier.ramirez/Library/Caches/Coursier/arc/https/github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.31%252B11/OpenJDK11U-jdk_aarch64_mac_hotspot_11.0.31_11.tar.gz/jdk-11.0.31+11/Contents/Home"
+
+# NOTE: Alias
+alias llm='claude --add-dir ~/Projects/workbook'
+alias refresh='cd "$HOME/.dotfiles/" && ./workstation refresh nu'

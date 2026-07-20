@@ -1,0 +1,27 @@
+---
+- name: Render SSH Configuration
+  template:
+    src: "templates/config.j2"
+    dest: "{{ ansible_facts['user_dir'] }}/.ssh/config"
+    owner: "{{ ansible_facts['user_id'] }}"
+    mode: 0644
+  notify:
+    - event_reload_zsh_files
+
+- name: Set Life Symlink
+  ansible.builtin.file:
+    src: "{{ ansible_facts['user_dir'] }}/.dotfiles/files/{{ item }}"
+    dest: "{{ ansible_facts['user_dir'] }}/{{ item }}"
+    state: link
+    force: true
+  loop:
+    - .life_profile
+  notify: event_reload_zsh_files
+
+- name: Set Opencode Configuration Symlink
+  ansible.builtin.file:
+    src: "{{ ansible_facts['user_dir'] }}/.dotfiles/systems/life/AGENTS.md"
+    dest: "{{ ansible_facts['user_dir'] }}/.config/opencode/AGENTS.md"
+    state: link
+    force: true
+  notify: event_reload_zsh_files

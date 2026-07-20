@@ -1,0 +1,59 @@
+---
+- name: Install Dependencies
+  become: true
+  community.general.pacman:
+    name:
+      - fd
+      - git
+      - zsh
+      - gcc
+      - curl
+      - tree
+      - tidy
+      - make
+      - cmake
+      - shfmt
+      - unzip
+      - pdftk
+      - sqlite
+      - neovim
+      - stylua
+      - duckdb
+      - rlwrap
+      - direnv
+      - pandoc
+      - dbeaver
+      - ghostty
+      - ripgrep
+      - lazygit
+      - opentofu
+      - base-devel
+      - github-cli
+      - shellcheck
+      - ttf-fira-code
+      - lua-language-server
+    state: latest
+    update_cache: true
+  notify:
+    - event_download_ohmyzsh
+    - event_install_ohmyzsh
+
+- name: Install Npm Dependencies
+  become: true
+  community.general.npm:
+    name: "{{ item }}"
+    global: true
+    force: true
+    state: latest
+  loop: "{{ npm_global_packages }}"
+
+- name: Install Ollama
+  become: true
+  shell: curl -fsSL https://ollama.com/install.sh | sh
+  args:
+    creates: "/usr/local/bin/ollama"
+
+- name: Install Opencode
+  shell: curl -fsSL https://opencode.ai/install | bash
+  args:
+    creates: "{{ ansible_facts['user_dir'] }}/.local/bin/opencode"

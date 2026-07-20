@@ -1,0 +1,6 @@
+---
+- hosts: Workstation
+
+  roles:
+    - common
+    - linux

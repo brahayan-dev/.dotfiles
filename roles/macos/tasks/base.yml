@@ -1,0 +1,49 @@
+---
+- name: Install Dependencies
+  community.general.homebrew:
+    name:
+      - fd
+      - gh
+      - zsh
+      - git
+      - gmp
+      - gcc
+      - curl
+      - grip
+      - tree
+      - node
+      - cmake
+      - shfmt
+      - unzip
+      - pandoc
+      - duckdb
+      - neovim
+      - stylua
+      - libtool
+      - lazygit
+      - ripgrep
+      - ghostty
+      - readline
+      - openssl@3
+      - shellcheck
+      - font-fira-code
+      - lua-language-server
+    state: latest
+  notify:
+    - event_download_ohmyzsh
+    - event_install_ohmyzsh
+
+- name: Install Npm Dependencies
+  community.general.npm:
+    name: "{{ item }}"
+    global: true
+    force: true
+    state: latest
+  loop: "{{ npm_global_packages }}"
+
+- name: Install Common Cask Dependencies
+  community.general.homebrew_cask:
+    name:
+      - arc
+      - ollama-app
+    state: latest

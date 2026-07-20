@@ -1,0 +1,9 @@
+Host github.com
+  AddKeysToAgent yes
+  IgnoreUnknown UseKeychain
+  IdentityFile ~/.ssh/{{ ansible_facts['user_id'] }}_rsa
+
+Host {{ vps_name }}
+  HostName {{ vps_ipv4 }}
+  User {{ vps_user }}
+  IdentityFile ~/.ssh/{{ ansible_facts['user_id'] }}_rsa

@@ -1,0 +1,88 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+RED=$'\033[0;31m'
+GREEN=$'\033[0;32m'
+NC=$'\033[0m'
+
+log_info() { printf '%s[INFO]%s %s\n' "$GREEN" "$NC" "$*"; }
+log_error() { printf '%s[ERROR]%s %s\n' "$RED" "$NC" "$*" >&2; }
+
+have() { command -v "$1" >/dev/null 2>&1; }
+
+ensure_brew() {
+  if have brew; then
+    return 0
+  fi
+
+  log_info "Installing Homebrew"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+  if [[ -x /opt/homebrew/bin/brew ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  elif [[ -x /usr/local/bin/brew ]]; then
+    eval "$(/usr/local/bin/brew shellenv)"
+  fi
+
+  have brew || {
+    log_error "Brew Not Found After Install"
+    return 1
+  }
+}
+
+ensure_deps_macos() {
+  ensure_brew
+  if ! have ansible; then
+    log_info "Installing Ansible"
+    brew install ansible
+  fi
+  if ! have fennel; then
+    log_info "Installing Fennel"
+    brew install fennel
+  fi
+}
+
+ensure_deps_linux() {
+  if have pacman; then
+    if ! have ansible || ! have fennel; then
+      log_info "Updating Pacman Index"
+      sudo pacman-mirrors --fasttrack 5 && sudo pacman -Syu
+    fi
+
+    if ! have ansible; then
+      log_info "Installing Ansible"
+      sudo pacman -S ansible
+    fi
+    if ! have fennel; then
+      log_info "Installing Fennel"
+      sudo pacman -S fennel
+    fi
+  else
+    log_error "Could Not Detect Package Manager To Install Dependencies"
+    return 1
+  fi
+}
+
+main() {
+  local os script_dir
+  script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+  os="$(uname -s)"
+
+  case "$os" in
+  Darwin)
+    ensure_deps_macos
+    ;;
+  Linux)
+    ensure_deps_linux
+    ;;
+  *)
+    log_error "OS Not Supported: $os"
+    return 1
+    ;;
+  esac
+
+  cd "$script_dir"
+  exec fennel systems/core.fnl "$@"
+}
+
+main "$@"

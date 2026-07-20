@@ -1,0 +1,6 @@
+font-size = 17
+font-family = "Fira Code"
+cursor-style = bar
+adjust-cursor-thickness = "300%"
+
+theme = dark:Rose Pine,light:Rose Pine Dawn

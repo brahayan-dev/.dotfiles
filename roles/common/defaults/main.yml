@@ -1,0 +1,14 @@
+---
+npm_global_packages:
+  - prettier
+  - stylelint
+  - typescript
+  - http-server
+  - js-beautify
+  - bash-language-server
+  - yaml-language-server
+  - typescript-language-server
+  - vscode-langservers-extracted
+  - "@ansible/ansible-language-server"
+
+git_user_email: "bxsr@proton.me"
