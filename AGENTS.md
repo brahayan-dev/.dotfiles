@@ -1,6 +1,6 @@
 # AGENTS.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to opencode and other AI coding agents working in this repository.
 
 ## Architecture
 
@@ -26,19 +26,21 @@ The `workstation` shell script detects the OS to bootstrap deps (`fennel` + `ans
 
 The command registry is the `register` function in `systems/core.fnl`. Each entry pairs a handler with an `:allowed-on` list (`:all`, `:work`, or `[:life :linux]`).
 
-| Command          | work | life | linux | handler                           |
-| ---------------- | :--: | :--: | :---: | --------------------------------- |
-| `setup`          |  ●   |  ●   |   ●   | `systems/library/ansible.fnl`     |
-| `ping`           |  ●   |  ●   |   ●   | `systems/library/ansible.fnl`     |
-| `install scala`  |  ●   |  ·   |   ·   | `systems/library/interactive.fnl` |
-| `connect github` |  ·   |  ●   |   ●   | `systems/library/interactive.fnl` |
-| `refresh nu`     |  ●   |  ·   |   ·   | `systems/library/work.fnl`        |
+| Command            | work | life | linux | handler                           |
+| ------------------ | :--: | :--: | :---: | --------------------------------- |
+| `setup`            |  ●   |  ●   |   ●   | `systems/library/ansible.fnl`     |
+| `ping`             |  ●   |  ●   |   ●   | `systems/library/ansible.fnl`     |
+| `install scala`    |  ●   |  ·   |   ·   | `systems/library/interactive.fnl` |
+| `connect github`   |  ·   |  ●   |   ●   | `systems/library/interactive.fnl` |
+| `refresh nu`       |  ●   |  ·   |   ·   | `systems/library/work.fnl`        |
+| `generate aliases` |  ●   |  ●   |   ●   | `systems/library/repository.fnl`  |
 
 - `setup` runs the Ansible playbook for the host's environment (`library/ansible.fnl:setup`).
 - `ping` runs `ansible -m ping` against localhost as a sanity check (`library/ansible.fnl:ping`).
 - `install <lang>` installs a toolchain (scala) via coursier (`library/interactive.fnl:install-scala`).
 - `connect github` authenticates with GitHub (SSH key + token + origin) (`library/interactive.fnl:connect-github`).
-- `refresh nu` runs the seven-step Nu refresh sequence (`library/work.fnl:bom-dia`, work only).
+- `refresh nu` runs the five-step Nu refresh sequence (`library/work.fnl:bom-dia`, work only).
+- `generate aliases` emits shell `cd`/`nvim` aliases for known repositories in `~/.dotfiles`, `~/Projects`, and (on work) `~/dev/nu` (`library/repository.fnl:generate-aliases`).
 
 When a command is run in an environment not in its `:allowed-on` list, `systems/library/logic.fnl`'s `dispatch` exits silently without invoking the handler.
 
@@ -56,6 +58,7 @@ systems/
     logic.fnl                  allowed? · dispatch  (gating primitive)
     ansible.fnl                ping · setup
     interactive.fnl            install-scala · connect-github
+    repository.fnl             generate-aliases
     work.fnl                   bom-dia  (Nu refresh sequence)
 
   macos/ansible.cfg            Darwin ansible config (python3, roles_path)

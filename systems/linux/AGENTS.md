@@ -10,9 +10,3 @@
 | Language | Runtime         | LSP    | Formatter        |
 | -------- | --------------- | ------ | ---------------- |
 | Lua      | LuaJIT (pacman) | lua_ls | conform → stylua |
-
-### Install commands
-
-```
-./workstation install lua      # luarocks install busted
-```

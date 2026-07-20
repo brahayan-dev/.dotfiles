@@ -36,13 +36,14 @@ work ∩ life ∩ linux = { Fennel, Neovim, Claude Code, zsh, ~/.config }
 
 The dispatcher is the `register` function in `systems/core.fnl`. Each entry pairs a handler with an `:allowed-on` list (`:all`, `:work`, or `[:life :linux]`).
 
-| command          | work | life | linux | handler                           |
-| ---------------- | :--: | :--: | :---: | --------------------------------- |
-| `setup`          |  ●   |  ●   |   ●   | `systems/library/ansible.fnl`     |
-| `ping`           |  ●   |  ●   |   ●   | `systems/library/ansible.fnl`     |
-| `install scala`  |  ●   |  ·   |   ·   | `systems/library/interactive.fnl` |
-| `connect github` |  ·   |  ●   |   ●   | `systems/library/interactive.fnl` |
-| `refresh nu`     |  ●   |  ·   |   ·   | `systems/library/work.fnl`        |
+| command            | work | life | linux | handler                           |
+| ------------------ | :--: | :--: | :---: | --------------------------------- |
+| `setup`            |  ●   |  ●   |   ●   | `systems/library/ansible.fnl`     |
+| `ping`             |  ●   |  ●   |   ●   | `systems/library/ansible.fnl`     |
+| `install scala`    |  ●   |  ·   |   ·   | `systems/library/interactive.fnl` |
+| `connect github`   |  ·   |  ●   |   ●   | `systems/library/interactive.fnl` |
+| `refresh nu`       |  ●   |  ·   |   ·   | `systems/library/work.fnl`        |
+| `generate aliases` |  ●   |  ●   |   ●   | `systems/library/repository.fnl`  |
 
 ```
 setup    ──▶  run the ansible playbook for the host
@@ -50,6 +51,7 @@ ping     ──▶  ansible -m ping (sanity check)
 install  ──▶  install a language toolchain (scala)
 connect  ──▶  authenticate with the remote forge (github only, today)
 refresh  ──▶  refresh work credentials (work only)
+generate ──▶  generate shell aliases for known repositories
 ```
 
 Usage:
@@ -59,6 +61,7 @@ $ ./workstation <command> [entity]
 $ ./workstation install scala
 $ ./workstation connect github
 $ ./workstation refresh nu
+$ ./workstation generate aliases
 ```
 
 When a command is run in an environment that is not in its `:allowed-on` list, `systems/library/logic.fnl`'s `dispatch` exits silently without invoking the handler.
@@ -78,6 +81,7 @@ When a command is run in an environment that is not in its `:allowed-on` list, `
 │   │   ├── logic.fnl            ◀── allowed? · dispatch  (gating primitive)
 │   │   ├── ansible.fnl          ◀── ping · setup
 │   │   ├── interactive.fnl      ◀── install-scala · connect-github
+│   │   ├── repository.fnl      ◀── generate-aliases
 │   │   └── work.fnl             ◀── bom-dia  (Work refresh sequence)
 │   │
 │   ├── macos/ansible.cfg

@@ -11,17 +11,9 @@
 
 | Language | Runtime                      | LSP                      | Formatter | Notes                                   |
 | -------- | ---------------------------- | ------------------------ | --------- | --------------------------------------- |
-| Scala    | coursier (JDK 17)            | Metals (via nvim-metals) | —         | Spark development                       |
-| Clojure  | homebrew + coursier (JDK 17) | clojure-lsp              | cljfmt    | ClojureScript via aliases + shadow-cljs |
-| Java     | coursier (temurin:17)        | —                        | —         | JDK via coursier                        |
-
-### Install commands
-
-```
-./workstation install scala    # cs java --jvm temurin:17 --setup + cs setup --yes + cs install metals
-./workstation install clojure  # cs java --jvm temurin:17 --setup + clojure-lsp install script
-```
-
+| Scala    | coursier (JDK 11)            | Metals (via nvim-metals) | —         | Spark development                       |
+| Clojure  | homebrew + coursier (JDK 11) | clojure-lsp              | cljfmt    | ClojureScript via aliases + shadow-cljs |
+| Java     | coursier (temurin:11)        | —                        | —         | JDK via coursier                        |
 
 ## Wingman — Rollout Investigations
 
