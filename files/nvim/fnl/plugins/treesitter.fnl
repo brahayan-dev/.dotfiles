@@ -8,7 +8,6 @@
               :scala
               :fennel
               :clojure
-              :glimmer
               :javascript
               :embedded_template])
 
@@ -17,7 +16,7 @@
   nil)
 
 (fn add-support-to-mustache []
-  (vim.treesitter.language.register :glimmer :mustache))
+  (vim.treesitter.language.register :html :mustache))
 
 [{1 :nvim-treesitter/nvim-treesitter-textobjects
   :branch :main

@@ -4,10 +4,11 @@
   (let [cmp (require :cmp)
         ->sources (require :cmp.config.sources)
         {: bordered} (require :cmp.config.window)
-        {: lsp_expand} (require :luasnip)
+        {: lsp_expand : filetype_extend} (require :luasnip)
         {: lazy_load} (require :luasnip.loaders.from_vscode)
         preset (. cmp.mapping.preset :insert)]
     (lazy_load)
+    (filetype_extend :mustache [:html])
     (cmp.setup {:snippet {:expand #(lsp_expand $.body)}
                 :window {:completion (bordered) :documentation (bordered)}
                 :mapping (-> cmp autocomplete preset)
