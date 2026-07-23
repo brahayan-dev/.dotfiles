@@ -45,3 +45,5 @@
                                                                   {:clear true})
                               :callback (fn [] (vim.hl.on_yank))
                               :desc "Highlight when yanking text"})
+
+(vim.filetype.add {:extension {:mustache :mustache}})

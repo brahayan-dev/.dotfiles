@@ -1,5 +1,7 @@
 (local formatters_by_ft {:lua [:stylua]
+                         :html [:prettier]
                          :json [:prettier]
+                         :mustache [:prettier]
                          :fennel [:fnlfmt]
                          :scala [:scalafmt]
                          :clojure [:cljfmt]

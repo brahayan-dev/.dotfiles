@@ -8,12 +8,16 @@
               :scala
               :fennel
               :clojure
+              :glimmer
               :javascript
               :embedded_template])
 
 (fn callback [args]
   (pcall vim.treesitter.start args.buf)
   nil)
+
+(fn add-support-to-mustache []
+  (vim.treesitter.language.register :glimmer :mustache))
 
 [{1 :nvim-treesitter/nvim-treesitter-textobjects
   :branch :main
@@ -24,4 +28,6 @@
   :config #(let [{: setup : install} (require :nvim-treesitter)]
              (setup)
              (install langs)
-             (vim.api.nvim_create_autocmd :FileType {: callback}))}]
+             (add-support-to-mustache)
+             (vim.api.nvim_create_autocmd :FileType
+                                          {: callback :pattern [:mustache]}))}]
