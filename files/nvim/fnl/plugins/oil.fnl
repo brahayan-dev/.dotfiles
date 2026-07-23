@@ -8,6 +8,7 @@
                       :.become_
                       :.parcel-cache
                       :dist
+                      :lua_modules
                       :node_modules])]
     (when (= name v)
       (set result true)))

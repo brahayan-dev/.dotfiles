@@ -14,5 +14,6 @@
       - tofu-ls
       - opencode
       - opentofu
+      - luarocks
       - dbeaver-community
     state: latest
