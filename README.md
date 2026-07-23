@@ -77,11 +77,11 @@ When a command is run in an environment that is not in its `:allowed-on` list, `
 │   ├── hosts.ini                ◀── ansible inventory
 │   │
 │   ├── library/                 ◀── Fennel libraries
-│   │   ├── common.fnl           ◀── os-name · working-day? · environment · run
+│   │   ├── common.fnl           ◀── os-name · environment · run
 │   │   ├── logic.fnl            ◀── allowed? · dispatch  (gating primitive)
 │   │   ├── ansible.fnl          ◀── ping · setup
 │   │   ├── interactive.fnl      ◀── install-scala · connect-github
-│   │   ├── repository.fnl      ◀── generate-aliases
+│   │   ├── repository.fnl       ◀── generate-aliases
 │   │   └── work.fnl             ◀── bom-dia  (Work refresh sequence)
 │   │
 │   ├── macos/ansible.cfg
