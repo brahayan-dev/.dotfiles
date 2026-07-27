@@ -4,6 +4,10 @@
 (local user (os.getenv :USER))
 (local host (os.getenv :HOST))
 
+(fn install-fsharp []
+  (run [:dotnet :tool :install :--global :fantomas])
+  (run [:dotnet :tool :install :--global :fsautocomplete]))
+
 (fn install-scala []
   (let [dir (.. home :/.local/share/coursier/bin)]
     (run [:coursier :java :--jvm "temurin:11" :--setup])
@@ -20,4 +24,4 @@
     (run [:gh :auth :refresh :-h :github.com :-s "admin:ssh_signing_key"])
     (run [:gh :ssh-key :add ssh-key-path :-t host])))
 
-{: install-scala : connect-github}
+{: install-fsharp : install-scala : connect-github}

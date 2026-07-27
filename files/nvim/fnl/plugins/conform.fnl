@@ -3,6 +3,7 @@
                          :json [:prettier]
                          :mustache [:prettier]
                          :fennel [:fnlfmt]
+                         :fsharp [:fantomas]
                          :scala [:scalafmt]
                          :clojure [:cljfmt]
                          :markdown [:prettier]})

@@ -19,8 +19,12 @@
 (local ping {:allowed-on :all :handler ansible.ping})
 (local setup {:allowed-on :all :handler ansible.setup})
 (local refresh-nu {:allowed-on :work :handler work.bom-dia})
-(local install-scala {:allowed-on :work :handler interactive.install-scala})
 (local generate-aliases {:allowed-on :all :handler repository.generate-aliases})
+
+(local install-scala {:allowed-on :work :handler interactive.install-scala})
+(local install-fsharp
+       {:allowed-on [:life :linux] :handler interactive.install-fsharp})
+
 (local connect-github
        {:allowed-on [:life :linux] :handler interactive.connect-github})
 
@@ -33,6 +37,7 @@
     [:setup _] setup
     [:refresh :nu] refresh-nu
     [:install :scala] install-scala
+    [:install :fsharp] install-fsharp
     [:connect :github] connect-github
     [:generate :aliases] generate-aliases
     [_ _] default))

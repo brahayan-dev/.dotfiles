@@ -7,6 +7,7 @@
               :html
               :scala
               :fennel
+              :fsharp
               :clojure
               :javascript
               :embedded_template])
@@ -29,4 +30,6 @@
              (install langs)
              (add-support-to-mustache)
              (vim.api.nvim_create_autocmd :FileType
-                                          {: callback :pattern [:mustache]}))}]
+                                          {: callback
+                                           :pattern [:mustache
+                                                     (_G.unpack langs)]}))}]
