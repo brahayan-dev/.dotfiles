@@ -28,6 +28,7 @@
       - lazygit
       - opentofu
       - base-devel
+      - dotnet-sdk
       - github-cli
       - shellcheck
       - ttf-fira-code

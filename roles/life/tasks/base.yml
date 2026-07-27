@@ -9,11 +9,11 @@
 - name: Install Dependencies
   community.general.homebrew:
     name:
+      - dotnet
       - direnv
       - sqlite
       - tofu-ls
       - opencode
       - opentofu
-      - luarocks
       - dbeaver-community
     state: latest
