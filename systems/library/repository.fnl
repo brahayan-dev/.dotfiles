@@ -2,6 +2,7 @@
 
 (local repos-dot [:.dotfiles])
 (local repos-base [:kiln :workbook :turing])
+(local repos-akeptous [:risk-box :risk-hub])
 (local repos-fentari [:thalassa-air :thalassa-box :thalassa-hub])
 (local repos-work [:babel
                    :itaipu
@@ -19,6 +20,7 @@
 (local work {:repos repos-work :base-path (.. home :/dev/nu/)})
 (local base {:repos repos-base :base-path (.. home :/Projects/)})
 (local fentari {:repos repos-fentari :base-path (.. home :/Projects/)})
+(local akeptous {:repos repos-akeptous :base-path (.. home :/Projects/)})
 
 (fn run [v]
   (-> v (table.concat " ") print))
@@ -45,6 +47,8 @@
   (load base)
   (case environment
     :work (load work)
-    _ (load fentari)))
+    _ (do
+        (load akeptous)
+        (load fentari))))
 
 {: generate-aliases}
