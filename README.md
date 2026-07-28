@@ -20,11 +20,11 @@ The `workstation` shell script detects the OS, installs `fennel` and `ansible` i
 
 Three environments, partitioned by host signal (see `systems/library/common.fnl`):
 
-| env     | host signal              | toolchain                                   |
-| ------- | ------------------------ | ------------------------------------------- |
-| `work`  | macOS, `~/.nurc` exists  | Scala, Clojure, Fennel, Work infrastructure |
-| `life`  | macOS, default           | Personal dev (SSH, git, API tokens)         |
-| `linux` | Linux, `pacman` detected | Similar to `life` with Linux-specific pkgs  |
+| env     | host signal              | toolchain                                        |
+| ------- | ------------------------ | ------------------------------------------------- |
+| `work`  | macOS, `~/.nurc` exists  | Scala, Clojure, Fennel, Work infrastructure      |
+| `life`  | macOS, default           | Personal dev (SSH, git, API tokens), F# (dotnet) |
+| `linux` | Linux, `pacman` detected | Similar to `life` with Linux-specific pkgs, F# (dotnet) |
 
 Intersection — what every environment inherits:
 
@@ -43,12 +43,13 @@ The dispatcher is the `register` function in `systems/core.fnl`. Each entry pair
 | `install scala`    |  ●   |  ·   |   ·   | `systems/library/interactive.fnl` |
 | `connect github`   |  ·   |  ●   |   ●   | `systems/library/interactive.fnl` |
 | `refresh nu`       |  ●   |  ·   |   ·   | `systems/library/work.fnl`        |
+| `install fsharp`   |  ·   |  ●   |   ●   | `systems/library/interactive.fnl` |
 | `generate aliases` |  ●   |  ●   |   ●   | `systems/library/repository.fnl`  |
 
 ```
 setup    ──▶  run the ansible playbook for the host
 ping     ──▶  ansible -m ping (sanity check)
-install  ──▶  install a language toolchain (scala)
+install  ──▶  install a language toolchain (scala, fsharp)
 connect  ──▶  authenticate with the remote forge (github only, today)
 refresh  ──▶  refresh work credentials (work only)
 generate ──▶  generate shell aliases for known repositories
@@ -59,6 +60,7 @@ Usage:
 ```
 $ ./workstation <command> [entity]
 $ ./workstation install scala
+$ ./workstation install fsharp
 $ ./workstation connect github
 $ ./workstation refresh nu
 $ ./workstation generate aliases
@@ -75,12 +77,13 @@ When a command is run in an environment that is not in its `:allowed-on` list, `
 ├── systems/                     ◀── Fennel CLI · ansible config
 │   ├── core.fnl                 ◀── entrypoint + register table
 │   ├── hosts.ini                ◀── ansible inventory
+│   ├── .vault_ .become_         ◀── vault/become password files (gitignored)
 │   │
 │   ├── library/                 ◀── Fennel libraries
 │   │   ├── common.fnl           ◀── os-name · environment · run
 │   │   ├── logic.fnl            ◀── allowed? · dispatch  (gating primitive)
 │   │   ├── ansible.fnl          ◀── ping · setup
-│   │   ├── interactive.fnl      ◀── install-scala · connect-github
+│   │   ├── interactive.fnl      ◀── install-scala · install-fsharp · connect-github
 │   │   ├── repository.fnl       ◀── generate-aliases
 │   │   └── work.fnl             ◀── bom-dia  (Work refresh sequence)
 │   │
@@ -88,13 +91,13 @@ When a command is run in an environment that is not in its `:allowed-on` list, `
 │   ├── linux/
 │   │   ├── ansible.cfg
 │   │   ├── playbook.yml
-    │   │   └── AGENTS.md
-    │   ├── life/
-    │   │   ├── playbook.yml
-    │   │   └── AGENTS.md
-    │   └── work/
-    │       ├── playbook.yml
-    │       └── CLAUDE.md
+│   │   └── AGENTS.md
+│   ├── life/
+│   │   ├── playbook.yml
+│   │   └── AGENTS.md
+│   └── work/
+│       ├── playbook.yml
+│       └── CLAUDE.md
 │
 ├── roles/                       ◀── ansible roles
 │   ├── common/                  all environments
