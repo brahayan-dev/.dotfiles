@@ -9,6 +9,7 @@
                    :solar-wind
                    :controlinho
                    :optimus-prime
+                   :arcadia-policies
                    :reference-data-registry
                    :lending-claude-workspace
                    :data-quality-custom-checks])
