@@ -1,12 +1,20 @@
-(local {: environment} (require :systems.library.common))
+(local {: environment &as common} (require :systems.library.common))
 
 (local repos-dot [:.dotfiles])
 (local repos-base [:kiln :workbook :turing])
 (local repos-akeptous [:risk-box :risk-hub])
 (local repos-fentari [:thalassa-air :thalassa-box :thalassa-hub])
 (local repos-work [:babel
+                   :agora
+                   :earner
+                   :kairos
                    :itaipu
+                   :conrado
+                   :wiseguy
+                   :giovanni
                    :two-face
+                   :thalassa
+                   :underboss
                    :solar-wind
                    :controlinho
                    :optimus-prime
@@ -51,4 +59,8 @@
         (load akeptous)
         (load fentari))))
 
-{: generate-aliases}
+(fn clone-repositories []
+  (each [_ repo (ipairs repos-work)]
+    (common.run [:nu :proj :clone repo])))
+
+{: generate-aliases : clone-repositories}

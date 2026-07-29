@@ -12,6 +12,8 @@
         "    ping                ansible -m ping (sanity check)"
         "    setup               run the ansible playbook for the host"
         "    install scala       install the scala toolchain via coursier"
+        "    install fsharp      install the fsharp toolchain via dotnet"
+        "    clone repositories  clone repositories used in work"
         "    generate aliases    generate aliases for each repository"
         "    connect github      authenticate with the remote forge"
         "    refresh nu          refresh work credentials (work only)"])
@@ -20,13 +22,16 @@
 (local setup {:allowed-on :all :handler ansible.setup})
 (local refresh-nu {:allowed-on :work :handler work.bom-dia})
 (local generate-aliases {:allowed-on :all :handler repository.generate-aliases})
-
 (local install-scala {:allowed-on :work :handler interactive.install-scala})
+
 (local install-fsharp
        {:allowed-on [:life :linux] :handler interactive.install-fsharp})
 
 (local connect-github
        {:allowed-on [:life :linux] :handler interactive.connect-github})
+
+(local clone-repositories
+       {:allowed-on :work :handler repository.clone-repositories})
 
 (local default
        {:allowed-on :all :handler #(each [_ line (ipairs usage)] (print line))})
@@ -39,6 +44,7 @@
     [:install :scala] install-scala
     [:install :fsharp] install-fsharp
     [:connect :github] connect-github
+    [:clone :repositories] clone-repositories
     [:generate :aliases] generate-aliases
     [_ _] default))
 
