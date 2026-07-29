@@ -20,17 +20,11 @@ The `workstation` shell script detects the OS, installs `fennel` and `ansible` i
 
 Three environments, partitioned by host signal (see `systems/library/common.fnl`):
 
-| env     | host signal              | toolchain                                        |
-| ------- | ------------------------ | ------------------------------------------------- |
-| `work`  | macOS, `~/.nurc` exists  | Scala, Clojure, Fennel, Work infrastructure      |
-| `life`  | macOS, default           | Personal dev (SSH, git, API tokens), F# (dotnet) |
+| env     | host signal              | toolchain                                               |
+| ------- | ------------------------ | ------------------------------------------------------- |
+| `work`  | macOS, `~/.nurc` exists  | Scala, Clojure, Fennel, Work infrastructure             |
+| `life`  | macOS, default           | Personal dev (SSH, git, API tokens), F# (dotnet)        |
 | `linux` | Linux, `pacman` detected | Similar to `life` with Linux-specific pkgs, F# (dotnet) |
-
-Intersection — what every environment inherits:
-
-```
-work ∩ life ∩ linux = { Fennel, Neovim, Claude Code, zsh, ~/.config }
-```
 
 ## §2 · commands
 
@@ -41,9 +35,9 @@ The dispatcher is the `register` function in `systems/core.fnl`. Each entry pair
 | `setup`            |  ●   |  ●   |   ●   | `systems/library/ansible.fnl`     |
 | `ping`             |  ●   |  ●   |   ●   | `systems/library/ansible.fnl`     |
 | `install scala`    |  ●   |  ·   |   ·   | `systems/library/interactive.fnl` |
+| `install fsharp`   |  ·   |  ●   |   ●   | `systems/library/interactive.fnl` |
 | `connect github`   |  ·   |  ●   |   ●   | `systems/library/interactive.fnl` |
 | `refresh nu`       |  ●   |  ·   |   ·   | `systems/library/work.fnl`        |
-| `install fsharp`   |  ·   |  ●   |   ●   | `systems/library/interactive.fnl` |
 | `generate aliases` |  ●   |  ●   |   ●   | `systems/library/repository.fnl`  |
 
 ```
@@ -77,7 +71,6 @@ When a command is run in an environment that is not in its `:allowed-on` list, `
 ├── systems/                     ◀── Fennel CLI · ansible config
 │   ├── core.fnl                 ◀── entrypoint + register table
 │   ├── hosts.ini                ◀── ansible inventory
-│   ├── .vault_ .become_         ◀── vault/become password files (gitignored)
 │   │
 │   ├── library/                 ◀── Fennel libraries
 │   │   ├── common.fnl           ◀── os-name · environment · run
