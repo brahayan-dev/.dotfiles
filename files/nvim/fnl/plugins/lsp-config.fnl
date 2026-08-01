@@ -11,6 +11,7 @@
              :fennel_ls
              :ansiblels
              :clojure_lsp
+             :rust_analyzer
              :fsautocomplete])
 
 (local lua_ls_settings {:Lua {:diagnostics {:globals [:vim]}}})

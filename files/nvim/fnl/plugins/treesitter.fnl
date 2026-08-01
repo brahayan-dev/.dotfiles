@@ -1,6 +1,7 @@
 (local langs [:lua
               :sql
               :css
+              :rust
               :bash
               :yaml
               :json

@@ -30,17 +30,17 @@ Three environments, partitioned by host signal (see `systems/library/common.fnl`
 
 The dispatcher is the `register` function in `systems/core.fnl`. Each entry pairs a handler with an `:allowed-on` list (`:all`, `:work`, or `[:life :linux]`).
 
-| command              | work | life | linux | handler                           |
-| -------------------- | :--: | :--: | :---: | --------------------------------- |
-| `ping`               |  ●   |  ●   |   ●   | `systems/library/ansible.fnl`     |
-| `setup`              |  ●   |  ●   |   ●   | `systems/library/ansible.fnl`     |
-| `install rust`       |  ●   |  ●   |   ●   | `systems/library/interactive.fnl` |
-| `install scala`      |  ●   |  ·   |   ·   | `systems/library/interactive.fnl` |
-| `install fsharp`     |  ·   |  ●   |   ●   | `systems/library/interactive.fnl` |
-| `connect github`     |  ·   |  ●   |   ●   | `systems/library/interactive.fnl` |
-| `refresh nu`         |  ●   |  ·   |   ·   | `systems/library/work.fnl`        |
-| `clone repositories` |  ●   |  ·   |   ·   | `systems/library/repository.fnl`  |
-| `generate aliases`   |  ●   |  ●   |   ●   | `systems/library/repository.fnl`  |
+| command              | work | life | linux |
+| -------------------- | :--: | :--: | :---: |
+| `ping`               |  ●   |  ●   |   ●   |
+| `setup`              |  ●   |  ●   |   ●   |
+| `install rust`       |  ●   |  ●   |   ●   |
+| `install scala`      |  ●   |  ·   |   ·   |
+| `install fsharp`     |  ·   |  ●   |   ●   |
+| `connect github`     |  ·   |  ●   |   ●   |
+| `refresh nu`         |  ●   |  ·   |   ·   |
+| `clone repositories` |  ●   |  ·   |   ·   |
+| `generate aliases`   |  ●   |  ●   |   ●   |
 
 Usage:
 
