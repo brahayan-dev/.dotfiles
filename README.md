@@ -20,47 +20,33 @@ The `workstation` shell script detects the OS, installs `fennel` and `ansible` i
 
 Three environments, partitioned by host signal (see `systems/library/common.fnl`):
 
-| env     | host signal              | toolchain                                               |
-| ------- | ------------------------ | ------------------------------------------------------- |
-| `work`  | macOS, `~/.nurc` exists  | Scala, Clojure, Fennel, Work infrastructure             |
-| `life`  | macOS, default           | Personal dev (SSH, git, API tokens), F# (dotnet)        |
-| `linux` | Linux, `pacman` detected | Similar to `life` with Linux-specific pkgs, F# (dotnet) |
+| env     | host signal              | toolchain                                        |
+| ------- | ------------------------ | ------------------------------------------------ |
+| `work`  | macOS, `~/.nurc` exists  | Scala and Clojure, Work infrastructure           |
+| `life`  | macOS, default           | Personal dev (SSH, git, API tokens), Rust        |
+| `linux` | Linux, `pacman` detected | Similar to `life` with Linux-specific pkgs, Rust |
 
 ## §2 · commands
 
 The dispatcher is the `register` function in `systems/core.fnl`. Each entry pairs a handler with an `:allowed-on` list (`:all`, `:work`, or `[:life :linux]`).
 
-| command            | work | life | linux | handler                           |
-| ------------------ | :--: | :--: | :---: | --------------------------------- |
-| `setup`            |  ●   |  ●   |   ●   | `systems/library/ansible.fnl`     |
-| `ping`             |  ●   |  ●   |   ●   | `systems/library/ansible.fnl`     |
-| `install scala`    |  ●   |  ·   |   ·   | `systems/library/interactive.fnl` |
-| `install fsharp`   |  ·   |  ●   |   ●   | `systems/library/interactive.fnl` |
-| `connect github`   |  ·   |  ●   |   ●   | `systems/library/interactive.fnl` |
-| `refresh nu`       |  ●   |  ·   |   ·   | `systems/library/work.fnl`        |
-| `generate aliases` |  ●   |  ●   |   ●   | `systems/library/repository.fnl`  |
-
-```
-setup    ──▶  run the ansible playbook for the host
-ping     ──▶  ansible -m ping (sanity check)
-install  ──▶  install a language toolchain (scala, fsharp)
-connect  ──▶  authenticate with the remote forge (github only, today)
-refresh  ──▶  refresh work credentials (work only)
-generate ──▶  generate shell aliases for known repositories
-```
+| command              | work | life | linux | handler                           |
+| -------------------- | :--: | :--: | :---: | --------------------------------- |
+| `ping`               |  ●   |  ●   |   ●   | `systems/library/ansible.fnl`     |
+| `setup`              |  ●   |  ●   |   ●   | `systems/library/ansible.fnl`     |
+| `install rust`       |  ●   |  ●   |   ●   | `systems/library/interactive.fnl` |
+| `install scala`      |  ●   |  ·   |   ·   | `systems/library/interactive.fnl` |
+| `install fsharp`     |  ·   |  ●   |   ●   | `systems/library/interactive.fnl` |
+| `connect github`     |  ·   |  ●   |   ●   | `systems/library/interactive.fnl` |
+| `refresh nu`         |  ●   |  ·   |   ·   | `systems/library/work.fnl`        |
+| `clone repositories` |  ●   |  ·   |   ·   | `systems/library/repository.fnl`  |
+| `generate aliases`   |  ●   |  ●   |   ●   | `systems/library/repository.fnl`  |
 
 Usage:
 
 ```
 $ ./workstation <command> [entity]
-$ ./workstation install scala
-$ ./workstation install fsharp
-$ ./workstation connect github
-$ ./workstation refresh nu
-$ ./workstation generate aliases
 ```
-
-When a command is run in an environment that is not in its `:allowed-on` list, `systems/library/logic.fnl`'s `dispatch` exits silently without invoking the handler.
 
 ## §3 · topology
 
@@ -76,8 +62,8 @@ When a command is run in an environment that is not in its `:allowed-on` list, `
 │   │   ├── common.fnl           ◀── os-name · environment · run
 │   │   ├── logic.fnl            ◀── allowed? · dispatch  (gating primitive)
 │   │   ├── ansible.fnl          ◀── ping · setup
-│   │   ├── interactive.fnl      ◀── install-scala · install-fsharp · connect-github
-│   │   ├── repository.fnl       ◀── generate-aliases
+│   │   ├── interactive.fnl      ◀── install-* · connect-github
+│   │   ├── repository.fnl       ◀── generate-aliases · clone-repositories
 │   │   └── work.fnl             ◀── bom-dia  (Work refresh sequence)
 │   │
 │   ├── macos/ansible.cfg

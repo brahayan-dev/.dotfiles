@@ -11,6 +11,7 @@
         "commands:"
         "    ping                ansible -m ping (sanity check)"
         "    setup               run the ansible playbook for the host"
+        "    install rust        install the rust toolchain via rustup"
         "    install scala       install the scala toolchain via coursier"
         "    install fsharp      install the fsharp toolchain via dotnet"
         "    clone repositories  clone repositories used in work"
@@ -23,6 +24,7 @@
 (local refresh-nu {:allowed-on :work :handler work.bom-dia})
 (local generate-aliases {:allowed-on :all :handler repository.generate-aliases})
 (local install-scala {:allowed-on :work :handler interactive.install-scala})
+(local install-rust {:allowed-on :all :handler interactive.install-rust})
 
 (local install-fsharp
        {:allowed-on [:life :linux] :handler interactive.install-fsharp})
@@ -41,6 +43,7 @@
     [:ping _] ping
     [:setup _] setup
     [:refresh :nu] refresh-nu
+    [:install :rust] install-rust
     [:install :scala] install-scala
     [:install :fsharp] install-fsharp
     [:connect :github] connect-github

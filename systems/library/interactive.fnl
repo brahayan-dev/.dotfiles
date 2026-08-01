@@ -8,6 +8,10 @@
   (run [:dotnet :tool :install :--global :fantomas])
   (run [:dotnet :tool :install :--global :fsautocomplete]))
 
+(fn install-rust []
+  (run [:rustup :component :add :clippy])
+  (run [:rustup :component :add :rustfmt]))
+
 (fn install-scala []
   (let [dir (.. home :/.local/share/coursier/bin)]
     (run [:coursier :java :--jvm "temurin:11" :--setup])
@@ -24,4 +28,4 @@
     (run [:gh :auth :refresh :-h :github.com :-s "admin:ssh_signing_key"])
     (run [:gh :ssh-key :add ssh-key-path :-t host])))
 
-{: install-fsharp : install-scala : connect-github}
+{: install-fsharp : install-rust : install-scala : connect-github}

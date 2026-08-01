@@ -10,5 +10,7 @@
       - fennel-ls
       - podman
       - ripgrep
+      - rustup
+      - rust-analyzer
       - tree-sitter-cli
     state: latest
