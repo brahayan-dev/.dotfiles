@@ -20,11 +20,11 @@ The `workstation` shell script detects the OS, installs `fennel` and `ansible` i
 
 Three environments, partitioned by host signal (see `systems/library/common.fnl`):
 
-| env     | host signal              | toolchain                                        |
-| ------- | ------------------------ | ------------------------------------------------ |
-| `work`  | macOS, `~/.nurc` exists  | Scala and Clojure, Work infrastructure           |
-| `life`  | macOS, default           | Personal dev (SSH, git, API tokens), Rust        |
-| `linux` | Linux, `pacman` detected | Similar to `life` with Linux-specific pkgs, Rust |
+| env     | host signal              | toolchain                                      |
+| ------- | ------------------------ | ---------------------------------------------- |
+| `work`  | macOS, `~/.nurc` exists  | Scala and Clojure, Work infrastructure         |
+| `life`  | macOS, default           | Personal dev (SSH, git, API tokens), F#        |
+| `linux` | Linux, `pacman` detected | Similar to `life` with Linux-specific pkgs, F# |
 
 ## §2 · commands
 
