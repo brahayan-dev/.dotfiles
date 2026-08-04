@@ -10,5 +10,6 @@ npm_global_packages:
   - typescript-language-server
   - vscode-langservers-extracted
   - "@ansible/ansible-language-server"
+  - shadow-cljs
 
 git_user_email: "bxsr@proton.me"

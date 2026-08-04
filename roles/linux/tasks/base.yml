@@ -32,6 +32,10 @@
       - shellcheck
       - ttf-fira-code
       - lua-language-server
+      - nodejs
+      - npm
+      - clojure
+      - clojure-lsp
     state: latest
     update_cache: true
   notify:
@@ -46,6 +50,12 @@
     force: true
     state: latest
   loop: "{{ npm_global_packages }}"
+
+- name: Install Cljfmt
+  become: true
+  shell: curl -fsSL https://raw.githubusercontent.com/weavejester/cljfmt/HEAD/install.sh | bash
+  args:
+    creates: "/usr/local/bin/cljfmt"
 
 - name: Install Ollama
   become: true

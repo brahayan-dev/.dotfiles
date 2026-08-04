@@ -5,7 +5,6 @@
     state: present
   loop:
     - anomalyco/tap
-    - d12frosted/emacs-plus
 
 - name: Install Dependencies
   community.general.homebrew:
@@ -15,6 +14,5 @@
       - tofu-ls
       - opencode
       - opentofu
-      - emacs-plus@30
       - dbeaver-community
     state: latest
