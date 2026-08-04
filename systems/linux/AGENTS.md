@@ -7,9 +7,10 @@
 
 ## Language Stack
 
-| Language | Runtime         | LSP    | Formatter        |
-| -------- | --------------- | ------ | ---------------- |
-| Lua      | LuaJIT (pacman) | lua_ls | conform → stylua |
+| Language | Runtime         | LSP                  | Formatter               | Notes                                   |
+| -------- | --------------- | -------------------- | ----------------------- | --------------------------------------- |
+| Lua      | LuaJIT (pacman) | lua_ls               | conform → stylua        |                                         |
+| Clojure  | pacman          | clojure-lsp (pacman) | cljfmt (install script) | ClojureScript via aliases + shadow-cljs |
 
 ## Fennel Style
 

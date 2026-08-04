@@ -10,9 +10,9 @@ Multi-environment dotfiles repository. A small Fennel entrypoint (`systems/core.
 
 Three environments, derived at runtime in `systems/library/common.fnl` from `os-name` (`uname -s`) and `~/.nurc` presence:
 
-- **work** (macOS + `~/.nurc`) — Clojure toolchain, Nu infrastructure
-- **life** (macOS, default) — Personal dev: SSH, git, API tokens (`GITHUB_TOKEN`, `ANTHROPIC_API_KEY`)
-- **linux** (pacman-based Linux) — Similar to life with Linux-specific packages
+- **work** (macOS + `~/.nurc`) — Nu infrastructure (Clojure toolchain shared with life via the `macos` role)
+- **life** (macOS, default) — Personal dev: SSH, git, API tokens (`GITHUB_TOKEN`, `ANTHROPIC_API_KEY`), Clojure toolchain
+- **linux** (pacman-based Linux) — Similar to life with Linux-specific packages, Clojure toolchain
 
 ### Entry Point
 
@@ -81,7 +81,7 @@ files/                         managed dotfiles (symlinked into $HOME / ~/.confi
 
 ### Ansible
 
-Playbooks run against `localhost` via `hosts.ini`. The Fennel dispatcher sets `ANSIBLE_CONFIG=systems/macos/ansible.cfg` (Darwin) or `ANSIBLE_CONFIG=systems/linux/ansible.cfg` (Linux), picks the playbook by host signal (`work`/`life`/`linux`), and passes `systems/.vault_` and `systems/.become_` as password files. The `common` role creates directories (`~/.ssh`, `~/.config`, `~/.claude`, `~/.config/opencode`), installs `fennel` + `fennel-ls`, symlinks nvim/.zprofile/.zshrc, installs global npm packages. Environment-specific roles add their own packages and symlinks.
+Playbooks run against `localhost` via `hosts.ini`. The Fennel dispatcher sets `ANSIBLE_CONFIG=systems/macos/ansible.cfg` (Darwin) or `ANSIBLE_CONFIG=systems/linux/ansible.cfg` (Linux), picks the playbook by host signal (`work`/`life`/`linux`), and passes `systems/.vault_` and `systems/.become_` as password files. The `common` role creates directories (`~/.ssh`, `~/.config`, `~/.claude`, `~/.config/opencode`), installs `fennel` + `fennel-ls`, symlinks nvim/.zprofile/.zshrc, installs global npm packages (including `shadow-cljs`). Environment-specific roles add their own packages and symlinks. The `macos` role (shared by `life` and `work`) installs the Clojure toolchain (`clojure`, `leiningen`, `coursier`, `clj-kondo`, `cljfmt`, `clojure-lsp-native`) via Homebrew taps; `linux` installs the equivalent via pacman (`clojure`, `clojure-lsp`) plus the `weavejester/cljfmt` install script (`cljfmt` isn't packaged for pacman).
 
 `roles_path = ../../roles` in each `ansible.cfg` is relative to the `.cfg` location; ansible resolves it back to the repo's top-level `roles/` directory.
 

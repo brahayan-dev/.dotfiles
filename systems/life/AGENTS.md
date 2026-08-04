@@ -7,9 +7,10 @@
 
 ## Language Stack
 
-| Language | Runtime           | LSP    | Formatter        |
-| -------- | ----------------- | ------ | ---------------- |
-| Lua      | LuaJIT (homebrew) | lua_ls | conform → stylua |
+| Language | Runtime                      | LSP                | Formatter        | Notes                                   |
+| -------- | ---------------------------- | ------------------ | ---------------- | --------------------------------------- |
+| Lua      | LuaJIT (homebrew)            | lua_ls             | conform → stylua |                                         |
+| Clojure  | homebrew + coursier (JDK 11) | clojure-lsp-native | cljfmt           | ClojureScript via aliases + shadow-cljs |
 
 ## Fennel Style
 
