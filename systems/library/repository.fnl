@@ -2,7 +2,7 @@
 
 (local repos-dot [:.dotfiles])
 (local repos-base [:kiln :workbook :turing])
-(local repos-akeptous [:risk-box :risk-hub])
+(local repos-akeptous [:risk-etl :risk-api])
 (local repos-fentari [:thalassa-air :thalassa-box :thalassa-hub])
 (local repos-work [:babel
                    :agora
