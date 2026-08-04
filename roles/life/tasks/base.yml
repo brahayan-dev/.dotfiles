@@ -9,9 +9,11 @@
 - name: Install Dependencies
   community.general.homebrew:
     name:
+      - rlwrap
       - direnv
       - sqlite
       - tofu-ls
+      - openjdk
       - opencode
       - opentofu
       - dbeaver-community

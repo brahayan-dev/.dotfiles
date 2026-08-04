@@ -23,6 +23,7 @@
       - direnv
       - pandoc
       - dbeaver
+      - openjdk
       - ghostty
       - ripgrep
       - lazygit
