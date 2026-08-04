@@ -14,6 +14,8 @@
     force: true
   loop:
     - .linux_profile
+    - emacs-plus
+    - doom
   notify: event_reload_zsh_files
 
 - name: Set Opencode Configuration Symlink

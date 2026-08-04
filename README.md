@@ -20,27 +20,26 @@ The `workstation` shell script detects the OS, installs `fennel` and `ansible` i
 
 Three environments, partitioned by host signal (see `systems/library/common.fnl`):
 
-| env     | host signal              | toolchain                                      |
-| ------- | ------------------------ | ---------------------------------------------- |
-| `work`  | macOS, `~/.nurc` exists  | Scala and Clojure, Work infrastructure         |
-| `life`  | macOS, default           | Personal dev (SSH, git, API tokens), F#        |
-| `linux` | Linux, `pacman` detected | Similar to `life` with Linux-specific pkgs, F# |
+| env     | host signal               | toolchain                                      |
+| ------- | ------------------------- | ---------------------------------------------- |
+| `work`  | macOS, work-env available | Scala and Clojure, Work infrastructure         |
+| `life`  | macOS, default            | Personal dev (SSH, git, API tokens), CL        |
+| `linux` | Linux, `pacman` detected  | Similar to `life` with Linux-specific pkgs, CL |
 
 ## §2 · commands
 
 The dispatcher is the `register` function in `systems/core.fnl`. Each entry pairs a handler with an `:allowed-on` list (`:all`, `:work`, or `[:life :linux]`).
 
-| command              | work | life | linux |
-| -------------------- | :--: | :--: | :---: |
-| `ping`               |  ●   |  ●   |   ●   |
-| `setup`              |  ●   |  ●   |   ●   |
-| `install rust`       |  ●   |  ●   |   ●   |
-| `install scala`      |  ●   |  ·   |   ·   |
-| `install fsharp`     |  ·   |  ●   |   ●   |
-| `connect github`     |  ·   |  ●   |   ●   |
-| `refresh nu`         |  ●   |  ·   |   ·   |
-| `clone repositories` |  ●   |  ·   |   ·   |
-| `generate aliases`   |  ●   |  ●   |   ●   |
+| command               | work | life | linux |
+| --------------------- | :--: | :--: | :---: |
+| `ping`                |  ●   |  ●   |   ●   |
+| `setup`               |  ●   |  ●   |   ●   |
+| `install scala`       |  ●   |  ·   |   ·   |
+| `install common-lisp` |  ·   |  ●   |   ●   |
+| `connect github`      |  ·   |  ●   |   ●   |
+| `refresh nu`          |  ●   |  ·   |   ·   |
+| `clone repositories`  |  ●   |  ·   |   ·   |
+| `generate aliases`    |  ●   |  ●   |   ●   |
 
 Usage:
 

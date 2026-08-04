@@ -1,14 +1,12 @@
 (local langs [:lua
               :sql
               :css
-              :rust
               :bash
               :yaml
               :json
               :html
               :scala
               :fennel
-              :fsharp
               :clojure
               :javascript
               :embedded_template])

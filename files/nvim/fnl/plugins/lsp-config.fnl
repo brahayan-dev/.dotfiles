@@ -10,9 +10,7 @@
              :tofu_ls
              :fennel_ls
              :ansiblels
-             :clojure_lsp
-             :rust_analyzer
-             :fsautocomplete])
+             :clojure_lsp])
 
 (local lua_ls_settings {:Lua {:diagnostics {:globals [:vim]}}})
 
