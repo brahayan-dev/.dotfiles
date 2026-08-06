@@ -57,6 +57,24 @@
   args:
     creates: "/usr/local/bin/cljfmt"
 
+- name: Install Clojure Lsp
+  become: true
+  shell: curl -fsSL https://raw.githubusercontent.com/clojure-lsp/clojure-lsp/master/install | bash
+  args:
+    creates: "/usr/local/bin/clojure-lsp"
+
+- name: Clone Fennel Lsp
+  ansible.builtin.git:
+    repo: https://git.sr.ht/~xerool/fennel-ls
+    dest: "{{ ansible_facts['user_dir'] }}/.local/src/fennel-ls"
+    depth: 1
+
+- name: Build Fennel Lsp
+  ansible.builtin.command: make install PREFIX={{ ansible_facts['user_dir'] }}/.local
+  args:
+    chdir: "{{ ansible_facts['user_dir'] }}/.local/src/fennel-ls"
+    creates: "{{ ansible_facts['user_dir'] }}/.local/bin/fennel-ls"
+
 - name: Install Ollama
   become: true
   shell: curl -fsSL https://ollama.com/install.sh | sh
