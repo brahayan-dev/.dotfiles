@@ -11,6 +11,14 @@
     - .config/opencode
     - .config/ghostty
 
+- name: Set Clojure Aliases Symlink
+  ansible.builtin.file:
+    src: "{{ ansible_facts['user_dir'] }}/.dotfiles/files/clojure/deps.edn"
+    dest: "{{ ansible_facts['user_dir'] }}/.clojure/deps.edn"
+    state: link
+    force: true
+  notify: event_reload_zsh_files
+
 - name: Set Editor Symlinks
   ansible.builtin.file:
     src: "{{ ansible_facts['user_dir'] }}/.dotfiles/files/{{ item }}"

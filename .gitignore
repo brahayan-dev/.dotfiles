@@ -1,6 +1,12 @@
 **/.vault_
 **/.become_
 **/.private_profile
+**/.cpcache
+
+.claude/
+.clj-kondo/
+.lsp/
+
 
 # Neovim
 /files/nvim/lua/*
