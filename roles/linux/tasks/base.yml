@@ -23,7 +23,6 @@
       - direnv
       - pandoc
       - dbeaver
-      - openjdk
       - ghostty
       - ripgrep
       - lazygit
@@ -32,11 +31,11 @@
       - github-cli
       - shellcheck
       - ttf-fira-code
+      - jdk-openjdk
       - lua-language-server
       - nodejs
       - npm
       - clojure
-      - clojure-lsp
     state: latest
     update_cache: true
   notify:
