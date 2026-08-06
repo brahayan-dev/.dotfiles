@@ -50,6 +50,7 @@
       - leiningen
       - clojure
       - coursier
+      - fennel-ls
       - clj-kondo
       - cljfmt
       - clojure-lsp-native

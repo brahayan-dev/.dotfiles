@@ -44,3 +44,6 @@ if [[ "$(uname -a)" =~ Darwin ]]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
     export PATH="$PATH:$HOME/.local/bin"
 fi
+
+# opencode
+export PATH=/home/bxsr/.opencode/bin:$PATH

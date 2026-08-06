@@ -7,7 +7,6 @@
       - luajit
       - fnlfmt
       - fennel
-      - fennel-ls
       - podman
       - ripgrep
       - tree-sitter-cli
