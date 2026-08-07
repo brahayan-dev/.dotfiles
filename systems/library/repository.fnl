@@ -1,7 +1,7 @@
 (local {: environment &as common} (require :systems.library.common))
 
 (local repos-dot [:.dotfiles])
-(local repos-base [:kiln :workbook :turing])
+(local repos-base [:kiln :workbook :turing :curriculum])
 (local repos-akeptous [:risk-etl :risk-api])
 (local repos-fentari [:thalassa-air :thalassa-box :thalassa-hub])
 (local repos-work [:babel
