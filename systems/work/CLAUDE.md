@@ -9,11 +9,11 @@
 
 ## Language Stack
 
-| Language | Runtime                      | LSP                      | Formatter | Notes                                   |
-| -------- | ---------------------------- | ------------------------ | --------- | --------------------------------------- |
-| Scala    | coursier (JDK 11)            | Metals (via nvim-metals) | —         | Spark development                       |
-| Clojure  | homebrew + coursier (JDK 11) | clojure-lsp              | cljfmt    | ClojureScript via aliases + shadow-cljs |
-| Java     | coursier (temurin:11)        | —                        | —         | JDK via coursier                        |
+| Language | Runtime                      | LSP                      | Formatter | Notes             |
+| -------- | ---------------------------- | ------------------------ | --------- | ----------------- |
+| Scala    | coursier (JDK 11)            | Metals (via nvim-metals) | —         | Spark development |
+| Clojure  | homebrew + coursier (JDK 11) | clojure-lsp-native       | cljfmt    |                   |
+| Java     | coursier (temurin:11)        | —                        | —         | JDK via coursier  |
 
 ## Fennel Style
 

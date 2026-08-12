@@ -12,7 +12,7 @@ Three environments, derived at runtime in `systems/library/common.fnl` from `os-
 
 - **work** (macOS + `~/.nurc`) — Nu infrastructure (Clojure toolchain via the `work` role)
 - **life** (macOS, default) — Personal dev: SSH, git, API tokens (`GITHUB_TOKEN`, `ANTHROPIC_API_KEY`)
-- **linux** (pacman-based Linux) — Similar to life with Linux-specific packages, Clojure toolchain
+- **linux** (pacman-based Linux) — Similar to life with Linux-specific packages
 
 ### Entry Point
 
@@ -83,7 +83,7 @@ files/                         managed dotfiles (symlinked into $HOME / ~/.confi
 
 ### Ansible
 
-Playbooks run against `localhost` via `hosts.ini`. The Fennel dispatcher sets `ANSIBLE_CONFIG=systems/macos/ansible.cfg` (Darwin) or `ANSIBLE_CONFIG=systems/linux/ansible.cfg` (Linux), picks the playbook by host signal (`work`/`life`/`linux`), and passes `systems/.vault_` and `systems/.become_` as password files. The `common` role creates directories (`~/.ssh`, `~/.config`, `~/.claude`, `~/.config/opencode`), installs `fennel` + `fennel-ls`, symlinks nvim/.zprofile/.zshrc, installs global npm packages (including `shadow-cljs`). Environment-specific roles add their own packages and symlinks. The `macos` role (shared by `life` and `work`) installs `coursier` via Homebrew (used by the Scala toolchain in both `life` and `work`). The `work` role installs the Clojure toolchain (`clojure`, `leiningen`, `clj-kondo`, `cljfmt`, `clojure-lsp-native`) via Homebrew taps (`clojure/tools`, `weavejester/brew`, `borkdude/brew`, `clojure-lsp/brew`); `linux` installs the equivalent via pacman (`clojure`, `clojure-lsp`) plus the `weavejester/cljfmt` install script (`cljfmt` isn't packaged for pacman).
+Playbooks run against `localhost` via `hosts.ini`. The Fennel dispatcher sets `ANSIBLE_CONFIG=systems/macos/ansible.cfg` (Darwin) or `ANSIBLE_CONFIG=systems/linux/ansible.cfg` (Linux), picks the playbook by host signal (`work`/`life`/`linux`), and passes `systems/.vault_` and `systems/.become_` as password files. The `common` role creates directories (`~/.ssh`, `~/.config`, `~/.config/ghostty`), installs `fennel` + `fennel-ls`, symlinks nvim/.zprofile/.zshrc, and installs global npm packages. Environment-specific roles create their own config directories (`~/.claude` on work, `~/.config/opencode` on life/linux) and add their own packages and symlinks. The `macos` role (shared by `life` and `work`) installs `coursier` via Homebrew (used by the Scala toolchain in both `life` and `work`). The `work` role installs the Clojure toolchain (`clojure`, `leiningen`, `clj-kondo`, `cljfmt`, `clojure-lsp-native`) via Homebrew taps (`clojure/tools`, `weavejester/brew`, `borkdude/brew`, `clojure-lsp/brew`).
 
 `roles_path = ../../roles` in each `ansible.cfg` is relative to the `.cfg` location; ansible resolves it back to the repo's top-level `roles/` directory.
 
