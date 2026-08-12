@@ -1,0 +1,29 @@
+---
+- name: Enable Repositories On Brew
+  community.general.homebrew_tap:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - clojure/tools
+    - weavejester/brew
+    - borkdude/brew
+    - clojure-lsp/brew
+
+- name: Trust Non-Official Brew Taps
+  ansible.builtin.command: "brew trust --tap {{ item }}"
+  changed_when: false
+  loop:
+    - clojure/tools
+    - weavejester/brew
+    - borkdude/brew
+    - clojure-lsp/brew
+
+- name: Install Clojure Dependencies
+  community.general.homebrew:
+    name:
+      - leiningen
+      - clojure
+      - clj-kondo
+      - cljfmt
+      - clojure-lsp-native
+    state: latest
