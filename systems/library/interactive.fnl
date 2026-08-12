@@ -4,7 +4,15 @@
 (local user (os.getenv :USER))
 (local host (os.getenv :HOST))
 
-(fn install-scala []
+(fn install-scala3 []
+  (let [dir (.. home :/.local/share/coursier/bin)]
+    (run [:coursier :java :--jvm "temurin:17" :--setup])
+    (run [:coursier :install :sbt])
+    (run [:coursier :install :scalafmt])
+    (run [:coursier :install :metals :--install-dir dir])
+    (run [:coursier :install :scala :scalac])))
+
+(fn install-scala2 []
   (let [dir (.. home :/.local/share/coursier/bin)]
     (run [:coursier :java :--jvm "temurin:11" :--setup])
     (run [:coursier :install "sbt:1.9.9"])
@@ -20,4 +28,4 @@
     (run [:gh :auth :refresh :-h :github.com :-s "admin:ssh_signing_key"])
     (run [:gh :ssh-key :add ssh-key-path :-t host])))
 
-{: install-scala : connect-github}
+{: install-scala2 : install-scala3 : connect-github}

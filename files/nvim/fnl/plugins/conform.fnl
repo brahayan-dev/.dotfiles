@@ -1,10 +1,10 @@
 (local formatters_by_ft {:lua [:stylua]
                          :html [:prettier]
                          :json [:prettier]
-                         :mustache [:prettier]
                          :fennel [:fnlfmt]
                          :scala [:scalafmt]
                          :clojure [:cljfmt]
+                         :mustache [:prettier]
                          :markdown [:prettier]})
 
 (local format_on_save {:timeout_ms 500 :lsp_format :fallback})

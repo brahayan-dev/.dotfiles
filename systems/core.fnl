@@ -11,7 +11,8 @@
         "commands:"
         "    ping                ansible -m ping (sanity check)"
         "    setup               run the ansible playbook for the host"
-        "    install scala       install the scala toolchain via coursier"
+        "    install scala2      install the scala V2 toolchain via coursier"
+        "    install scala3      install the scala V3 toolchain via coursier"
         "    clone repositories  clone repositories used in work"
         "    generate aliases    generate aliases for each repository"
         "    connect github      authenticate with the remote forge"
@@ -21,7 +22,9 @@
 (local setup {:allowed-on :all :handler ansible.setup})
 (local refresh-nu {:allowed-on :work :handler work.bom-dia})
 (local generate-aliases {:allowed-on :all :handler repository.generate-aliases})
-(local install-scala {:allowed-on :work :handler interactive.install-scala})
+(local install-scala2 {:allowed-on :work :handler interactive.install-scala2})
+(local install-scala3
+       {:allowed-on [:life :linux] :handler interactive.install-scala3})
 
 (local connect-github
        {:allowed-on [:life :linux] :handler interactive.connect-github})
@@ -37,7 +40,8 @@
     [:ping _] ping
     [:setup _] setup
     [:refresh :nu] refresh-nu
-    [:install :scala] install-scala
+    [:install :scala2] install-scala2
+    [:install :scala3] install-scala3
     [:connect :github] connect-github
     [:clone :repositories] clone-repositories
     [:generate :aliases] generate-aliases
