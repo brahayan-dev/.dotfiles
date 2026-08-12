@@ -7,10 +7,11 @@
 
 ## Language Stack
 
-| Language | Runtime                      | LSP                | Formatter        | Notes                                   |
-| -------- | ---------------------------- | ------------------ | ---------------- | --------------------------------------- |
-| Lua      | LuaJIT (homebrew)            | lua_ls             | conform → stylua |                                         |
-| Clojure  | homebrew + coursier (JDK 11) | clojure-lsp-native | cljfmt           | ClojureScript via aliases + shadow-cljs |
+| Language | Runtime                      | LSP                      | Formatter        | Notes                                   |
+| -------- | ---------------------------- | ------------------------ | ---------------- | --------------------------------------- |
+| Lua      | LuaJIT (homebrew)            | lua_ls                   | conform → stylua |                                         |
+| Clojure  | homebrew + coursier (JDK 11) | clojure-lsp-native       | cljfmt           | ClojureScript via aliases + shadow-cljs |
+| Scala    | coursier (JDK 17)            | Metals (via nvim-metals) | scalafmt         | Scala 3                                 |
 
 ## Fennel Style
 
