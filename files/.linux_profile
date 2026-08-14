@@ -7,5 +7,8 @@ export PATH="$HOME/.local/bin:$PATH"
 export ANTHROPIC_API_KEY=""
 export ANTHROPIC_AUTH_TOKEN=ollama
 export ANTHROPIC_BASE_URL=http://localhost:11434
+# NOTE: Go
+export GOPATH="${HOME}/.go"
+export PATH=$GOPATH/bin:$PATH
 # NOTE: Scala
 export JAVA_HOME="/Users/brahayanxavier/Library/Caches/Coursier/arc/https/github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.18%252B8/OpenJDK17U-jdk_aarch64_mac_hotspot_17.0.18_8.tar.gz/jdk-17.0.18+8/Contents/Home"
