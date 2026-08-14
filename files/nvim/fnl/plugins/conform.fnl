@@ -1,4 +1,5 @@
-(local formatters_by_ft {:lua [:stylua]
+(local formatters_by_ft {:go [:gofmt]
+                         :lua [:stylua]
                          :html [:prettier]
                          :json [:prettier]
                          :fennel [:fnlfmt]

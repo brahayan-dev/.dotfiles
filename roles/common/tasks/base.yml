@@ -3,11 +3,13 @@
   become: "{{ ansible_facts['os_family'] == 'Archlinux' }}"
   package:
     name:
+      - go
       - lua
       - luajit
       - fnlfmt
       - fennel
       - podman
       - ripgrep
+      - golangci-lint
       - tree-sitter-cli
     state: latest

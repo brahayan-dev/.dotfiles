@@ -4,6 +4,10 @@
 (local user (os.getenv :USER))
 (local host (os.getenv :HOST))
 
+(fn install-go []
+  (run [:go :install "golang.org/x/tools/gopls@latest"])
+  (run [:go :install "golang.org/x/tools/cmd/goimports@latest"]))
+
 (fn install-scala3 []
   (let [dir (.. home :/.local/share/coursier/bin)]
     (run [:coursier :java :--jvm "temurin:17" :--setup])
@@ -28,4 +32,4 @@
     (run [:gh :auth :refresh :-h :github.com :-s "admin:ssh_signing_key"])
     (run [:gh :ssh-key :add ssh-key-path :-t host])))
 
-{: install-scala2 : install-scala3 : connect-github}
+{: install-scala2 : install-scala3 : connect-github : install-go}

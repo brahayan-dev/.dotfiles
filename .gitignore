@@ -7,6 +7,6 @@
 .lsp/
 
 # Neovim
-/files/nvim/lua/*
-!/files/nvim/lua/
+**/*.lua
+!/files/nvim/init.lua
 !/files/nvim/lua/plugins.lua
