@@ -6,6 +6,7 @@
       - fd
       - git
       - zsh
+      - 0ad
       - gcc
       - npm
       - curl
