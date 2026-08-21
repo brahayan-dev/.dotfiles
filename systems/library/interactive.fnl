@@ -1,4 +1,4 @@
-(local {: run} (require :systems/library/common))
+(local {: run : environment} (require :systems/library/common))
 
 (local home (os.getenv :HOME))
 (local user (os.getenv :USER))
@@ -9,12 +9,13 @@
   (run [:go :install "golang.org/x/tools/cmd/goimports@latest"]))
 
 (fn install-scala3 []
-  (let [dir (.. home :/.local/share/coursier/bin)]
-    (run [:coursier :java :--jvm "temurin:17" :--setup])
-    (run [:coursier :install :sbt])
-    (run [:coursier :install :scalafmt])
-    (run [:coursier :install :metals :--install-dir dir])
-    (run [:coursier :install :scala :scalac])))
+  (let [dir (.. home :/.local/share/coursier/bin)
+        cmd (if (= environment :linux) :cs :coursier)]
+    (run [cmd :java :--jvm "temurin:17" :--setup])
+    (run [cmd :install :sbt])
+    (run [cmd :install :scalafmt])
+    (run [cmd :install :metals :--install-dir dir])
+    (run [cmd :install :scala :scalac])))
 
 (fn install-scala2 []
   (let [dir (.. home :/.local/share/coursier/bin)]

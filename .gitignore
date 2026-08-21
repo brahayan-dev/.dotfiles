@@ -3,9 +3,6 @@
 **/.private_profile
 **/.cpcache
 
-.clj-kondo/
-.lsp/
-
 # Neovim
 **/*.lua
 !/files/nvim/init.lua
