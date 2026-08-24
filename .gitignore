@@ -1,8 +1,9 @@
 **/.vault_
 **/.become_
 **/.private_profile
+**/.cpcache
 
 # Neovim
-/files/nvim/lua/*
-!/files/nvim/lua/
+**/*.lua
+!/files/nvim/init.lua
 !/files/nvim/lua/plugins.lua

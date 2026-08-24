@@ -10,9 +10,9 @@ Multi-environment dotfiles repository. A small Fennel entrypoint (`systems/core.
 
 Three environments, derived at runtime in `systems/library/common.fnl` from `os-name` (`uname -s`) and `~/.nurc` presence:
 
-- **work** (macOS + `~/.nurc`) — Nu infrastructure (Clojure toolchain shared with life via the `macos` role)
-- **life** (macOS, default) — Personal dev: SSH, git, API tokens (`GITHUB_TOKEN`, `ANTHROPIC_API_KEY`), Clojure toolchain
-- **linux** (pacman-based Linux) — Similar to life with Linux-specific packages, Clojure toolchain
+- **work** (macOS + `~/.nurc`) — Nu infrastructure (Clojure toolchain via the `work` role)
+- **life** (macOS, default) — Personal dev: SSH, git, API tokens (`GITHUB_TOKEN`, `ANTHROPIC_API_KEY`)
+- **linux** (pacman-based Linux) — Similar to life with Linux-specific packages
 
 ### Entry Point
 
@@ -30,7 +30,8 @@ The command registry is the `register` function in `systems/core.fnl`. Each entr
 | -------------------- | :--: | :--: | :---: |
 | `ping`               |  ●   |  ●   |   ●   |
 | `setup`              |  ●   |  ●   |   ●   |
-| `install scala`      |  ●   |  ·   |   ·   |
+| `install scala2`     |  ●   |  ·   |   ·   |
+| `install scala3`     |  ·   |  ●   |   ●   |
 | `connect github`     |  ·   |  ●   |   ●   |
 | `refresh nu`         |  ●   |  ·   |   ·   |
 | `clone repositories` |  ●   |  ·   |   ·   |
@@ -38,7 +39,8 @@ The command registry is the `register` function in `systems/core.fnl`. Each entr
 
 - `setup` runs the Ansible playbook for the host's environment (`library/ansible.fnl:setup`).
 - `ping` runs `ansible -m ping` against localhost as a sanity check (`library/ansible.fnl:ping`).
-- `install scala` installs the scala toolchain via coursier (`library/interactive.fnl:install-scala`).
+- `install scala2` installs the Scala 2 toolchain (JDK 11, Scala 2.12.19, sbt 1.9.9, scalafmt 2.7.5) via coursier (`library/interactive.fnl:install-scala2`).
+- `install scala3` installs the Scala 3 toolchain (JDK 17, latest) via coursier (`library/interactive.fnl:install-scala3`).
 - `connect github` authenticates with GitHub (SSH key + token + origin) (`library/interactive.fnl:connect-github`).
 - `refresh nu` runs the five-step Nu refresh sequence (`library/work.fnl:bom-dia`, work only).
 - `clone repositories` clones repositories used in work (`library/repository.fnl:clone-repositories`).
@@ -59,7 +61,7 @@ systems/
     common.fnl                 os-name · environment · run
     logic.fnl                  allowed? · dispatch  (gating primitive)
     ansible.fnl                ping · setup
-    interactive.fnl            install-scala · connect-github
+    interactive.fnl            install-scala2 · install-scala3 · connect-github
     repository.fnl             generate-aliases
     work.fnl                   bom-dia  (Nu refresh sequence)
 
@@ -81,7 +83,7 @@ files/                         managed dotfiles (symlinked into $HOME / ~/.confi
 
 ### Ansible
 
-Playbooks run against `localhost` via `hosts.ini`. The Fennel dispatcher sets `ANSIBLE_CONFIG=systems/macos/ansible.cfg` (Darwin) or `ANSIBLE_CONFIG=systems/linux/ansible.cfg` (Linux), picks the playbook by host signal (`work`/`life`/`linux`), and passes `systems/.vault_` and `systems/.become_` as password files. The `common` role creates directories (`~/.ssh`, `~/.config`, `~/.claude`, `~/.config/opencode`), installs `fennel` + `fennel-ls`, symlinks nvim/.zprofile/.zshrc, installs global npm packages (including `shadow-cljs`). Environment-specific roles add their own packages and symlinks. The `macos` role (shared by `life` and `work`) installs the Clojure toolchain (`clojure`, `leiningen`, `coursier`, `clj-kondo`, `cljfmt`, `clojure-lsp-native`) via Homebrew taps; `linux` installs the equivalent via pacman (`clojure`, `clojure-lsp`) plus the `weavejester/cljfmt` install script (`cljfmt` isn't packaged for pacman).
+Playbooks run against `localhost` via `hosts.ini`. The Fennel dispatcher sets `ANSIBLE_CONFIG=systems/macos/ansible.cfg` (Darwin) or `ANSIBLE_CONFIG=systems/linux/ansible.cfg` (Linux), picks the playbook by host signal (`work`/`life`/`linux`), and passes `systems/.vault_` and `systems/.become_` as password files. The `common` role creates directories (`~/.ssh`, `~/.config`, `~/.config/ghostty`), installs `fennel` + `fennel-ls`, symlinks nvim/.zprofile/.zshrc, and installs global npm packages. Environment-specific roles create their own config directories (`~/.claude` on work, `~/.config/opencode` on life/linux) and add their own packages and symlinks. The `macos` role (shared by `life` and `work`) installs `coursier` via Homebrew (used by the Scala toolchain in both `life` and `work`). The `work` role installs the Clojure toolchain (`clojure`, `leiningen`, `clj-kondo`, `cljfmt`, `clojure-lsp-native`) via Homebrew taps (`clojure/tools`, `weavejester/brew`, `borkdude/brew`, `clojure-lsp/brew`).
 
 `roles_path = ../../roles` in each `ansible.cfg` is relative to the `.cfg` location; ansible resolves it back to the repo's top-level `roles/` directory.
 
@@ -91,7 +93,7 @@ Plugin manager: lazy.nvim. Leader: Space, local leader: comma.
 
 Source of truth is Fennel under `files/nvim/fnl/` (`settings.fnl` + `mappings.fnl` + `plugins/*.fnl`); the `lua/` tree is generated by nfnl on save and is gitignored (only `lua/plugins.lua` is committed as the bootstrap). `settings.fnl` defines vim options and explicitly invokes `(mappings.general)`, `(mappings.window)`, `(mappings.lsp)` so the keymaps are actually registered. `mappings.fnl` exports a module `(local M {})` with functions `M.general`, `M.window`, `M.lsp`, `M.telescope`, `M.oil`, `M.autocomplete`.
 
-LSP uses the new `vim.lsp.config`/`vim.lsp.enable` API (not the old `lspconfig.setup`), plus nvim-metals for Scala (which manages its own LSP outside the generic `vim.lsp.enable` loop). Configured LSPs: html, sqls, ts_ls, lua_ls, yamlls, bashls, jsonls, tofu_ls, ansiblels, clojure_lsp, **fennel_ls**. Formatting is handled by conform.nvim (stylua for Lua, **fnlfmt for Fennel**, cljfmt for Clojure, scalafmt for Scala, prettier for JSON/markdown, LSP fallback for others). LSP provides diagnostics and code actions.
+LSP uses the new `vim.lsp.config`/`vim.lsp.enable` API (not the old `lspconfig.setup`), plus nvim-metals for Scala (which manages its own LSP outside the generic `vim.lsp.enable` loop). nvim-metals picks Scala 3 settings by default (`JAVA_HOME`); Scala 2 settings (`JHFM`) when `NU_HOME` is set (work). Configured LSPs: html, sqls, ts_ls, lua_ls, yamlls, bashls, jsonls, tofu_ls, ansiblels, clojure_lsp, **fennel_ls**. Formatting is handled by conform.nvim (stylua for Lua, **fnlfmt for Fennel**, cljfmt for Clojure, scalafmt for Scala, prettier for JSON/markdown, LSP fallback for others). LSP provides diagnostics and code actions.
 
 Treesitter parsers: lua, sql, css, bash, yaml, json, html, scala, clojure, javascript, embedded_template, **fennel**. Completion via nvim-cmp with LuaSnip and cmp-nvim-lsp. Paredit is enabled for `clojure` and `fennel` filetypes.
 
@@ -112,7 +114,7 @@ These cost real time during the migration, watch for them:
 
 ### Profile System
 
-`.zprofile` sources up to four profile files in order: `~/.life_profile`, `~/.work_profile`, `~/.linux_profile`, `~/.private_profile`. Life, work, and linux profiles are symlinked by Ansible; `.private_profile` is written in-place by Ansible using `lineinfile`. Profiles contain environment variables, PATH entries, and project aliases. The `work` profile adds Nu/Flutter/Python/Ruby/Go/Node/Coursier paths.
+`.zprofile` sources up to four profile files in order: `~/.life_profile`, `~/.work_profile`, `~/.linux_profile`, `~/.private_profile`. Life, work, and linux profiles are symlinked by Ansible; `.private_profile` is written in-place by Ansible using `lineinfile`. Profiles contain environment variables, PATH entries, and project aliases. The `work` profile adds Nu/Flutter/Python/Ruby/Go/Node/Coursier paths. The `life` and `linux` profiles export `JAVA_HOME` (temurin17 via coursier) for Scala 3.
 
 ### Secrets
 

@@ -43,6 +43,7 @@ export PATH="$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME:$ANDROID
 # Golang
 export GOPATH="${NU_HOME}/go"
 export PATH=$GOPATH/bin:$PATH
+# Scala
 export PATH="$PATH:/Users/xavier.ramirez/Library/Application Support/Coursier/bin"
 
 # {mark} START IT-ENG JAMF SETUP - ~/.nurc File

@@ -6,7 +6,9 @@
       - fd
       - git
       - zsh
+      - 0ad
       - gcc
+      - npm
       - curl
       - tree
       - tidy
@@ -15,6 +17,7 @@
       - shfmt
       - unzip
       - pdftk
+      - nodejs
       - sqlite
       - neovim
       - stylua
@@ -23,7 +26,6 @@
       - direnv
       - pandoc
       - dbeaver
-      - openjdk
       - ghostty
       - ripgrep
       - lazygit
@@ -33,10 +35,6 @@
       - shellcheck
       - ttf-fira-code
       - lua-language-server
-      - nodejs
-      - npm
-      - clojure
-      - clojure-lsp
     state: latest
     update_cache: true
   notify:
@@ -52,11 +50,17 @@
     state: latest
   loop: "{{ npm_global_packages }}"
 
-- name: Install Cljfmt
-  become: true
-  shell: curl -fsSL https://raw.githubusercontent.com/weavejester/cljfmt/HEAD/install.sh | bash
+- name: Clone Fennel Lsp
+  ansible.builtin.git:
+    repo: https://git.sr.ht/~xerool/fennel-ls
+    dest: "{{ ansible_facts['user_dir'] }}/.local/src/fennel-ls"
+    depth: 1
+
+- name: Build Fennel Lsp
+  ansible.builtin.command: make install PREFIX={{ ansible_facts['user_dir'] }}/.local
   args:
-    creates: "/usr/local/bin/cljfmt"
+    chdir: "{{ ansible_facts['user_dir'] }}/.local/src/fennel-ls"
+    creates: "{{ ansible_facts['user_dir'] }}/.local/bin/fennel-ls"
 
 - name: Install Ollama
   become: true
@@ -68,3 +72,22 @@
   shell: curl -fsSL https://opencode.ai/install | bash
   args:
     creates: "{{ ansible_facts['user_dir'] }}/.local/bin/opencode"
+
+- name: Ensure Coursier Bin Directory
+  ansible.builtin.file:
+    path: "{{ ansible_facts['user_dir'] }}/.local/share/coursier/bin"
+    state: directory
+    mode: 0755
+
+- name: Download Coursier Launcher
+  ansible.builtin.get_url:
+    url: https://github.com/coursier/launchers/raw/master/cs-x86_64-pc-linux.gz
+    dest: /tmp/cs.gz
+    mode: "0644"
+  changed_when: false
+
+- name: Install Coursier
+  ansible.builtin.shell: gunzip -c /tmp/cs.gz > cs
+  args:
+    chdir: "{{ ansible_facts['user_dir'] }}/.local/share/coursier/bin"
+    creates: "{{ ansible_facts['user_dir'] }}/.local/share/coursier/bin/cs"

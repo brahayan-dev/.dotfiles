@@ -2,6 +2,7 @@
 
 (local lsps [:html
              :sqls
+             :gopls
              :ts_ls
              :lua_ls
              :yamlls

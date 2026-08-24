@@ -2,17 +2,26 @@
 ;; https://github.com/christoomey/dotfiles/blob/master/nvim/lua/plugins/scala-metals.lua
 ;; TODO: Add support for nvim-dap and telescope
 
-(local settings {:excludedPackages {}
-                 :serverVersion :1.6.4
-                 :showInferredType true
-                 :javaHome (os.getenv :JHFM)
-                 :showImplicitArguments false})
+(local settings-scala-3
+       {:excludedPackages {}
+        :serverVersion :1.6.4
+        :showInferredType true
+        :showImplicitArguments false
+        :javaHome (os.getenv :JAVA_HOME)})
+
+(local settings-scala-2 {:excludedPackages {}
+                         :serverVersion :1.6.4
+                         :showInferredType true
+                         :javaHome (os.getenv :JHFM)
+                         :showImplicitArguments false})
+
+(local work? (os.getenv :NU_HOME))
 
 (fn opts []
   (let [{: bare_config} (require :metals)
         {: default_capabilities} (require :cmp_nvim_lsp)
         metals (bare_config)]
-    (set metals.settings settings)
+    (set metals.settings (if work? settings-scala-2 settings-scala-3))
     (set metals.capabilities (default_capabilities))
     metals))
 

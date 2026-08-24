@@ -13,7 +13,6 @@
       - direnv
       - sqlite
       - tofu-ls
-      - openjdk
       - opencode
       - opentofu
       - dbeaver-community

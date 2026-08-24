@@ -7,8 +7,6 @@
   loop:
     - .ssh
     - .config
-    - .claude
-    - .config/opencode
     - .config/ghostty
 
 - name: Set Editor Symlinks
