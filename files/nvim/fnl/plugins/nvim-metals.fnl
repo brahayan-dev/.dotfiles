@@ -23,6 +23,10 @@
         metals (bare_config)]
     (set metals.settings (if work? settings-scala-2 settings-scala-3))
     (set metals.capabilities (default_capabilities))
+    ;; Metals itself needs JDK 17+ to run, regardless of the project's
+    ;; target JDK, since JAVA_HOME picks which java launches the server.
+    (when work?
+      (set metals.cmd_env {:JAVA_HOME (os.getenv :JHFM)}))
     metals))
 
 (fn config [{: ft} metals]
