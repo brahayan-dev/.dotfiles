@@ -4,6 +4,7 @@
   package:
     name:
       - lua
+      - qpdf
       - luajit
       - fnlfmt
       - fennel
