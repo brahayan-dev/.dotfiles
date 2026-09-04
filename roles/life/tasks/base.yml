@@ -17,3 +17,9 @@
       - opentofu
       - dbeaver-community
     state: latest
+
+- name: Install Common Cask Dependencies
+  community.general.homebrew_cask:
+    name:
+      - balenaetcher
+    state: latest
