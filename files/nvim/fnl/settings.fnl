@@ -7,7 +7,8 @@
 (set vim.opt.listchars {:tab "» " :trail "·" :nbsp "␣"})
 
 (set vim.o.number true)
-(set vim.o.relativenumber true)
+; (set vim.o.relativenumber true)
+(set vim.o.relativenumber false)
 (set vim.o.mouse :a)
 (set vim.o.showmode false)
 (set vim.o.breakindent true)

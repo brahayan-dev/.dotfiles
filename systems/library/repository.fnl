@@ -2,7 +2,11 @@
 
 (local repos-dot [:.dotfiles])
 (local repos-base [:kiln :workbook :turing :curriculum :nullstellensatz])
-(local repos-akeptous [:risk-etl :risk-api :risk-web :risk-hub])
+(local repos-akeptous [:ferrenova-nbk
+                       :ferrenova-api
+                       :ferrenova-web
+                       :ferrenova-hub])
+
 (local repos-fentari [:thalassa-air :thalassa-box :thalassa-hub])
 (local repos-work [:babel
                    :agora
