@@ -15,6 +15,7 @@
       - tofu-ls
       - opencode
       - opentofu
+      - jupyterlab
       - dbeaver-community
     state: latest
 

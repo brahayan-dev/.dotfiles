@@ -1,7 +1,7 @@
 (local {: environment &as common} (require :systems.library.common))
 
 (local repos-dot [:.dotfiles])
-(local repos-base [:kiln :workbook :turing :curriculum :nullstellensatz])
+(local repos-base [:kiln :workbook :turing :frapelle :nullstellensatz])
 (local repos-akeptous [:ferrenova-nbk
                        :ferrenova-api
                        :ferrenova-web

@@ -34,6 +34,7 @@
       - github-cli
       - shellcheck
       - ttf-fira-code
+      - jupyter-notebook
       - lua-language-server
     state: latest
     update_cache: true
