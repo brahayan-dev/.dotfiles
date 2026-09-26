@@ -10,6 +10,7 @@
       - fennel
       - podman
       - poppler
+      - poppler-glib
       - ripgrep
       - tree-sitter-cli
     state: latest
