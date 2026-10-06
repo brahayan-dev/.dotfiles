@@ -11,21 +11,27 @@
 (local repos-work [:babel
                    :agora
                    :earner
+                   :netero
                    :kairos
                    :itaipu
                    :conrado
                    :wiseguy
+                   :pericles
+                   :hellenes
                    :giovanni
                    :two-face
                    :thalassa
                    :underboss
                    :solar-wind
+                   :consigliere
                    :controlinho
                    :optimus-prime
                    :arcadia-policies
                    :reference-data-registry
                    :lending-claude-workspace
-                   :data-quality-custom-checks])
+                   :data-quality-custom-checks
+                   :lending-foundations-job-repo
+                   :lending-personal-account-unsec-job-repo])
 
 (local home (os.getenv :HOME))
 (local dot {:repos repos-dot :base-path (.. home "/")})
