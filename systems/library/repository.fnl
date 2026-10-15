@@ -8,7 +8,8 @@
                        :ferrenova-hub])
 
 (local repos-fentari [:thalassa-air :thalassa-box :thalassa-hub])
-(local repos-work [:babel
+(local repos-work [:capo
+                   :babel
                    :agora
                    :earner
                    :netero
