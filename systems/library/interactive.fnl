@@ -12,6 +12,10 @@
     (run [:coursier :install :metals :--install-dir dir])
     (run [:coursier :install "scala:2.12.19" "scalac:2.12.19"])))
 
+(fn install-ruby []
+  (run [:mise :use :-g "ruby@latest"])
+  (run [:mise :x :-- :gem :install :rubocop :ruby-lsp :--no-document]))
+
 (fn connect-github []
   (let [ssh-key-path (.. home :/.ssh/ user :_rsa.pub)
         repo "git@github.com:brahayan-dev/.dotfiles.git"]
@@ -20,4 +24,4 @@
     (run [:gh :auth :refresh :-h :github.com :-s "admin:ssh_signing_key"])
     (run [:gh :ssh-key :add ssh-key-path :-t host])))
 
-{: install-scala2 : connect-github}
+{: install-scala2 : install-ruby : connect-github}

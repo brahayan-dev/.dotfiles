@@ -12,6 +12,7 @@
         "    ping                ansible -m ping (sanity check)"
         "    setup               run the ansible playbook for the host"
         "    install scala2      install the Scala V2 toolchain via coursier"
+        "    install ruby        install the Ruby toolchain via mise"
         "    clone repositories  clone repositories used in work"
         "    generate aliases    generate aliases for each repository"
         "    connect github      authenticate with the remote forge"
@@ -22,6 +23,8 @@
 (local refresh-nu {:allowed-on :work :handler work.bom-dia})
 (local generate-aliases {:allowed-on :all :handler repository.generate-aliases})
 (local install-scala2 {:allowed-on :work :handler interactive.install-scala2})
+(local install-ruby
+       {:allowed-on [:life :linux] :handler interactive.install-ruby})
 
 (local connect-github
        {:allowed-on [:life :linux] :handler interactive.connect-github})
@@ -38,6 +41,7 @@
     [:setup _] setup
     [:refresh :nu] refresh-nu
     [:install :scala2] install-scala2
+    [:install :ruby] install-ruby
     [:connect :github] connect-github
     [:clone :repositories] clone-repositories
     [:generate :aliases] generate-aliases

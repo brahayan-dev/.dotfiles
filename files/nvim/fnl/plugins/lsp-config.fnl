@@ -11,7 +11,8 @@
              :tofu_ls
              :fennel_ls
              :ansiblels
-             :clojure_lsp])
+             :clojure_lsp
+             :ruby_lsp])
 
 (local lua_ls_settings {:Lua {:diagnostics {:globals [:vim]}}})
 

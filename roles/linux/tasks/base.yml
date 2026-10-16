@@ -12,6 +12,7 @@
       - curl
       - tree
       - tidy
+      - mise
       - make
       - cmake
       - shfmt
@@ -38,7 +39,6 @@
       - jupyter-notebook
       - lua-language-server
 
-
     state: latest
     update_cache: true
   notify:
@@ -47,12 +47,9 @@
 
 - name: Install Npm Dependencies
   become: true
-  community.general.npm:
-    name: "{{ item }}"
-    global: true
-    force: true
-    state: latest
-  loop: "{{ npm_global_packages }}"
+  ansible.builtin.command:
+    cmd: "npm install --global {{ npm_global_packages | join(' ') }}"
+  changed_when: false
 
 - name: Clone Fennel Lsp
   ansible.builtin.git:

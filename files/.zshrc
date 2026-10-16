@@ -49,6 +49,9 @@ fi
 export PATH=/home/bxsr/.opencode/bin:$PATH
 
 
+# NOTE: Mise (life and linux only — ~/.nurc marks the work environment)
+[ ! -f ~/.nurc ] && command -v mise >/dev/null && eval "$(mise activate zsh)"
+
 # >>> Nubank SSL Inspection CA — managed by: nu zscaler setup env >>>
 # mode: baseline
 NUBANK_CA_CERT="$HOME/dev/nu/.nu/certificates/zscaler/ca-bundle-with-zscaler.pem"

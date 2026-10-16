@@ -5,6 +5,7 @@
                          :fennel [:fnlfmt]
                          :scala [:scalafmt]
                          :clojure [:cljfmt]
+                         :ruby [:rubocop]
                          :mustache [:prettier]
                          :markdown [:prettier]})
 
