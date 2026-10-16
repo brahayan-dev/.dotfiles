@@ -10,9 +10,9 @@ Multi-environment dotfiles repository. A small Fennel entrypoint (`systems/core.
 
 Three environments, derived at runtime in `systems/library/common.fnl` from `os-name` (`uname -s`) and `~/.nurc` presence:
 
-- **work** (macOS + `~/.nurc`) — Nu infrastructure (Clojure toolchain via the `work` role)
-- **life** (macOS, default) — Personal dev: SSH, git, API tokens (`GITHUB_TOKEN`, `ANTHROPIC_API_KEY`)
-- **linux** (pacman-based Linux) — Similar to life with Linux-specific packages
+- **work** (macOS + `~/.nurc`) — Nu infrastructure (Clojure and Scala 2 toolchains via the `work` role)
+- **life** (macOS, default) — Personal dev: SSH, git, Ruby toolchain (mise + RuboCop/Ruby LSP via `install ruby`), API tokens (`GITHUB_TOKEN`, `ANTHROPIC_API_KEY`)
+- **linux** (pacman-based Linux) — Same Ruby tooling as life with Linux-specific packages
 
 ### Entry Point
 
