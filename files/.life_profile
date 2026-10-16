@@ -4,10 +4,6 @@ alias llm='ollama launch opencode'
 # NOTE: Path to binaries on Brew
 export PATH="/opt/homebrew/bin:$PATH"
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
-# NOTE: Anthropic
-export ANTHROPIC_API_KEY=""
-export ANTHROPIC_AUTH_TOKEN=ollama
-export ANTHROPIC_BASE_URL=http://localhost:11434
 # NOTE: Direnv
 command -v direnv >/dev/null && eval "$(direnv hook zsh)"
 # NOTE: Brew

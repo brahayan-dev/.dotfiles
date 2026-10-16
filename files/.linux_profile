@@ -3,10 +3,6 @@
 alias llm='ollama launch opencode'
 # NOTE: Other configurations
 export PATH="$HOME/.local/bin:$PATH"
-# NOTE: Anthropic
-export ANTHROPIC_API_KEY=""
-export ANTHROPIC_AUTH_TOKEN=ollama
-export ANTHROPIC_BASE_URL=http://localhost:11434
 # NOTE: Direnv
 command -v direnv >/dev/null && eval "$(direnv hook zsh)"
 # NOTE: Opencode
