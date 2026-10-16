@@ -5,6 +5,7 @@
                          :scala [:scalafmt]
                          :clojure [:cljfmt]
                          :ruby [:rubocop]
+                         :eruby [:htmlbeautifier]
                          :mustache [:prettier]
                          :markdown [:prettier]})
 

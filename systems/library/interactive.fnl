@@ -14,7 +14,7 @@
 
 (fn install-ruby []
   (run [:mise :use :-g "ruby@latest"])
-  (run [:mise :x :-- :gem :install :rubocop :ruby-lsp :--no-document]))
+  (run [:mise :x :-- :gem :install :rubocop :ruby-lsp :htmlbeautifier :--no-document]))
 
 (fn connect-github []
   (let [ssh-key-path (.. home :/.ssh/ user :_rsa.pub)
