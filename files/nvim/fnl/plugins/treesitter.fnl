@@ -11,6 +11,7 @@
               :scala
               :fennel
               :clojure
+              :ruby
               :javascript
               :embedded_template])
 

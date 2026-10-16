@@ -40,7 +40,7 @@ The command registry is the `register` function in `systems/core.fnl`. Each entr
 - `setup` runs the Ansible playbook for the host's environment (`library/ansible.fnl:setup`).
 - `ping` runs `ansible -m ping` against localhost as a sanity check (`library/ansible.fnl:ping`).
 - `install scala2` installs the Scala 2 toolchain (JDK 11, Scala 2.12.19, sbt 1.9.9, scalafmt 2.7.5) via coursier (`library/interactive.fnl:install-scala2`).
-- `install ruby` installs the Ruby toolchain via mise (`mise use -g ruby@latest`) then the RuboCop and Ruby LSP gems (`library/interactive.fnl:install-ruby`, **life and linux only** — mise ships in those roles).
+- `install ruby` installs Ruby via mise (`mise use -g ruby@latest`) then RuboCop and Ruby LSP gems under the mise Ruby (`mise x -- gem install ... --no-document`) (`library/interactive.fnl:install-ruby`, **life and linux only** — mise ships in those roles).
 - `connect github` authenticates with GitHub (SSH key + token + origin) (`library/interactive.fnl:connect-github`).
 - `refresh nu` runs the five-step Nu refresh sequence (`library/work.fnl:bom-dia`, work only).
 - `clone repositories` clones repositories used in work (`library/repository.fnl:clone-repositories`).
@@ -95,7 +95,7 @@ Source of truth is Fennel under `files/nvim/fnl/` (`settings.fnl` + `mappings.fn
 
 LSP uses the new `vim.lsp.config`/`vim.lsp.enable` API (not the old `lspconfig.setup`), plus nvim-metals for Scala (which manages its own LSP outside the generic `vim.lsp.enable` loop). nvim-metals picks Scala 3 settings by default (`JAVA_HOME`); Scala 2 settings (`JHFM`) when `NU_HOME` is set (work). Configured LSPs: html, sqls, ts_ls, lua_ls, yamlls, bashls, jsonls, tofu_ls, ansiblels, clojure_lsp, ruby_lsp, **fennel_ls**. Formatting is handled by conform.nvim (stylua for Lua, **fnlfmt for Fennel**, cljfmt for Clojure, scalafmt for Scala, rubocop for Ruby, prettier for JSON/markdown, LSP fallback for others). LSP provides diagnostics and code actions.
 
-Treesitter parsers: lua, sql, css, bash, yaml, json, html, scala, clojure, javascript, embedded_template, **fennel**. Completion via nvim-cmp with LuaSnip and cmp-nvim-lsp. Paredit is enabled for `clojure` and `fennel` filetypes.
+Treesitter parsers: go, gomod, gosum, lua, sql, css, bash, yaml, json, html, scala, clojure, ruby, javascript, embedded_template, **fennel**. ERB is covered by `embedded_template` plus the `html` tree registered for `mustache`. Completion via nvim-cmp with LuaSnip and cmp-nvim-lsp. Paredit is enabled for `clojure` and `fennel` filetypes.
 
 #### Fennel gotchas
 
@@ -114,7 +114,7 @@ These cost real time during the migration, watch for them:
 
 ### Profile System
 
-`.zprofile` sources up to four profile files in order: `~/.life_profile`, `~/.work_profile`, `~/.linux_profile`, `~/.private_profile`. Life, work, and linux profiles are symlinked by Ansible; `.private_profile` is written in-place by Ansible using `lineinfile`. Profiles contain environment variables, PATH entries, and project aliases. The `work` profile adds Nu/Flutter/Python/Ruby/Go/Node/Coursier paths.
+`.zprofile` sources up to four profile files in order: `~/.life_profile`, `~/.work_profile`, `~/.linux_profile`, `~/.private_profile`. Life, work, and linux profiles are symlinked by Ansible; `.private_profile` is written in-place by Ansible using `lineinfile`. Profiles contain environment variables, PATH entries, and project aliases. The `work` profile adds Nu/Flutter/Python/Ruby/Go/Node/Coursier paths. Profiles carry the environment-specific tool setup: direnv hook, brew shellenv and `~/.local/bin` plus mise activation on life; direnv hook, opencode and mise activation on linux. `.zshrc` has no environment gating — work sources neither life nor linux profile, and `~/.nurc` marks the work environment.
 
 ### Secrets
 
