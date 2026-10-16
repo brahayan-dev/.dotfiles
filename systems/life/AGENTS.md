@@ -7,10 +7,9 @@
 
 ## Language Stack
 
-| Language | Runtime           | LSP                      | Formatter        | Notes   |
-| -------- | ----------------- | ------------------------ | ---------------- | ------- |
-| Lua      | LuaJIT (homebrew) | lua_ls                   | conform → stylua |         |
-| Scala    | coursier (JDK 17) | Metals (via nvim-metals) | scalafmt         | Scala 3 |
+| Language | Runtime           | LSP    | Formatter        | Notes |
+| -------- | ----------------- | ------ | ---------------- | ----- |
+| Lua      | LuaJIT (homebrew) | lua_ls | conform → stylua |       |
 
 ## Fennel Style
 

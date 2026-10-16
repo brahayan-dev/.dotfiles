@@ -28,7 +28,6 @@
       - shellcheck
       - font-fira-code
       - lua-language-server
-      - coursier
       - fennel-ls
     state: latest
   notify:

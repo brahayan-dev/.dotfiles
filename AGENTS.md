@@ -31,7 +31,6 @@ The command registry is the `register` function in `systems/core.fnl`. Each entr
 | `ping`               |  ●   |  ●   |   ●   |
 | `setup`              |  ●   |  ●   |   ●   |
 | `install scala2`     |  ●   |  ·   |   ·   |
-| `install scala3`     |  ·   |  ●   |   ●   |
 | `connect github`     |  ·   |  ●   |   ●   |
 | `refresh nu`         |  ●   |  ·   |   ·   |
 | `clone repositories` |  ●   |  ·   |   ·   |
@@ -40,7 +39,6 @@ The command registry is the `register` function in `systems/core.fnl`. Each entr
 - `setup` runs the Ansible playbook for the host's environment (`library/ansible.fnl:setup`).
 - `ping` runs `ansible -m ping` against localhost as a sanity check (`library/ansible.fnl:ping`).
 - `install scala2` installs the Scala 2 toolchain (JDK 11, Scala 2.12.19, sbt 1.9.9, scalafmt 2.7.5) via coursier (`library/interactive.fnl:install-scala2`).
-- `install scala3` installs the Scala 3 toolchain (JDK 17, latest) via coursier (`library/interactive.fnl:install-scala3`).
 - `connect github` authenticates with GitHub (SSH key + token + origin) (`library/interactive.fnl:connect-github`).
 - `refresh nu` runs the five-step Nu refresh sequence (`library/work.fnl:bom-dia`, work only).
 - `clone repositories` clones repositories used in work (`library/repository.fnl:clone-repositories`).
@@ -61,7 +59,7 @@ systems/
     common.fnl                 os-name · environment · run
     logic.fnl                  allowed? · dispatch  (gating primitive)
     ansible.fnl                ping · setup
-    interactive.fnl            install-scala2 · install-scala3 · connect-github
+    interactive.fnl            install-scala2 · connect-github
     repository.fnl             generate-aliases
     work.fnl                   bom-dia  (Nu refresh sequence)
 
@@ -83,7 +81,7 @@ files/                         managed dotfiles (symlinked into $HOME / ~/.confi
 
 ### Ansible
 
-Playbooks run against `localhost` via `hosts.ini`. The Fennel dispatcher sets `ANSIBLE_CONFIG=systems/macos/ansible.cfg` (Darwin) or `ANSIBLE_CONFIG=systems/linux/ansible.cfg` (Linux), picks the playbook by host signal (`work`/`life`/`linux`), and passes `systems/.vault_` and `systems/.become_` as password files. The `common` role creates directories (`~/.ssh`, `~/.config`, `~/.config/ghostty`), installs `fennel` + `fennel-ls`, symlinks nvim/.zprofile/.zshrc, and installs global npm packages. Environment-specific roles create their own config directories (`~/.claude` on work, `~/.config/opencode` on life/linux) and add their own packages and symlinks. The `macos` role (shared by `life` and `work`) installs `coursier` via Homebrew (used by the Scala toolchain in both `life` and `work`). The `work` role installs the Clojure toolchain (`clojure`, `leiningen`, `clj-kondo`, `cljfmt`, `clojure-lsp-native`) via Homebrew taps (`clojure/tools`, `weavejester/brew`, `borkdude/brew`, `clojure-lsp/brew`).
+Playbooks run against `localhost` via `hosts.ini`. The Fennel dispatcher sets `ANSIBLE_CONFIG=systems/macos/ansible.cfg` (Darwin) or `ANSIBLE_CONFIG=systems/linux/ansible.cfg` (Linux), picks the playbook by host signal (`work`/`life`/`linux`), and passes `systems/.vault_` and `systems/.become_` as password files. The `common` role creates directories (`~/.ssh`, `~/.config`, `~/.config/ghostty`), installs `fennel` + `fennel-ls`, symlinks nvim/.zprofile/.zshrc, and installs global npm packages. Environment-specific roles create their own config directories (`~/.claude` on work, `~/.config/opencode` on life/linux) and add their own packages and symlinks. The `macos` role (shared by `life` and `work`) installs the shared Homebrew base. The `work` role installs `coursier` via Homebrew (used by the Scala 2 toolchain) plus the Clojure toolchain (`clojure`, `leiningen`, `clj-kondo`, `cljfmt`, `clojure-lsp-native`) via Homebrew taps (`clojure/tools`, `weavejester/brew`, `borkdude/brew`, `clojure-lsp/brew`).
 
 `roles_path = ../../roles` in each `ansible.cfg` is relative to the `.cfg` location; ansible resolves it back to the repo's top-level `roles/` directory.
 
@@ -114,7 +112,7 @@ These cost real time during the migration, watch for them:
 
 ### Profile System
 
-`.zprofile` sources up to four profile files in order: `~/.life_profile`, `~/.work_profile`, `~/.linux_profile`, `~/.private_profile`. Life, work, and linux profiles are symlinked by Ansible; `.private_profile` is written in-place by Ansible using `lineinfile`. Profiles contain environment variables, PATH entries, and project aliases. The `work` profile adds Nu/Flutter/Python/Ruby/Go/Node/Coursier paths. The `life` and `linux` profiles export `JAVA_HOME` (temurin17 via coursier) for Scala 3.
+`.zprofile` sources up to four profile files in order: `~/.life_profile`, `~/.work_profile`, `~/.linux_profile`, `~/.private_profile`. Life, work, and linux profiles are symlinked by Ansible; `.private_profile` is written in-place by Ansible using `lineinfile`. Profiles contain environment variables, PATH entries, and project aliases. The `work` profile adds Nu/Flutter/Python/Ruby/Go/Node/Coursier paths.
 
 ### Secrets
 

@@ -9,6 +9,7 @@
 - name: Install Dependencies
   community.general.homebrew:
     name:
+      - mise
       - rlwrap
       - direnv
       - sqlite
