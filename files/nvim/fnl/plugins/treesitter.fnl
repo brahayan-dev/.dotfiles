@@ -1,13 +1,10 @@
-(local langs [:go
-              :lua
+(local langs [:lua
               :sql
               :css
               :bash
               :yaml
               :json
               :html
-              :gomod
-              :gosum
               :scala
               :fennel
               :clojure
