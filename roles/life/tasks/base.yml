@@ -18,6 +18,7 @@
       - opentofu
       - jupyterlab
       - dbeaver-community
+      - visidata
     state: latest
 
 - name: Install Common Cask Dependencies

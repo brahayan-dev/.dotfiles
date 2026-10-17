@@ -23,6 +23,7 @@
       - neovim
       - stylua
       - duckdb
+      - visidata
       - rlwrap
       - direnv
       - pandoc
