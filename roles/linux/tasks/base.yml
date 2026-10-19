@@ -12,6 +12,7 @@
       - curl
       - tree
       - tidy
+      - mise
       - make
       - cmake
       - shfmt
@@ -22,6 +23,7 @@
       - neovim
       - stylua
       - duckdb
+      - visidata
       - rlwrap
       - direnv
       - pandoc
@@ -38,7 +40,6 @@
       - jupyter-notebook
       - lua-language-server
 
-
     state: latest
     update_cache: true
   notify:
@@ -47,12 +48,9 @@
 
 - name: Install Npm Dependencies
   become: true
-  community.general.npm:
-    name: "{{ item }}"
-    global: true
-    force: true
-    state: latest
-  loop: "{{ npm_global_packages }}"
+  ansible.builtin.command:
+    cmd: "npm install --global {{ npm_global_packages | join(' ') }}"
+  changed_when: false
 
 - name: Clone Fennel Lsp
   ansible.builtin.git:
@@ -76,22 +74,3 @@
   shell: curl -fsSL https://opencode.ai/install | bash
   args:
     creates: "{{ ansible_facts['user_dir'] }}/.local/bin/opencode"
-
-- name: Ensure Coursier Bin Directory
-  ansible.builtin.file:
-    path: "{{ ansible_facts['user_dir'] }}/.local/share/coursier/bin"
-    state: directory
-    mode: 0755
-
-- name: Download Coursier Launcher
-  ansible.builtin.get_url:
-    url: https://github.com/coursier/launchers/raw/master/cs-x86_64-pc-linux.gz
-    dest: /tmp/cs.gz
-    mode: "0644"
-  changed_when: false
-
-- name: Install Coursier
-  ansible.builtin.shell: gunzip -c /tmp/cs.gz > cs
-  args:
-    chdir: "{{ ansible_facts['user_dir'] }}/.local/share/coursier/bin"
-    creates: "{{ ansible_facts['user_dir'] }}/.local/share/coursier/bin/cs"

@@ -4,13 +4,10 @@ alias llm='ollama launch opencode'
 # NOTE: Path to binaries on Brew
 export PATH="/opt/homebrew/bin:$PATH"
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
-# NOTE: Anthropic
-export ANTHROPIC_API_KEY=""
-export ANTHROPIC_AUTH_TOKEN=ollama
-export ANTHROPIC_BASE_URL=http://localhost:11434
-# NOTE: Go
-export GOPATH="${HOME}/.go"
-export PATH=$GOPATH/bin:$PATH
-# NOTE: Scala
-export PATH="$PATH:$HOME/Library/Application Support/Coursier/bin"
-export JAVA_HOME="$HOME/Library/Caches/Coursier/arc/https/github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.18%252B8/OpenJDK17U-jdk_aarch64_mac_hotspot_17.0.18_8.tar.gz/jdk-17.0.18+8/Contents/Home"
+# NOTE: Direnv
+command -v direnv >/dev/null && eval "$(direnv hook zsh)"
+# NOTE: Brew
+eval "$(/opt/homebrew/bin/brew shellenv)"
+export PATH="$PATH:$HOME/.local/bin"
+# NOTE: Mise
+command -v mise >/dev/null && eval "$(mise activate zsh)"

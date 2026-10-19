@@ -20,11 +20,11 @@ The `workstation` shell script detects the OS, installs `fennel` and `ansible` i
 
 Three environments, partitioned by host signal (see `systems/library/common.fnl`):
 
-| env     | host signal               | toolchain                                           |
-| ------- | ------------------------- | --------------------------------------------------- |
-| `work`  | macOS, work-env available | Scala and Clojure, Work infrastructure              |
-| `life`  | macOS, default            | Personal dev (SSH, git, API tokens), Scala 3        |
-| `linux` | Linux, `pacman` detected  | Similar to `life` with Linux-specific pkgs, Scala 3 |
+| env     | host signal               | toolchain                                 |
+| ------- | ------------------------- | ----------------------------------------- |
+| `work`  | macOS, work-env available | Scala and Clojure, Work infrastructure    |
+| `life`  | macOS, default            | Personal dev (SSH, git, Ruby, API tokens) |
+| `linux` | Linux, `pacman` detected  | Same Ruby tooling as `life`, Linux pkgs   |
 
 ## §2 · commands
 
@@ -35,7 +35,7 @@ The dispatcher is the `register` function in `systems/core.fnl`. Each entry pair
 | `ping`               |  ●   |  ●   |   ●   |
 | `setup`              |  ●   |  ●   |   ●   |
 | `install scala2`     |  ●   |  ·   |   ·   |
-| `install scala3`     |  ·   |  ●   |   ●   |
+| `install ruby`       |  ·   |  ●   |   ●   |
 | `connect github`     |  ·   |  ●   |   ●   |
 | `refresh nu`         |  ●   |  ·   |   ·   |
 | `clone repositories` |  ●   |  ·   |   ·   |

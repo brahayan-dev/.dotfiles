@@ -18,6 +18,12 @@
     - borkdude/brew
     - clojure-lsp/brew
 
+- name: Install Scala Dependencies
+  community.general.homebrew:
+    name:
+      - coursier
+    state: latest
+
 - name: Install Clojure Dependencies
   community.general.homebrew:
     name:

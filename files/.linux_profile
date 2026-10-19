@@ -3,13 +3,9 @@
 alias llm='ollama launch opencode'
 # NOTE: Other configurations
 export PATH="$HOME/.local/bin:$PATH"
-# NOTE: Anthropic
-export ANTHROPIC_API_KEY=""
-export ANTHROPIC_AUTH_TOKEN=ollama
-export ANTHROPIC_BASE_URL=http://localhost:11434
-# NOTE: Go
-export GOPATH="${HOME}/.go"
-export PATH=$GOPATH/bin:$PATH
-# NOTE: Scala
-export PATH="$HOME/.local/share/coursier/bin:$PATH"
-[ -x "$HOME/.local/share/coursier/bin/cs" ] && eval "$($HOME/.local/share/coursier/bin/cs java --jvm temurin:17 --env 2>/dev/null)"
+# NOTE: Direnv
+command -v direnv >/dev/null && eval "$(direnv hook zsh)"
+# NOTE: Opencode
+[[ -d $HOME/.opencode/bin ]] && export PATH="$HOME/.opencode/bin:$PATH"
+# NOTE: Mise
+command -v mise >/dev/null && eval "$(mise activate zsh)"
