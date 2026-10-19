@@ -2,12 +2,12 @@
 
 (local repos-dot [:.dotfiles])
 (local repos-base [:kiln :workbook :turing :frapelle :nullstellensatz])
+(local repos-fentari [:thalassa-air :thalassa-box :thalassa-hub])
 (local repos-akeptous [:ferrenova-nbk
-                       :ferrenova-api
-                       :ferrenova-web
+                       :ferrenova-app
+                       :ferrenova-etl
                        :ferrenova-hub])
 
-(local repos-fentari [:thalassa-air :thalassa-box :thalassa-hub])
 (local repos-work [:capo
                    :babel
                    :agora
@@ -26,6 +26,7 @@
                    :solar-wind
                    :consigliere
                    :controlinho
+                   :carne-do-bau
                    :optimus-prime
                    :arcadia-policies
                    :reference-data-registry
