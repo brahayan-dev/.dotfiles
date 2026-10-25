@@ -8,9 +8,8 @@ Multi-environment dotfiles repository. A small Fennel entrypoint (`systems/core.
 
 ### Environments
 
-Three environments, derived at runtime in `systems/library/common.fnl` from `os-name` (`uname -s`) and `~/.nurc` presence:
+Two environments, derived at runtime in `systems/library/common.fnl` from `os-name` (`uname -s`):
 
-- **work** (macOS + `~/.nurc`) — Nu infrastructure (Clojure and Scala 2 toolchains via the `work` role)
 - **life** (macOS, default) — Personal dev: SSH, git, Ruby toolchain (mise + RuboCop/Ruby LSP via `install ruby`), Python runtime (mise via `install python`), Elm and JS toolchains (npm globals), API tokens (`GITHUB_TOKEN`, `ANTHROPIC_API_KEY`)
 - **linux** (pacman-based Linux) — Same tooling as life (Ruby, Python, Elm and JS) with Linux-specific packages
 
@@ -20,33 +19,27 @@ Three environments, derived at runtime in `systems/library/common.fnl` from `os-
 ./workstation <command> [entity]
 ```
 
-The `workstation` shell script detects the OS to bootstrap deps (`fennel` + `ansible` via brew/pacman), then `exec`s `fennel systems/core.fnl "$@"`. From there, all dispatch lives in Fennel.
+The `workstation` shell script detects the OS to bootstrap deps (`fennel` + `ansible` via brew/pacman), then `exec`s `fennel systems/core.fnl "$@"`. From there, all dispatch lives in Fennel; the versioned toolchains come from mise — Ruby 4 via `install ruby`, Python via `install python`.
 
 ### Commands
 
-The command registry is the `register` function in `systems/core.fnl`. Each entry pairs a handler with an `:allowed-on` list (`:all`, `:work`, or `[:life :linux]`).
+The command registry is the `register` function in `systems/core.fnl`. Each entry pairs a handler with an `:allowed-on` value (`:all` — only life and linux remain).
 
-| Command              | work | life | linux |
-| -------------------- | :--: | :--: | :---: |
-| `ping`               |  ●   |  ●   |   ●   |
-| `setup`              |  ●   |  ●   |   ●   |
-| `install scala2`     |  ●   |  ·   |   ·   |
-| `install ruby`       |  ·   |  ●   |   ●   |
-| `install python`     |  ·   |  ●   |   ●   |
-| `connect github`     |  ·   |  ●   |   ●   |
-| `refresh nu`         |  ●   |  ·   |   ·   |
-| `clone repositories` |  ●   |  ·   |   ·   |
-| `generate aliases`   |  ●   |  ●   |   ●   |
+| Command            | life | linux |
+| ------------------ | :--: | :---: |
+| `ping`             |  ●   |   ●   |
+| `setup`            |  ●   |   ●   |
+| `install ruby`     |  ●   |   ●   |
+| `install python`   |  ●   |   ●   |
+| `connect github`   |  ●   |   ●   |
+| `generate aliases` |  ●   |   ●   |
 
 - `setup` runs the Ansible playbook for the host's environment (`library/ansible.fnl:setup`).
 - `ping` runs `ansible -m ping` against localhost as a sanity check (`library/ansible.fnl:ping`).
-- `install scala2` installs the Scala 2 toolchain (JDK 11, Scala 2.12.19, sbt 1.9.9, scalafmt 2.7.5) via coursier (`library/interactive.fnl:install-scala2`).
-- `install ruby` installs Ruby via mise (`mise use -g ruby@latest`) then the RuboCop, Ruby LSP and htmlbeautifier gems under the mise Ruby (`mise x -- gem install ... --no-document`) (`library/interactive.fnl:install-ruby`, **life and linux only** — mise ships in those roles).
-- `install python` installs the Python runtime via mise (`mise use -g python@latest`) (`library/interactive.fnl:install-python`, **life and linux only**). The pyright LSP and ruff formatter ship as global deps (npm), not under the mise Python.
+- `install ruby` installs Ruby via mise (`mise use -g ruby@4`) then the RuboCop, Ruby LSP and htmlbeautifier gems under the mise Ruby (`mise x -- gem install ... --no-document`) (`library/interactive.fnl:install-ruby`, **life and linux only** — mise ships in those roles).
+- `install python` installs the Python runtime via mise (`mise use -g python@latest`) (`library/interactive.fnl:install-python`). The pyright LSP and ruff formatter ship as global deps (npm), not under the mise Python.
 - `connect github` authenticates with GitHub (SSH key + token + origin) (`library/interactive.fnl:connect-github`).
-- `refresh nu` runs the five-step Nu refresh sequence (`library/work.fnl:bom-dia`, work only).
-- `clone repositories` clones repositories used in work (`library/repository.fnl:clone-repositories`).
-- `generate aliases` emits shell `cd`/`nvim` aliases for known repositories in `~/.dotfiles`, `~/Projects`, and (on work) `~/dev/nu` (`library/repository.fnl:generate-aliases`).
+- `generate aliases` emits shell `cd`/`nvim` aliases for known repositories in `~/.dotfiles`, `~/Projects` (`library/repository.fnl:generate-aliases`).
 
 When a command is run in an environment not in its `:allowed-on` list, `systems/library/logic.fnl`'s `dispatch` exits silently without invoking the handler.
 
@@ -61,31 +54,27 @@ systems/
 
   library/                     Fennel libraries
     common.fnl                 os-name · environment · run
-    logic.fnl                  allowed? · dispatch  (gating primitive)
+    logic.fnl                  allowed-on · dispatch  (gating primitive)
     ansible.fnl                ping · setup
-    interactive.fnl            install-scala2 · connect-github
-    repository.fnl             generate-aliases
-    work.fnl                   bom-dia  (Nu refresh sequence)
+    interactive.fnl            install ruby · install python · connect github
+    repository.fnl             generate aliases
 
-  macos/ansible.cfg            Darwin ansible config (python3, roles_path)
+  life/
+    ansible.cfg                Darwin ansible config (python3, roles_path)
+    playbook.yml               macOS-life setup playbook
+    AGENTS.md                  life env docs (symlinked to ~/.config/opencode/AGENTS.md)
   linux/
     ansible.cfg                Linux ansible config
     playbook.yml               Linux setup playbook
     AGENTS.md                  Linux env docs (symlinked to ~/.config/opencode/AGENTS.md)
-  life/
-    playbook.yml               macOS-life setup playbook
-    AGENTS.md                  life env docs (symlinked to ~/.config/opencode/AGENTS.md)
-  work/
-    playbook.yml               macOS-work setup playbook
-    CLAUDE.md                  work env docs (symlinked to ~/.claude/CLAUDE.md)
 
-roles/                         ansible roles: common, macos, life, work, linux
+roles/                         ansible roles: common, macos, life, linux
 files/                         managed dotfiles (symlinked into $HOME / ~/.config)
 ```
 
 ### Ansible
 
-Playbooks run against `localhost` via `hosts.ini`. The Fennel dispatcher sets `ANSIBLE_CONFIG=systems/macos/ansible.cfg` (Darwin) or `ANSIBLE_CONFIG=systems/linux/ansible.cfg` (Linux), picks the playbook by host signal (`work`/`life`/`linux`), and passes `systems/.vault_` and `systems/.become_` as password files. The `common` role creates directories (`~/.ssh`, `~/.config`, `~/.config/ghostty`), installs `fennel` + `fennel-ls`, symlinks nvim/.zprofile/.zshrc, and installs global npm packages. Environment-specific roles create their own config directories (`~/.claude` on work, `~/.config/opencode` on life/linux) and add their own packages and symlinks. The `macos` role (shared by `life` and `work`) installs the shared Homebrew base. The `work` role installs `coursier` via Homebrew (used by the Scala 2 toolchain) plus the Clojure toolchain (`clojure`, `leiningen`, `clj-kondo`, `cljfmt`, `clojure-lsp-native`) via Homebrew taps (`clojure/tools`, `weavejester/brew`, `borkdude/brew`, `clojure-lsp/brew`).
+Playbooks run against `localhost` via `hosts.ini`. The Fennel dispatcher sets `ANSIBLE_CONFIG=systems/life/ansible.cfg` (Darwin) or `ANSIBLE_CONFIG=systems/linux/ansible.cfg` (Linux), picks the playbook by host signal (`life`/`linux`), and passes `systems/.vault_` and `systems/.become_` as password files. The `common` role creates directories (`~/.ssh`, `~/.config`, `~/.config/ghostty`), installs `fennel` + `fennel-ls`, symlinks nvim/.zprofile/.zshrc, and installs global npm packages. Environment-specific roles create their own config directories (`~/.config/opencode` on life/linux) and add their own packages and symlinks. The `macos` role (Darwin) installs the shared Homebrew base.
 
 `roles_path = ../../roles` in each `ansible.cfg` is relative to the `.cfg` location; ansible resolves it back to the repo's top-level `roles/` directory.
 
@@ -93,11 +82,11 @@ Playbooks run against `localhost` via `hosts.ini`. The Fennel dispatcher sets `A
 
 Plugin manager: lazy.nvim. Leader: Space, local leader: comma.
 
-Source of truth is Fennel under `files/nvim/fnl/` (`settings.fnl` + `mappings.fnl` + `plugins/*.fnl`); the `lua/` tree is generated by nfnl on save and is gitignored (only `lua/plugins.lua` is committed as the bootstrap). `settings.fnl` defines vim options and explicitly invokes `(mappings.general)`, `(mappings.window)`, `(mappings.lsp)` so the keymaps are actually registered. `mappings.fnl` exports a module `(local M {})` with functions `M.general`, `M.window`, `M.lsp`, `M.telescope`, `M.oil`, `M.autocomplete`.
+Source of truth is Fennel under `files/nvim/fnl/` (`settings.fnl` + `mappings.fnl` + `plugins/*.fnl`); the `lua/` tree is generated by nfnl on save and is gitignored (only `lua/plugins.lua` is committed as the bootstrap). `settings.fnl` defines vim options and explicitly invokes `(mappings.general)`, `(mappings.window)`, `(mappings.lsp)` so the keymaps are actually registered. `mappings.fnl` exports functions `general`, `window`, `lsp`, `telescope`, `oil`, `autocomplete`.
 
-LSP uses the new `vim.lsp.config`/`vim.lsp.enable` API (not the old `lspconfig.setup`), plus nvim-metals for Scala (**work only** — gated on `NU_HOME`, Scala 2 settings via `JHFM`). Configured LSPs: html, sqls, ts_ls, lua_ls, yamlls, bashls, jsonls, tofu_ls, ansiblels, clojure_lsp, ruby_lsp, elm_ls, pyright, **fennel_ls**. Formatting is handled by conform.nvim (stylua for Lua, **fnlfmt for Fennel**, cljfmt for Clojure, scalafmt for Scala (work), rubocop for Ruby, htmlbeautifier for ERB, prettier for JSON/markdown/JS/TS, ruff for Python, elm-format for Elm, LSP fallback for others). LSP provides diagnostics and code actions.
+LSP uses the new `vim.lsp.config`/`vim.lsp.enable` API (not the old `lspconfig.setup`). Configured LSPs: html, sqls, ts_ls, lua_ls, yamlls, bashls, jsonls, tofu_ls, ansiblels, ruby_lsp, elm_ls, pyright, **fennel_ls**. Formatting is handled by conform.nvim (stylua for Lua, **fnlfmt for Fennel**, rubocop for Ruby, htmlbeautifier for ERB, prettier for JSON/markdown/JS/TS, ruff for Python, elm-format for Elm, LSP fallback for others). LSP provides diagnostics and code actions.
 
-Treesitter parsers: lua, sql, css, bash, yaml, json, html, scala (work), clojure, ruby, javascript, typescript, embedded_template, **fennel**, python, elm. ERB is covered by `embedded_template` plus the `html` tree registered for `mustache`. Completion via nvim-cmp with LuaSnip and cmp-nvim-lsp. Paredit is enabled for `clojure` and `fennel` filetypes.
+Treesitter parsers: lua, sql, css, bash, yaml, json, html, ruby, javascript, typescript, embedded_template, python, elm, **fennel**. ERB is covered by `embedded_template` plus the `html` tree registered for `mustache`. Completion via nvim-cmp with LuaSnip and cmp-nvim-lsp. Paredit is enabled for `fennel`.
 
 #### Fennel gotchas
 
@@ -113,10 +102,11 @@ These cost real time during the migration, watch for them:
    ```
    nvim --headless -c "lua require('nfnl.api')['compile-file']({ path = './fnl/x.fnl' })" -c "qa!"
    ```
+8. **`os.execute` returns tuples with different shapes per Lua** — 5.5 gives `(ok kind code)` and LuaJIT a single code; destructure with `(let [(ok _ code) ...] ...)` and treat `ok` as the only signal (fail-fast in `common.fnl`).
 
 ### Profile System
 
-`.zprofile` sources up to four profile files in order: `~/.life_profile`, `~/.work_profile`, `~/.linux_profile`, `~/.private_profile`. Life, work, and linux profiles are symlinked by Ansible; `.private_profile` is written in-place by Ansible using `lineinfile`. Profiles contain environment variables, PATH entries, and project aliases. The `work` profile adds Nu/Flutter/Python/Ruby/Go/Node/Coursier paths. Profiles carry the environment-specific tool setup: direnv hook, brew shellenv and `~/.local/bin` plus mise activation on life; direnv hook, opencode and mise activation on linux. `.zshrc` has no environment gating — work sources neither life nor linux profile, and `~/.nurc` marks the work environment.
+`.zprofile` sources up to three profile files in order: `~/.life_profile`, `~/.linux_profile`, `~/.private_profile`. Life and linux profiles are symlinked by Ansible; `.private_profile` is written in-place by Ansible using `lineinfile`. Profiles contain environment variables, PATH entries, and project aliases. Profiles carry the environment-specific tool setup: direnv hook, brew shellenv and `~/.local/bin` plus mise activation on life; direnv hook, opencode and mise activation on linux. `.zshrc` has no environment gating.
 
 ### Secrets
 
@@ -124,17 +114,16 @@ Ansible Vault encrypts `roles/life/vars/main.yml` and `roles/linux/vars/main.yml
 
 ## Key Conventions
 
-- Ansible task names use Title Case (e.g., `Install Dependencies`, `Configure Luarocks For LuaJIT`).
+- Ansible task names use Title Case (e.g., `Install Dependencies`).
 - Config deployment is always via symlinks — never copy files into `$HOME`.
 - Ghostty has three configs: `built-in` (all macOS), `external` (unused), `linux`.
-- Each environment's `systems/<env>/AGENTS.md` (life, linux) or `systems/<env>/CLAUDE.md` (work) is symlinked into `~/.config/opencode/AGENTS.md` or `~/.claude/CLAUDE.md` respectively by its corresponding role.
+- Each environment's `systems/<env>/AGENTS.md` (life, linux) is symlinked into `~/.config/opencode/AGENTS.md` respectively by its corresponding role.
 - The `workstation` script must be run from the repo root (`~/.dotfiles/`).
 - The Fennel command registry in `systems/core.fnl` is the source of truth for which command runs in which environment. Update both `systems/core.fnl` and `AGENTS.md` together when changing it.
 - Gating logic lives in `systems/library/logic.fnl` (`allowed?` + `dispatch`); keep it side-effect-free.
-- Host signal (OS name + `~/.nurc` presence) resolves to a Fennel keyword (`:work` / `:life` / `:linux`) in `systems/library/common.fnl`.
-- Use `prettier . --write` to format Markdown files, `stylua .` for Lua, `ruff . --fix` for Python, and `fnlfmt` for Fennel (handled by `conform.nvim` in the editor).
-- Don't write comments. If you do, keep them brief.
+- Host signal (`uname -s`) resolves to a Fennel keyword (`:life` / `:linux`) in `systems/library/common.fnl`.
+- Use `prettier . --write` to format Markdown files, `stylua .` for Lua, `ruff check --fix` for Python, and `fnlfmt` for Fennel (handled by `conform.nvim` in the editor).
 
 ## Direction
 
-End state: Fennel + sh across the board. The Neovim config is now fully in Fennel under `files/nvim/fnl/`. Remaining work lives in `systems/library/` if Ansible playbooks grow.
+End state: Fennel + sh across the board. The Neovim config is fully in Fennel under `files/nvim/fnl/`. Remaining work lives in systems/library/ if Ansible playbooks grow.

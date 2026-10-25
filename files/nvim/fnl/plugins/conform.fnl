@@ -2,8 +2,6 @@
                          :html [:prettier]
                          :json [:prettier]
                          :fennel [:fnlfmt]
-                         :scala [:scalafmt]
-                         :clojure [:cljfmt]
                          :ruby [:rubocop]
                          :eruby [:htmlbeautifier]
                          :mustache [:prettier]

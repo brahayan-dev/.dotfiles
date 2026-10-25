@@ -5,9 +5,7 @@
               :yaml
               :json
               :html
-              :scala
               :fennel
-              :clojure
               :ruby
               :javascript
               :typescript

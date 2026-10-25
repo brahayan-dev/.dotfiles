@@ -4,19 +4,16 @@
                      answer (raw:gsub "%s+$" "")]
                  answer))
 
-(local exists-nurc? (let [home (os.getenv :HOME)
-                          path (.. home :/.nurc)
-                          answer (os.rename path path)]
-                      (not= nil answer)))
+(local environment (if (= os-name :Linux) :linux :life))
 
-(local environment (case [os-name exists-nurc?]
-                     [:Linux _] :linux
-                     [:Darwin true] :work
-                     [:Darwin false] :life))
+(fn run-string [cmd]
+  (print "-->>" cmd)
+  (let [(ok _ code) (os.execute cmd)]
+    (when (not ok)
+      (io.stderr:write (.. "\nCommand failed (exit " (or code 1) "): " cmd "\n"))
+      (os.exit (or code 1)))))
 
 (fn run [v]
-  (let [cmd (table.concat v " ")]
-    (print "-->>" cmd)
-    (os.execute cmd)))
+  (run-string (table.concat v " ")))
 
-{: run : os-name : environment}
+{: run : run-string : os-name : environment}

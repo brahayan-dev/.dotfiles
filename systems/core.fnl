@@ -1,7 +1,6 @@
 (local ansible (require :systems.library.ansible))
 (local interactive (require :systems.library.interactive))
 (local repository (require :systems.library.repository))
-(local work (require :systems.library.work))
 
 (local {: dispatch} (require :systems.library.logic))
 
@@ -11,30 +10,17 @@
         "commands:"
         "    ping                ansible -m ping (sanity check)"
         "    setup               run the ansible playbook for the host"
-        "    install scala2      install the Scala V2 toolchain via coursier"
         "    install ruby        install the Ruby toolchain via mise"
         "    install python      install the Python runtime via mise"
-        "    clone repositories  clone repositories used in work"
         "    generate aliases    generate aliases for each repository"
-        "    connect github      authenticate with the remote forge"
-        "    refresh nu          refresh work credentials (work only)"])
+        "    connect github      authenticate with the remote forge"])
 
 (local ping {:allowed-on :all :handler ansible.ping})
 (local setup {:allowed-on :all :handler ansible.setup})
-(local refresh-nu {:allowed-on :work :handler work.bom-dia})
 (local generate-aliases {:allowed-on :all :handler repository.generate-aliases})
-(local install-scala2 {:allowed-on :work :handler interactive.install-scala2})
-(local install-ruby {:allowed-on [:life :linux]
-                     :handler interactive.install-ruby})
-
-(local install-python
-       {:allowed-on [:life :linux] :handler interactive.install-python})
-
-(local connect-github
-       {:allowed-on [:life :linux] :handler interactive.connect-github})
-
-(local clone-repositories
-       {:allowed-on :work :handler repository.clone-repositories})
+(local install-ruby {:allowed-on :all :handler interactive.install-ruby})
+(local install-python {:allowed-on :all :handler interactive.install-python})
+(local connect-github {:allowed-on :all :handler interactive.connect-github})
 
 (local default
        {:allowed-on :all :handler #(each [_ line (ipairs usage)] (print line))})
@@ -43,12 +29,9 @@
   (case [command entity]
     [:ping _] ping
     [:setup _] setup
-    [:refresh :nu] refresh-nu
-    [:install :scala2] install-scala2
     [:install :ruby] install-ruby
     [:install :python] install-python
     [:connect :github] connect-github
-    [:clone :repositories] clone-repositories
     [:generate :aliases] generate-aliases
     [_ _] default))
 

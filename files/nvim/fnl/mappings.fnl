@@ -50,6 +50,4 @@
    :<C-b> (cmp.mapping.scroll_docs -4)
    :<CR> (cmp.mapping.confirm {:select true})})
 
-(local conjure {:doc-word-key :H})
-
-{: general : window : lsp : telescope : oil : autocomplete : conjure}
+{: general : window : lsp : telescope : oil : autocomplete}

@@ -4,16 +4,8 @@
 (local user (os.getenv :USER))
 (local host (os.getenv :HOST))
 
-(fn install-scala2 []
-  (let [dir (.. home :/.local/share/coursier/bin)]
-    (run [:coursier :java :--jvm "temurin:11" :--setup])
-    (run [:coursier :install "sbt:1.9.9"])
-    (run [:coursier :install "scalafmt:2.7.5"])
-    (run [:coursier :install :metals :--install-dir dir])
-    (run [:coursier :install "scala:2.12.19" "scalac:2.12.19"])))
-
 (fn install-ruby []
-  (run [:mise :use :-g "ruby@latest"])
+  (run [:mise :use :-g "ruby@4"])
   (run [:mise
         :x
         :--
@@ -35,4 +27,4 @@
     (run [:gh :auth :refresh :-h :github.com :-s "admin:ssh_signing_key"])
     (run [:gh :ssh-key :add ssh-key-path :-t host])))
 
-{: install-scala2 : install-ruby : install-python : connect-github}
+{: install-ruby : install-python : connect-github}

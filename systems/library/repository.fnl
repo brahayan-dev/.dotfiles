@@ -1,46 +1,15 @@
-(local {: environment &as common} (require :systems.library.common))
+(local {: run} (require :systems/library/common))
 
 (local repos-dot [:.dotfiles])
 (local repos-base [:kiln :workbook :turing :frapelle :nullstellensatz])
-(local repos-fentari [:thalassa-air :thalassa-box :thalassa-hub])
 (local repos-akeptous [:box :toy :zen :hub])
-
-(local repos-work [:capo
-                   :babel
-                   :agora
-                   :earner
-                   :netero
-                   :kairos
-                   :itaipu
-                   :conrado
-                   :wiseguy
-                   :pericles
-                   :hellenes
-                   :giovanni
-                   :two-face
-                   :thalassa
-                   :underboss
-                   :solar-wind
-                   :consigliere
-                   :controlinho
-                   :carne-do-bau
-                   :optimus-prime
-                   :arcadia-policies
-                   :reference-data-registry
-                   :lending-claude-workspace
-                   :data-quality-custom-checks
-                   :lending-foundations-job-repo
-                   :lending-personal-account-unsec-job-repo])
+(local repos-fentari [:thalassa-air :thalassa-box :thalassa-hub])
 
 (local home (os.getenv :HOME))
 (local dot {:repos repos-dot :base-path (.. home "/")})
-(local work {:repos repos-work :base-path (.. home :/dev/nu/)})
 (local base {:repos repos-base :base-path (.. home :/Projects/)})
-(local fentari {:repos repos-fentari :base-path (.. home :/Projects/)})
 (local akeptous {:repos repos-akeptous :base-path (.. home :/Projects/)})
-
-(fn run [v]
-  (-> v (table.concat " ") print))
+(local fentari {:repos repos-fentari :base-path (.. home :/Projects/)})
 
 (fn join-cmd [repo base-path]
   (let [part-cmd (.. repo "=" "'" :cd " " base-path repo)]
@@ -62,14 +31,7 @@
 (fn generate-aliases []
   (load dot)
   (load base)
-  (case environment
-    :work (load work)
-    _ (do
-        (load akeptous)
-        (load fentari))))
+  (load fentari)
+  (load akeptous))
 
-(fn clone-repositories []
-  (each [_ repo (ipairs repos-work)]
-    (common.run [:nu :proj :clone repo])))
-
-{: generate-aliases : clone-repositories}
+{: generate-aliases}

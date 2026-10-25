@@ -10,7 +10,6 @@
              :tofu_ls
              :fennel_ls
              :ansiblels
-             :clojure_lsp
              :ruby_lsp
              :elm_ls
              :pyright])

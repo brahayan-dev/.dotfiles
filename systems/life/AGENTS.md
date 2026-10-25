@@ -7,9 +7,10 @@
 
 ## Language Stack
 
-| Language | Runtime           | LSP    | Formatter        | Notes |
-| -------- | ----------------- | ------ | ---------------- | ----- |
-| Lua      | LuaJIT (homebrew) | lua_ls | conform → stylua |       |
+| Language | Runtime              | LSP       | Formatter        | Notes             |
+| -------- | -------------------- | --------- | ---------------- | ----------------- |
+| Fennel   | fennel (brew/pacman) | fennel_ls | conform → fnlfmt | CLI · nvim config |
+| Lua      | LuaJIT (homebrew)    | lua_ls    | conform → stylua | nvim compiled     |
 
 ## Fennel Style
 
