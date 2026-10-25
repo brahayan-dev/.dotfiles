@@ -28,14 +28,21 @@ zsource() {
 # Alias
 # ------
 alias lg='lazygit'
+alias llm='ollama launch opencode'
 alias setup='cd "$HOME/.dotfiles/" && ./workstation setup'
 
 # ---------
 # Settings
 # ---------
 source ~/.zprofile
+# NOTE: Local binaries
+export PATH="$HOME/.local/bin:$PATH"
+# NOTE: Direnv
+command -v direnv >/dev/null && eval "$(direnv hook zsh)"
 # NOTE: Editor
 export EDITOR=nvim
 # NOTE: Repositories
 eval "$(~/.dotfiles/workstation generate-aliases)"
+# NOTE: Mise
+command -v mise >/dev/null && eval "$(mise activate zsh)"
 

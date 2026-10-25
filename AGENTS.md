@@ -94,7 +94,7 @@ These cost real time during the migration, watch for them:
 
 ### Profile System
 
-`.zprofile` sources up to three profile files in order: `~/.life_profile`, `~/.linux_profile`, `~/.private_profile`. Life and linux profiles are symlinked by Ansible; `.private_profile` is written in-place by Ansible using `lineinfile`. Profiles contain environment variables, PATH entries, and project aliases. Profiles carry the environment-specific tool setup: direnv hook, brew shellenv and `~/.local/bin` plus mise activation on life; direnv hook, opencode and mise activation on linux. `.zshrc` has no environment gating.
+`.zprofile` sources up to three profile files in order: `~/.life_profile`, `~/.linux_profile`, `~/.private_profile`. Life and linux profiles are symlinked by Ansible; `.private_profile` is written in-place by Ansible using `lineinfile`. Profiles contain environment variables, PATH entries, and project aliases. Profiles carry only environment-specific tool setup: brew shellenv and Homebrew Paths on life; opencode bin on linux. The shared tool setup lives in `.zshrc` once for both environments: `llm` alias, `~/.local/bin` PATH, direnv hook, `EDITOR`, repo aliases (generate-aliases), and mise activation (last, so it captures the resolved PATH). `.zshrc` has no environment gating.
 
 ### Secrets
 
