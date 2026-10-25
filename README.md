@@ -14,16 +14,16 @@ $ ./workstation setup
 $ ./workstation setup
 ```
 
-The `workstation` shell script detects the OS, installs `just` and `ansible` if missing (brew on macOS, pacman on Linux), then `exec`s `just --justfile justfile`. All dispatch lives in the justfile from that point on; the versioned toolchains come from mise — Ruby 4 via `./workstation install ruby`, Python via `./workstation install python`.
+The `workstation` shell script detects the OS, installs `just` and `ansible` if missing (brew on macOS, pacman on Linux), then `exec`s `just --justfile justfile`. All dispatch lives in the justfile from that point on; the versioned Python toolchain comes from mise via `./workstation install`.
 
 ## §1 · environments
 
 Two environments, partitioned by `os()` in the justfile:
 
-| env     | host signal              | toolchain                                                  |
-| ------- | ------------------------ | ---------------------------------------------------------- |
-| `life`  | macOS, default           | Personal dev (SSH, git, Ruby, Python, Elm, JS, API tokens) |
-| `linux` | Linux, `pacman` detected | Same tooling as `life`, Linux pkgs                         |
+| env     | host signal              | toolchain                                                 |
+| ------- | ------------------------ | --------------------------------------------------------- |
+| `life`  | macOS, default           | Personal dev (SSH, git, Python, Elm, JS, SQL, API tokens) |
+| `linux` | Linux, `pacman` detected | Same tooling as `life`, Linux pkgs                        |
 
 ## §2 · commands
 
@@ -33,8 +33,7 @@ The dispatcher is the `justfile` at the repo root — `just --list` documents ev
 | ------------------ | :--: | :---: |
 | `ping`             |  ●   |   ●   |
 | `setup`            |  ●   |   ●   |
-| `install ruby`     |  ●   |   ●   |
-| `install python`   |  ●   |   ●   |
+| `install`          |  ●   |   ●   |
 | `connect github`   |  ●   |   ●   |
 | `generate-aliases` |  ●   |   ●   |
 

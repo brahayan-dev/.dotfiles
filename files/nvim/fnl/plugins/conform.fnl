@@ -2,8 +2,6 @@
                          :html [:prettier]
                          :json [:prettier]
                          :fennel [:fnlfmt]
-                         :ruby [:rubocop]
-                         :eruby [:htmlbeautifier]
                          :mustache [:prettier]
                          :markdown [:prettier]
                          :typescript [:prettier]

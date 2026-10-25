@@ -6,10 +6,8 @@
               :json
               :html
               :fennel
-              :ruby
               :javascript
               :typescript
-              :embedded_template
               :just
               :python
               :elm])

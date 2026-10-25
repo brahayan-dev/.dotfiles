@@ -7,11 +7,15 @@
 
 ## Language Stack
 
-| Language | Runtime              | LSP       | Formatter        | Notes            |
-| -------- | -------------------- | --------- | ---------------- | ---------------- |
-| Just     | static binary        | just-lsp  | just --fmt       | workstation CLI  |
-| Fennel   | fennel (brew/pacman) | fennel_ls | conform → fnlfmt | nvim config      |
-| Lua      | LuaJIT (homebrew)    | lua_ls    | conform → stylua | nvim compiled    |
+| Language | Runtime                | LSP       | Formatter        | Notes           |
+| -------- | ---------------------- | --------- | ---------------- | --------------- |
+| Just     | static binary          | just-lsp  | just --fmt       | workstation CLI |
+| Fennel   | fennel (brew/pacman)   | fennel_ls | conform → fnlfmt | nvim config     |
+| Lua      | LuaJIT (homebrew)      | lua_ls    | conform → stylua | nvim compiled   |
+| Python   | mise (`python@latest`) | pyright   | ruff             | dev             |
+| Elm      | npm globals            | elm_ls    | elm-format       | dev             |
+| JS/TS    | node                   | ts_ls     | prettier         | dev             |
+| SQL      | —                      | sqls      | —                | dev             |
 
 ## Fennel Style
 

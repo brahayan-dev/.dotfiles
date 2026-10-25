@@ -19,19 +19,9 @@ alias s := setup
     ANSIBLE_CONFIG={{ cfg }} ansible-playbook -c local -i systems/hosts.ini \
       --vault-password-file systems/.vault_ --become-password-file systems/.become_ {{ playbook }}
 
-# install ruby or python via mise
-@install tool="ruby":
-    #!/usr/bin/env sh
-    set -eu
-    case "{{ tool }}" in
-      ruby)
-        mise use -g ruby@4
-        mise x -- gem install rubocop ruby-lsp htmlbeautifier --no-document ;;
-      python)
-        mise use -g python@latest ;;
-      *)
-      echo "usage: workstation install [ruby|python]" >&2; exit 1 ;;
-    esac
+# install the Python runtime via mise
+@install:
+    mise use -g "python@latest"
 
 @connect-github:
     gh auth login
