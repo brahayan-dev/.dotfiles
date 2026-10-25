@@ -12,12 +12,17 @@
              :ansiblels
              :ruby_lsp
              :elm_ls
-             :pyright])
+             :pyright
+             :just_lsp])
 
 (local lua_ls_settings {:Lua {:diagnostics {:globals [:vim]}}})
 
 (local html_settings
        {:filetypes [:html :mustache] :init_options {:provideFormatter false}})
+
+(local just_lsp_settings {:cmd [:just-lsp]
+                          :filetypes [:just]
+                          :root_markers [:justfile]})
 
 (fn capabilities_with_encoding []
   (let [{: default_capabilities} (require :cmp_nvim_lsp)]
@@ -31,6 +36,7 @@
             (vim.lsp.config "*" {:capabilities (capabilities_with_encoding)})
             (vim.lsp.config :lua_ls {:settings lua_ls_settings})
             (vim.lsp.config :html html_settings)
+            (vim.lsp.config :just_lsp just_lsp_settings)
             (vim.diagnostic.config {:virtual_text true})
             (each [_ lsp (ipairs lsps)]
               (vim.lsp.enable lsp))

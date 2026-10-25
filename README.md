@@ -1,6 +1,6 @@
 # `~/.dotfiles`
 
-Multi-environment dotfiles repository. A small Fennel entrypoint (`systems/core.fnl`) dispatches to environment-specific Ansible playbooks that deploy configs via symlinks from `~/.dotfiles/files/` into `$HOME` and `~/.config/`.
+Multi-environment dotfiles repository. A small `justfile` dispatches to environment-specific Ansible playbooks that deploy configs via symlinks from `~/.dotfiles/files/` into `$HOME` and `~/.config/`.
 
 ```
 $ git clone <repo> ~/.dotfiles
@@ -14,11 +14,11 @@ $ ./workstation setup
 $ ./workstation setup
 ```
 
-The `workstation` shell script detects the OS, installs `fennel` and `ansible` if missing (brew on macOS, pacman on Linux), then `exec`s `fennel systems/core.fnl "$@"`. All dispatch lives in Fennel from that point on; the versioned toolchains come from mise — Ruby 4 via `./workstation install ruby`, Python via `./workstation install python`.
+The `workstation` shell script detects the OS, installs `just` and `ansible` if missing (brew on macOS, pacman on Linux), then `exec`s `just --justfile justfile`. All dispatch lives in the justfile from that point on; the versioned toolchains come from mise — Ruby 4 via `./workstation install ruby`, Python via `./workstation install python`.
 
 ## §1 · environments
 
-Two environments, partitioned by host signal (see `systems/library/common.fnl`):
+Two environments, partitioned by `os()` in the justfile:
 
 | env     | host signal              | toolchain                                                  |
 | ------- | ------------------------ | ---------------------------------------------------------- |
@@ -27,7 +27,7 @@ Two environments, partitioned by host signal (see `systems/library/common.fnl`):
 
 ## §2 · commands
 
-The dispatcher is the `register` function in `systems/core.fnl`. Each entry pairs a handler with an `:allowed-on` value (`:all` — only life and linux remain). Side-effectful commands fail fast through `run` (non-zero exit code propagation).
+The dispatcher is the `justfile` at the repo root — `just --list` documents every recipe and aliases (`p`, `s`) cover the daily ones. Side-effectful recipes stop at the first failing line with a non-zero exit code.
 
 | command            | life | linux |
 | ------------------ | :--: | :---: |
@@ -36,7 +36,7 @@ The dispatcher is the `register` function in `systems/core.fnl`. Each entry pair
 | `install ruby`     |  ●   |   ●   |
 | `install python`   |  ●   |   ●   |
 | `connect github`   |  ●   |   ●   |
-| `generate aliases` |  ●   |   ●   |
+| `generate-aliases` |  ●   |   ●   |
 
 Usage:
 
@@ -49,17 +49,10 @@ $ ./workstation <command> [entity]
 ```
 ~/.dotfiles
 ├── workstation                  ◀── bash entry · OS detection · dep bootstrap
+├── justfile                     ◀── command runner · ansible invocation
 │
-├── systems/                     ◀── Fennel CLI · ansible config
-│   ├── core.fnl                 ◀── entrypoint + register table
+├── systems/                     ◀── ansible config
 │   ├── hosts.ini                ◀── ansible inventory
-│   │
-│   ├── library/                 ◀── Fennel libraries
-│   │   ├── common.fnl           ◀── os-name · environment · run
-│   │   ├── logic.fnl            ◀── allowed-on · dispatch  (gating primitive)
-│   │   ├── ansible.fnl          ◀── ping · setup
-│   │   ├── interactive.fnl      ◀── install ruby · install python · connect github
-│   │   └── repository.fnl       ◀── generate aliases
 │   │
 │   ├── life/
 │   │   ├── ansible.cfg          ◀── Darwin config

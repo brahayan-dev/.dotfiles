@@ -10,6 +10,7 @@
               :javascript
               :typescript
               :embedded_template
+              :just
               :python
               :elm])
 

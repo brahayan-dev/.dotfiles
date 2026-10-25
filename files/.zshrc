@@ -37,5 +37,5 @@ source ~/.zprofile
 # NOTE: Editor
 export EDITOR=nvim
 # NOTE: Repositories
-eval "$(~/.dotfiles/workstation generate aliases)"
+eval "$(~/.dotfiles/workstation generate-aliases)"
 

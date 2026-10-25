@@ -30,6 +30,7 @@
       - font-fira-code
       - lua-language-server
       - fennel-ls
+      - just-lsp
     state: latest
   notify:
     - event_download_ohmyzsh
