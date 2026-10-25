@@ -9,16 +9,10 @@
 - name: Install Dependencies
   community.general.homebrew:
     name:
-      - mise
-      - rlwrap
-      - direnv
-      - sqlite
       - tofu-ls
       - opencode
-      - opentofu
       - jupyterlab
       - dbeaver-community
-      - visidata
     state: latest
 
 - name: Install Common Cask Dependencies

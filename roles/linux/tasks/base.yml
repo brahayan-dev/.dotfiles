@@ -12,26 +12,19 @@
       - curl
       - tree
       - tidy
-      - mise
       - make
       - cmake
       - shfmt
       - unzip
       - pdftk
       - nodejs
-      - sqlite
       - neovim
       - stylua
       - duckdb
-      - visidata
-      - rlwrap
-      - direnv
       - pandoc
       - dbeaver
       - ghostty
-      - ripgrep
       - lazygit
-      - opentofu
       - base-devel
       - github-cli
       - shellcheck
@@ -46,12 +39,6 @@
   notify:
     - event_download_ohmyzsh
     - event_install_ohmyzsh
-
-- name: Install Npm Dependencies
-  become: true
-  ansible.builtin.command:
-    cmd: "npm install --global {{ npm_global_packages | join(' ') }}"
-  changed_when: false
 
 - name: Clone Fennel Lsp
   ansible.builtin.git:

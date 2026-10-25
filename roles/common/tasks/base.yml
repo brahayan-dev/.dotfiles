@@ -12,4 +12,16 @@
       - poppler
       - ripgrep
       - tree-sitter-cli
+      - mise
+      - rlwrap
+      - direnv
+      - sqlite
+      - opentofu
+      - visidata
     state: latest
+
+- name: Install Npm Dependencies
+  become: "{{ ansible_facts['os_family'] == 'Archlinux' }}"
+  ansible.builtin.command:
+    cmd: "npm install --global {{ npm_global_packages | join(' ') }}"
+  changed_when: false

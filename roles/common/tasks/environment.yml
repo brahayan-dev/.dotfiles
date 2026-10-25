@@ -8,6 +8,7 @@
     - .ssh
     - .config
     - .config/ghostty
+    - .config/opencode
 
 - name: Set Editor Symlinks
   ansible.builtin.file:
@@ -38,3 +39,10 @@
     - .zprofile
     - .zshrc
   notify: event_reload_zsh_files
+
+- name: Set Opencode Config Symlink
+  ansible.builtin.file:
+    src: "{{ ansible_facts['user_dir'] }}/.dotfiles/files/opencode/opencode.json"
+    dest: "{{ ansible_facts['user_dir'] }}/.config/opencode/opencode.json"
+    state: link
+    force: true
