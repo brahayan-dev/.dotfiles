@@ -25,3 +25,9 @@
   ansible.builtin.command:
     cmd: "npm install --global {{ npm_global_packages | join(' ') }}"
   changed_when: false
+
+- name: Install Markitdown
+  pip:
+    name: "markitdown[all]"
+    state: latest
+    extra_args: --user
