@@ -13,3 +13,9 @@
       - ripgrep
       - tree-sitter-cli
     state: latest
+
+- name: Install Markitdown
+  pip:
+    name: "markitdown[all]"
+    state: latest
+    extra_args: --user
