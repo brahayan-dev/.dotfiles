@@ -8,7 +8,7 @@
   notify:
     - event_reload_zsh_files
 
-- name: Set Life Symlink
+- name: Set Symlinks
   ansible.builtin.file:
     src: "{{ ansible_facts['user_dir'] }}/.dotfiles/files/{{ item }}"
     dest: "{{ ansible_facts['user_dir'] }}/{{ item }}"
@@ -16,6 +16,7 @@
     force: true
   loop:
     - .life_profile
+    - .private_profile
   notify: event_reload_zsh_files
 
 - name: Set Opencode Configuration Symlink

@@ -6,5 +6,5 @@
     path: "{{ ansible_facts['user_dir'] }}/.dotfiles/files/.private_profile"
   loop:
     - { name: "GITHUB_TOKEN", value: "{{ github_token }}" }
-    - { name: "ANTHROPIC_API_KEY", value: "{{ anthropic_api_key }}" }
+    - { name: "OLLAMA_API_KEY", value: "{{ ollama_api_key }}" }
   notify: event_reload_zsh_files
