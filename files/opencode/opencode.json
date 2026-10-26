@@ -1,5 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "model": "ollama/ornith-1.5:9b",
   "provider": {
     "ollama": {
       "npm": "@ai-sdk/openai-compatible",
@@ -17,6 +18,13 @@
         },
         "ornith:9b": {
           "name": "ornith:9b",
+          "limit": {
+            "context": 65536,
+            "output": 8192
+          }
+        },
+        "ornith-1.5:9b": {
+          "name": "ornith-1.5:9b",
           "limit": {
             "context": 65536,
             "output": 8192
