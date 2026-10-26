@@ -14,7 +14,18 @@
 
 (fn install-ruby []
   (run [:mise :use :-g "ruby@latest"])
-  (run [:mise :x :-- :gem :install :rubocop :ruby-lsp :htmlbeautifier :--no-document]))
+  (run [:mise
+        :x
+        :--
+        :gem
+        :install
+        :rubocop
+        :ruby-lsp
+        :htmlbeautifier
+        :--no-document]))
+
+(fn install-python []
+  (run [:mise :use :-g "python@latest"]))
 
 (fn connect-github []
   (let [ssh-key-path (.. home :/.ssh/ user :_rsa.pub)
@@ -24,4 +35,4 @@
     (run [:gh :auth :refresh :-h :github.com :-s "admin:ssh_signing_key"])
     (run [:gh :ssh-key :add ssh-key-path :-t host])))
 
-{: install-scala2 : install-ruby : connect-github}
+{: install-scala2 : install-ruby : install-python : connect-github}

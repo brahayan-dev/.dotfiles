@@ -7,7 +7,11 @@
                          :ruby [:rubocop]
                          :eruby [:htmlbeautifier]
                          :mustache [:prettier]
-                         :markdown [:prettier]})
+                         :markdown [:prettier]
+                         :typescript [:prettier]
+                         :javascript [:prettier]
+                         :python [:ruff_format]
+                         :elm [:elm_format]})
 
 (local format_on_save {:timeout_ms 500 :lsp_format :fallback})
 (local formatters {:prettier {:options {:ft_parsers {:mustache :html}}}})

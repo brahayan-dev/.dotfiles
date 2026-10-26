@@ -26,6 +26,7 @@
       - readline
       - openssl@3
       - shellcheck
+      - ruff
       - font-fira-code
       - lua-language-server
       - fennel-ls

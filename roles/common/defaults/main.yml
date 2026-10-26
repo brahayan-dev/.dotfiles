@@ -10,5 +10,9 @@ npm_global_packages:
   - typescript-language-server
   - vscode-langservers-extracted
   - "@ansible/ansible-language-server"
+  - pyright
+  - elm
+  - elm-format
+  - "@elm-tooling/elm-language-server"
 
 git_user_email: "bxsr@proton.me"

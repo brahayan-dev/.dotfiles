@@ -10,7 +10,10 @@
               :clojure
               :ruby
               :javascript
-              :embedded_template])
+              :typescript
+              :embedded_template
+              :python
+              :elm])
 
 (fn callback [args]
   (pcall vim.treesitter.start args.buf)

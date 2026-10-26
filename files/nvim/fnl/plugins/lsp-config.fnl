@@ -11,7 +11,9 @@
              :fennel_ls
              :ansiblels
              :clojure_lsp
-             :ruby_lsp])
+             :ruby_lsp
+             :elm_ls
+             :pyright])
 
 (local lua_ls_settings {:Lua {:diagnostics {:globals [:vim]}}})
 
