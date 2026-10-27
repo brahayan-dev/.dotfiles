@@ -29,4 +29,9 @@ alias s := setup
     gh ssh-key add "$HOME/.ssh/$(whoami)_rsa.pub" -t "$(hostname)"
 
 @generate-aliases:
-    printf "alias _.dotfiles='cd %s'\n" "$HOME/.dotfiles"; printf "alias __.dotfiles='cd %s && nvim .'\n" "$HOME/.dotfiles"; for repo in {{ repos }}; do printf "alias _%s='cd %s/Projects/%s'\n" "$repo" "$HOME" "$repo"; printf "alias __%s='cd %s/Projects/%s && nvim .'\n" "$repo" "$HOME" "$repo"; done
+    printf "alias _.dotfiles='cd %s'\n" "$HOME/.dotfiles"
+    printf "alias __.dotfiles='cd %s && nvim .'\n" "$HOME/.dotfiles"
+    for repo in {{ repos }}; do \
+      printf "alias _%s='cd %s/Projects/%s'\n" "$repo" "$HOME" "$repo"; \
+      printf "alias __%s='cd %s/Projects/%s && nvim .'\n" "$repo" "$HOME" "$repo"; \
+    done

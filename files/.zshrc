@@ -28,7 +28,6 @@ zsource() {
 # Alias
 # ------
 alias lg='lazygit'
-alias llm='opencode'
 alias setup='cd "$HOME/.dotfiles/" && ./workstation setup'
 
 # ---------

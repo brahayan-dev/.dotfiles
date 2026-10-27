@@ -18,11 +18,3 @@
     - .life_profile
     - .private_profile
   notify: event_reload_zsh_files
-
-- name: Set Opencode Configuration Symlink
-  ansible.builtin.file:
-    src: "{{ ansible_facts['user_dir'] }}/.dotfiles/systems/life/AGENTS.md"
-    dest: "{{ ansible_facts['user_dir'] }}/.config/opencode/AGENTS.md"
-    state: link
-    force: true
-  notify: event_reload_zsh_files

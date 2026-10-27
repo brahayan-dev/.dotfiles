@@ -20,10 +20,10 @@ The `workstation` shell script detects the OS, installs `just` and `ansible` if 
 
 Two environments, partitioned by `os()` in the justfile:
 
-| env     | host signal              | toolchain                                                 |
-| ------- | ------------------------ | --------------------------------------------------------- |
-| `life`  | macOS, default           | Personal dev (SSH, git, Python, Elm, JS, SQL, API tokens) |
-| `linux` | Linux, `pacman` detected | Same tooling as `life`, Linux pkgs                        |
+| env     | host signal              | toolchain                                                               |
+| ------- | ------------------------ | ----------------------------------------------------------------------- |
+| `life`  | macOS, default           | Personal dev (SSH, git, Python, ReScript + JS, SQL, GitHub/Ollama tokens) |
+| `linux` | Linux, `pacman` detected | Same tooling as `life`, Linux pkgs                                       |
 
 ## §2 · commands
 

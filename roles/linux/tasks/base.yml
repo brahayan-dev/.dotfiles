@@ -57,8 +57,3 @@
   shell: curl -fsSL https://ollama.com/install.sh | sh
   args:
     creates: "/usr/local/bin/ollama"
-
-- name: Install Opencode
-  shell: curl -fsSL https://opencode.ai/install | bash
-  args:
-    creates: "{{ ansible_facts['user_dir'] }}/.local/bin/opencode"

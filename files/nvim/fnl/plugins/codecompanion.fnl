@@ -1,12 +1,14 @@
+(local default "deepseek-v4.1-flash")
+
 (fn adapter []
   (let [{: extend} (require :codecompanion.adapters)]
     (extend :ollama
-            {:headers {:Content-Type :application/json
+            {:schema {:model {: default}}
+             :headers {:Content-Type :application/json
                        :Authorization "Bearer ${api_key}"}
-             :schema {:model {:default "glm-5.3-flash"}}
              :env {:url "https://ollama.com" :api_key "OLLAMA_API_KEY"}})))
 
-(local base {:adapter :ollama :model "glm-5.3-flash"})
+(local base {:adapter :ollama :model default})
 
 [{1 :olimorris/codecompanion.nvim
   :version "^20.0.0"

@@ -47,5 +47,4 @@
                               :callback (fn [] (vim.hl.on_yank))
                               :desc "Highlight when yanking text"})
 
-(vim.filetype.add {:extension {:mustache :mustache}
-                   :pattern {"[Jj]ustfile" :just}})
+(vim.filetype.add {:pattern {"[Jj]ustfile" :just}})

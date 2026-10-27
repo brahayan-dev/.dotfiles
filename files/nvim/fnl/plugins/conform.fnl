@@ -2,17 +2,15 @@
                          :html [:prettier]
                          :json [:prettier]
                          :fennel [:fnlfmt]
-                         :mustache [:prettier]
                          :markdown [:prettier]
                          :typescript [:prettier]
                          :javascript [:prettier]
                          :python [:ruff_format]
-                         :elm [:elm_format]
+                         :rescript [:rescript-format]
                          :just [:just_fmt]})
 
 (local format_on_save {:timeout_ms 500 :lsp_format :fallback})
-(local formatters {:prettier {:options {:ft_parsers {:mustache :html}}}
-                   :just_fmt {:command :just
+(local formatters {:just_fmt {:command :just
                               :args ["--justfile" "$FILENAME" "--fmt"]
                               :format :inplace}})
 

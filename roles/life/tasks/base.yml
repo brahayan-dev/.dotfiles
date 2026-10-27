@@ -10,7 +10,6 @@
   community.general.homebrew:
     name:
       - tofu-ls
-      - opencode
       - jupyterlab
       - dbeaver-community
     state: latest
