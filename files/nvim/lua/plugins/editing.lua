@@ -6,13 +6,5 @@ return {
       require("nvim-surround").setup()
     end,
   },
-  {
-    "julienvincent/nvim-paredit",
-    lazy = true,
-    ft = { "clojure" },
-    config = function()
-      require("nvim-paredit").setup()
-    end,
-  },
   { "windwp/nvim-autopairs", event = "InsertEnter", config = true },
 }
