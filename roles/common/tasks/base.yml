@@ -6,8 +6,6 @@
       - lua
       - qpdf
       - luajit
-      - fnlfmt
-      - fennel
       - podman
       - poppler
       - ripgrep
