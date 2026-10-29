@@ -3,8 +3,3 @@
 **/.cursor
 **/.cpcache
 **/.private_profile
-
-# Neovim
-**/*.lua
-!/files/nvim/init.lua
-!/files/nvim/lua/plugins.lua
