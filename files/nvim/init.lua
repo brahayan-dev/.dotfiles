@@ -18,6 +18,8 @@ vim.loader.enable()
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 
+require("settings")
+
 require("lazy").setup("plugins", {
   -- automatically check for plugin updates
   checker = { enabled = true },

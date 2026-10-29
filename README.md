@@ -1,6 +1,6 @@
 # `~/.dotfiles`
 
-Multi-environment dotfiles repository. A small Fennel entrypoint (`systems/core.fnl`) dispatches to environment-specific Ansible playbooks that deploy configs via symlinks from `~/.dotfiles/files/` into `$HOME` and `~/.config/`.
+Multi-environment dotfiles repository. A small `justfile` dispatches to environment-specific Ansible playbooks that deploy configs via symlinks from `~/.dotfiles/files/` into `$HOME` and `~/.config/`.
 
 ```
 $ git clone <repo> ~/.dotfiles
@@ -14,33 +14,28 @@ $ ./workstation setup
 $ ./workstation setup
 ```
 
-The `workstation` shell script detects the OS, installs `fennel` and `ansible` if missing (brew on macOS, pacman on Linux), then `exec`s `fennel systems/core.fnl "$@"`. All dispatch lives in Fennel from that point on.
+The `workstation` shell script detects the OS, installs `just` and `ansible` if missing (brew on macOS, pacman on Linux), then `exec`s `just --justfile justfile`. All dispatch lives in the justfile from that point on; the versioned Python toolchain comes from mise via `./workstation install`.
 
 ## §1 · environments
 
-Three environments, partitioned by host signal (see `systems/library/common.fnl`):
+Two environments, partitioned by `os()` in the justfile:
 
-| env     | host signal               | toolchain                                                  |
-| ------- | ------------------------- | ---------------------------------------------------------- |
-| `work`  | macOS, work-env available | Scala and Clojure, Work infrastructure                     |
-| `life`  | macOS, default            | Personal dev (SSH, git, Ruby, Python, Elm, JS, API tokens) |
-| `linux` | Linux, `pacman` detected  | Same tooling as `life`, Linux pkgs                         |
+| env     | host signal              | toolchain                                                               |
+| ------- | ------------------------ | ----------------------------------------------------------------------- |
+| `life`  | macOS, default           | Personal dev (SSH, git, Python, ReScript + JS, SQL, GitHub/Ollama tokens) |
+| `linux` | Linux, `pacman` detected | Same tooling as `life`, Linux pkgs                                       |
 
 ## §2 · commands
 
-The dispatcher is the `register` function in `systems/core.fnl`. Each entry pairs a handler with an `:allowed-on` list (`:all`, `:work`, or `[:life :linux]`).
+The dispatcher is the `justfile` at the repo root — `just --list` documents every recipe and aliases (`p`, `s`) cover the daily ones. Side-effectful recipes stop at the first failing line with a non-zero exit code.
 
-| command              | work | life | linux |
-| -------------------- | :--: | :--: | :---: |
-| `ping`               |  ●   |  ●   |   ●   |
-| `setup`              |  ●   |  ●   |   ●   |
-| `install scala2`     |  ●   |  ·   |   ·   |
-| `install ruby`       |  ·   |  ●   |   ●   |
-| `install python`     |  ·   |  ●   |   ●   |
-| `connect github`     |  ·   |  ●   |   ●   |
-| `refresh nu`         |  ●   |  ·   |   ·   |
-| `clone repositories` |  ●   |  ·   |   ·   |
-| `generate aliases`   |  ●   |  ●   |   ●   |
+| command            | life | linux |
+| ------------------ | :--: | :---: |
+| `ping`             |  ●   |   ●   |
+| `setup`            |  ●   |   ●   |
+| `install`          |  ●   |   ●   |
+| `connect github`   |  ●   |   ●   |
+| `generate-aliases` |  ●   |   ●   |
 
 Usage:
 
@@ -53,41 +48,29 @@ $ ./workstation <command> [entity]
 ```
 ~/.dotfiles
 ├── workstation                  ◀── bash entry · OS detection · dep bootstrap
+├── justfile                     ◀── command runner · ansible invocation
 │
-├── systems/                     ◀── Fennel CLI · ansible config
-│   ├── core.fnl                 ◀── entrypoint + register table
+├── systems/                     ◀── ansible config
 │   ├── hosts.ini                ◀── ansible inventory
 │   │
-│   ├── library/                 ◀── Fennel libraries
-│   │   ├── common.fnl           ◀── os-name · environment · run
-│   │   ├── logic.fnl            ◀── allowed? · dispatch  (gating primitive)
-│   │   ├── ansible.fnl          ◀── ping · setup
-│   │   ├── interactive.fnl      ◀── install-* · connect-github
-│   │   ├── repository.fnl       ◀── generate-aliases · clone-repositories
-│   │   └── work.fnl             ◀── bom-dia  (Work refresh sequence)
-│   │
-│   ├── macos/ansible.cfg
-│   ├── linux/
-│   │   ├── ansible.cfg
-│   │   ├── playbook.yml
-│   │   └── AGENTS.md
 │   ├── life/
+│   │   ├── ansible.cfg          ◀── Darwin config
 │   │   ├── playbook.yml
 │   │   └── AGENTS.md
-│   └── work/
+│   └── linux/
+│       ├── ansible.cfg          ◀── Linux config
 │       ├── playbook.yml
-│       └── CLAUDE.md
+│       └── AGENTS.md
 │
 ├── roles/                       ◀── ansible roles
 │   ├── common/                  all environments
 │   ├── macos/                   brew
-│   ├── work/                    internal toolchain
 │   ├── life/                    personal
 │   └── linux/                   pacman
 │
 └── files/                       ◀── managed dotfiles (symlinked)
-    ├── nvim/        ghostty/
-    └── .zshrc  .zprofile  .life_profile  .linux_profile  .work_profile
+    ├── nvim/fnl/   ghostty/
+    └── .zshrc  .zprofile  .life_profile  .linux_profile
 ```
 
 Deployment invariant — files are **always** symlinked, never copied:

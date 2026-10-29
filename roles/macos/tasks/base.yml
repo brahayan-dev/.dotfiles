@@ -21,7 +21,6 @@
       - stylua
       - libtool
       - lazygit
-      - ripgrep
       - ghostty
       - readline
       - openssl@3
@@ -29,16 +28,11 @@
       - ruff
       - font-fira-code
       - lua-language-server
-      - fennel-ls
+      - just-lsp
     state: latest
   notify:
     - event_download_ohmyzsh
     - event_install_ohmyzsh
-
-- name: Install Npm Dependencies
-  ansible.builtin.command:
-    cmd: "npm install --global {{ npm_global_packages | join(' ') }}"
-  changed_when: false
 
 - name: Install Common Cask Dependencies
   community.general.homebrew_cask:

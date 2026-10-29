@@ -36,15 +36,15 @@ ensure_deps_macos() {
     log_info "Installing Ansible"
     brew install ansible
   fi
-  if ! have fennel; then
-    log_info "Installing Fennel"
-    brew install fennel
+  if ! have just; then
+    log_info "Installing just"
+    brew install just
   fi
 }
 
 ensure_deps_linux() {
   if have pacman; then
-    if ! have ansible || ! have fennel; then
+    if ! have ansible || ! have just; then
       log_info "Updating Pacman Index"
       sudo pacman-mirrors --fasttrack 5 && sudo pacman -Syu
     fi
@@ -53,9 +53,9 @@ ensure_deps_linux() {
       log_info "Installing Ansible"
       sudo pacman -S ansible
     fi
-    if ! have fennel; then
-      log_info "Installing Fennel"
-      sudo pacman -S fennel
+    if ! have just; then
+      log_info "Installing just"
+      sudo pacman -S just
     fi
   else
     log_error "Could Not Detect Package Manager To Install Dependencies"
@@ -82,7 +82,7 @@ main() {
   esac
 
   cd "$script_dir"
-  exec fennel systems/core.fnl "$@"
+  exec just --justfile "$script_dir/justfile" --working-directory "$script_dir" "$@"
 }
 
 main "$@"

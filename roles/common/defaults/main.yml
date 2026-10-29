@@ -2,7 +2,7 @@
 npm_global_packages:
   - prettier
   - stylelint
-  - typescript
+  - typescript@~6
   - http-server
   - js-beautify
   - bash-language-server
@@ -11,8 +11,7 @@ npm_global_packages:
   - vscode-langservers-extracted
   - "@ansible/ansible-language-server"
   - pyright
-  - elm
-  - elm-format
-  - "@elm-tooling/elm-language-server"
+  - "@astrojs/language-server"
+  - "@rescript/language-server"
 
 git_user_email: "bxsr@proton.me"

@@ -1,24 +1,11 @@
 ---
-- name: Enable Repositories On Brew
-  community.general.homebrew_tap:
-    name: "{{ item }}"
-    state: present
-  loop:
-    - anomalyco/tap
 
 - name: Install Dependencies
   community.general.homebrew:
     name:
-      - mise
-      - rlwrap
-      - direnv
-      - sqlite
       - tofu-ls
-      - opencode
-      - opentofu
       - jupyterlab
       - dbeaver-community
-      - visidata
     state: latest
 
 - name: Install Common Cask Dependencies

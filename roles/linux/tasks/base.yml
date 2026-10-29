@@ -12,26 +12,19 @@
       - curl
       - tree
       - tidy
-      - mise
       - make
       - cmake
       - shfmt
       - unzip
       - pdftk
       - nodejs
-      - sqlite
       - neovim
       - stylua
       - duckdb
-      - visidata
-      - rlwrap
-      - direnv
       - pandoc
       - dbeaver
       - ghostty
-      - ripgrep
       - lazygit
-      - opentofu
       - base-devel
       - github-cli
       - shellcheck
@@ -47,31 +40,8 @@
     - event_download_ohmyzsh
     - event_install_ohmyzsh
 
-- name: Install Npm Dependencies
-  become: true
-  ansible.builtin.command:
-    cmd: "npm install --global {{ npm_global_packages | join(' ') }}"
-  changed_when: false
-
-- name: Clone Fennel Lsp
-  ansible.builtin.git:
-    repo: https://git.sr.ht/~xerool/fennel-ls
-    dest: "{{ ansible_facts['user_dir'] }}/.local/src/fennel-ls"
-    depth: 1
-
-- name: Build Fennel Lsp
-  ansible.builtin.command: make install PREFIX={{ ansible_facts['user_dir'] }}/.local
-  args:
-    chdir: "{{ ansible_facts['user_dir'] }}/.local/src/fennel-ls"
-    creates: "{{ ansible_facts['user_dir'] }}/.local/bin/fennel-ls"
-
 - name: Install Ollama
   become: true
   shell: curl -fsSL https://ollama.com/install.sh | sh
   args:
     creates: "/usr/local/bin/ollama"
-
-- name: Install Opencode
-  shell: curl -fsSL https://opencode.ai/install | bash
-  args:
-    creates: "{{ ansible_facts['user_dir'] }}/.local/bin/opencode"
