@@ -18,14 +18,6 @@ return {
     opts = {
       adapters = { http = { ollama = adapter } },
       interactions = { cmd = base, chat = base, inline = base },
-      strategies = {
-        chat = {
-          tools = {
-            ["file_search"] = { callback = "file_search" },
-            ["insert_edit_into_file"] = { callback = "insert_edit_into_file" },
-          },
-        },
-      },
       display = {
         chat = {
           window = {
