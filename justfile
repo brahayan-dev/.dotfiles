@@ -2,7 +2,7 @@
 
 cfg := if os() == "macos" { "systems/life/ansible.cfg" } else { "systems/linux/ansible.cfg" }
 playbook := if os() == "macos" { "systems/life/playbook.yml" } else { "systems/linux/playbook.yml" }
-repos := "workbook turing frapelle nullstellensatz box toy zen hub"
+repos := "max-neef workbook turing frapelle nullstellensatz box toy zen hub"
 
 @default:
     @just --list
