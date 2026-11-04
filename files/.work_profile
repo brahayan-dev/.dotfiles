@@ -112,6 +112,7 @@ arcadia() {
     --add-dir "$HOME/dev/nu/conrado" \
     --add-dir "$HOME/dev/nu/thalassa" \
     --add-dir "$HOME/dev/nu/arcadia-policies" \
+    --add-dir "$HOME/dev/nu/arcadia-scala-registry" \
     --add-dir "$HOME/dev/nu/lending-personal-account-unsec-job-repo" \
     --append-system-prompt-file "$HOME/Projects/workbook/work/contexts/arcadia.md"
 }

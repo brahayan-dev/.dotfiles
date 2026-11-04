@@ -26,6 +26,7 @@
                    :carne-do-bau
                    :optimus-prime
                    :arcadia-policies
+                   :arcadia-scala-registry
                    :reference-data-registry
                    :lending-claude-workspace
                    :data-quality-custom-checks
