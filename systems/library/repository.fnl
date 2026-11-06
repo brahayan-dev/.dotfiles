@@ -25,10 +25,12 @@
                    :controlinho
                    :carne-do-bau
                    :optimus-prime
+                   :common-arcadia
                    :arcadia-policies
                    :arcadia-scala-dsl
                    :arcadia-scala-registry
                    :reference-data-registry
+                   :arcadia-scala-simulation
                    :lending-claude-workspace
                    :data-quality-custom-checks
                    :lending-foundations-job-repo
