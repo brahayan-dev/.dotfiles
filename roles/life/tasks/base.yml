@@ -1,5 +1,4 @@
 ---
-
 - name: Install Dependencies
   community.general.homebrew:
     name:
@@ -13,3 +12,9 @@
     name:
       - balenaetcher
     state: latest
+
+- name: Install Markitdown
+  pip:
+    name: "markitdown[all]"
+    state: latest
+    extra_args: --user
