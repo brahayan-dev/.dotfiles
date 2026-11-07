@@ -1,9 +1,9 @@
 ---
 - name: Install Dependencies
   become: true
-  community.general.pacman:
+  ansible.builtin.dnf:
     name:
-      - fd
+      - fd-find
       - git
       - zsh
       - 0ad
@@ -16,7 +16,7 @@
       - cmake
       - shfmt
       - unzip
-      - pdftk
+      - pdftk-java
       - nodejs
       - neovim
       - stylua
@@ -25,13 +25,13 @@
       - dbeaver
       - ghostty
       - lazygit
-      - base-devel
-      - github-cli
-      - shellcheck
+      - "@development-tools"
+      - gh
+      - ShellCheck
       - ruff
-      - ttf-fira-code
+      - fira-code-fonts
       - poppler-glib
-      - jupyter-notebook
+      - python3-notebook
       - lua-language-server
 
     state: latest

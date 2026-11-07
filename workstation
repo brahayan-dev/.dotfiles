@@ -43,19 +43,19 @@ ensure_deps_macos() {
 }
 
 ensure_deps_linux() {
-  if have pacman; then
+  if have dnf; then
     if ! have ansible || ! have just; then
-      log_info "Updating Pacman Index"
-      sudo pacman-mirrors --fasttrack 5 && sudo pacman -Syu
+      log_info "Refreshing Dnf Index"
+      sudo dnf -y makecache
     fi
 
     if ! have ansible; then
       log_info "Installing Ansible"
-      sudo pacman -S ansible
+      sudo dnf install -y ansible
     fi
     if ! have just; then
       log_info "Installing just"
-      sudo pacman -S just
+      sudo dnf install -y just
     fi
   else
     log_error "Could Not Detect Package Manager To Install Dependencies"

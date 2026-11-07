@@ -14,7 +14,7 @@ $ ./workstation setup
 $ ./workstation setup
 ```
 
-The `workstation` shell script detects the OS, installs `just` and `ansible` if missing (brew on macOS, pacman on Linux), then `exec`s `just --justfile justfile`. All dispatch lives in the justfile from that point on; the versioned Python toolchain comes from mise via `./workstation install`.
+The `workstation` shell script detects the OS, installs `just` and `ansible` if missing (brew on macOS, dnf on Linux), then `exec`s `just --justfile justfile`. All dispatch lives in the justfile from that point on; the versioned Python toolchain comes from mise via `./workstation install`.
 
 ## §1 · environments
 
@@ -23,7 +23,7 @@ Two environments, partitioned by `os()` in the justfile:
 | env     | host signal              | toolchain                                                               |
 | ------- | ------------------------ | ----------------------------------------------------------------------- |
 | `life`  | macOS, default           | Personal dev (SSH, git, Python, ReScript + JS, SQL, GitHub/Ollama tokens) |
-| `linux` | Linux, `pacman` detected | Same tooling as `life`, Linux pkgs                                       |
+| `linux` | Linux, `dnf` detected    | Same tooling as `life`, Linux pkgs                                       |
 
 ## §2 · commands
 
@@ -66,7 +66,7 @@ $ ./workstation <command> [entity]
 │   ├── common/                  all environments
 │   ├── macos/                   brew
 │   ├── life/                    personal
-│   └── linux/                   pacman
+│   └── linux/                   dnf
 │
 └── files/                       ◀── managed dotfiles (symlinked)
     ├── nvim/fnl/   ghostty/

@@ -11,7 +11,7 @@ Multi-environment dotfiles repository. A small `justfile` dispatches to environm
 Two environments, partitioned at runtime by `os()` in the justfile (`macos` → `life`, `linux` → `linux`):
 
 - **life** (macOS, default) — Personal dev: SSH, git, Python runtime (mise via `install`), ReScript + JS toolchain (npm globals), Astro, API tokens (`GITHUB_TOKEN`, `OLLAMA_API_KEY`)
-- **linux** (pacman-based Linux) — Same tooling as life (Python, ReScript + JS, Astro) with Linux-specific packages
+- **linux** (dnf-based Linux, Fedora) — Same tooling as life (Python, ReScript + JS, Astro) with Linux-specific packages
 
 ### Entry Point
 
@@ -19,7 +19,7 @@ Two environments, partitioned at runtime by `os()` in the justfile (`macos` → 
 ./workstation <command> [entity]
 ```
 
-The `workstation` shell script detects the OS to bootstrap deps (`just` + `ansible` via brew/pacman), then `exec`s `just --justfile justfile --working-directory "$script_dir"`. All dispatch lives in the justfile from that point on; the versioned toolchain comes from mise — Python via `./workstation install`.
+The `workstation` shell script detects the OS to bootstrap deps (`just` + `ansible` via brew/dnf), then `exec`s `just --justfile justfile --working-directory "$script_dir"`. All dispatch lives in the justfile from that point on; the versioned toolchain comes from mise — Python via `./workstation install`.
 
 ### Commands
 
@@ -63,7 +63,7 @@ files/                         managed dotfiles (symlinked into $HOME / ~/.confi
 
 ### Ansible
 
-Playbooks run against `localhost` via `hosts.ini`. The justfile sets `ANSIBLE_CONFIG=systems/life/ansible.cfg` (macOS) or `ANSIBLE_CONFIG=systems/linux/ansible.cfg` (Linux) with the `cfg` recipe variable, picks the playbook with the `playbook` variable, and passes `systems/.vault_` and `systems/.become_` as password files. The `common` role creates directories (`~/.ssh`, `~/.config`, `~/.config/ghostty`), installs everything shared via the `package` module (global npm packages, and cross-env packages like `mise`, `direnv`, `sqlite`, `opentofu`, `visidata` — `become` only on Archlinux), and symlinks nvim, `.zprofile`, and `.zshrc`. Environment-specific roles only add packages and symlinks that differ per environment (SSH config, profiles, per-env AGENTS.md, Ghostty variants). The `macos` role (Darwin) installs the shared Homebrew base.
+Playbooks run against `localhost` via `hosts.ini`. The justfile sets `ANSIBLE_CONFIG=systems/life/ansible.cfg` (macOS) or `ANSIBLE_CONFIG=systems/linux/ansible.cfg` (Linux) with the `cfg` recipe variable, picks the playbook with the `playbook` variable, and passes `systems/.vault_` and `systems/.become_` as password files. The `common` role creates directories (`~/.ssh`, `~/.config`, `~/.config/ghostty`), installs everything shared via the `package` module (global npm packages, and cross-env packages like `mise`, `direnv`, `sqlite`, `opentofu`, `visidata` — `become` only on Linux (`os_family != 'Darwin'`)), and symlinks nvim, `.zprofile`, and `.zshrc`. Environment-specific roles only add packages and symlinks that differ per environment (SSH config, profiles, per-env AGENTS.md, Ghostty variants). The `macos` role (Darwin) installs the shared Homebrew base.
 
 `roles_path = ../../roles` in each `ansible.cfg` is relative to the `.cfg` location; ansible resolves it back to the repo's top-level `roles/` directory.
 
