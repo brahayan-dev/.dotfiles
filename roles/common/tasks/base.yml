@@ -10,7 +10,6 @@
       - poppler
       - ripgrep
       - tree-sitter-cli
-      - mise
       - rlwrap
       - direnv
       - sqlite
@@ -23,4 +22,3 @@
   ansible.builtin.command:
     cmd: "npm install --global {{ npm_global_packages | join(' ') }}"
   changed_when: false
-

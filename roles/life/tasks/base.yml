@@ -2,6 +2,7 @@
 - name: Install Dependencies
   community.general.homebrew:
     name:
+      - mise
       - tofu-ls
       - jupyterlab
       - dbeaver-community
