@@ -1,42 +1,78 @@
 ---
+- name: Install Dnf Plugins
+  become: true
+  ansible.builtin.dnf:
+    name:
+      - dnf-plugins-core
+    state: present
+    update_cache: true
+
+- name: Enable Copr Repositories
+  become: true
+  community.general.copr:
+    name: "{{ item }}"
+    state: enabled
+  loop:
+    - scottames/ghostty
+    - iucar/duckdb
+    - dejan/lazygit
+    - jdxcode/mise
+
 - name: Install Dependencies
   become: true
   ansible.builtin.dnf:
     name:
-      - fd-find
+      - gh
       - zsh
       - 0ad
       - gcc
       - npm
+      - ruff
       - curl
       - tree
       - tidy
       - make
+      - mise
       - cmake
       # - shfmt
       - unzip
       - pdftk-java
       - neovim
-      # - stylua
-      # - duckdb
+      - duckdb
       - pandoc
       # - dbeaver
-      # - ghostty
-      # - lazygit
-      - "@development-tools"
-      - gh
+      - ghostty
+      - lazygit
+      - fd-find
       - ShellCheck
-      - ruff
-      - fira-code-fonts
       - poppler-glib
+      - fira-code-fonts
       - python3-notebook
-      # - lua-language-server
+      - "@development-tools"
 
     state: latest
     update_cache: true
   notify:
     - event_download_ohmyzsh
     - event_install_ohmyzsh
+
+- name: Check Lua Language Server Installation
+  ansible.builtin.command:
+    cmd: mise where aqua:LuaLS/lua-language-server
+  register: lua_ls_check
+  changed_when: false
+  failed_when: false
+
+# mise resolves GitHub release tags through the API. The ambient GITHUB_TOKEN
+# exported by .private_profile is ignored here on purpose: a stale token makes
+# mise fail with 401 instead of falling back to anonymous access, which is
+# enough to read public release tags.
+- name: Install Lua Language Server
+  ansible.builtin.command:
+    cmd: env -u GITHUB_TOKEN -u MISE_GITHUB_TOKEN mise use --global aqua:LuaLS/lua-language-server
+  environment:
+    MISE_YES: "1"
+  when: lua_ls_check.rc != 0
 
 - name: Install Ollama
   become: true

@@ -10,7 +10,7 @@
 | Language | Runtime                | LSP        | Formatter                 | Notes           |
 | -------- | ---------------------- | ---------- | ------------------------- | --------------- |
 | Just     | static binary          | just-lsp   | just --fmt                | workstation CLI |
-| Lua      | LuaJIT (dnf)           | lua_ls     | conform → stylua          | nvim config     |
+| Lua      | LuaJIT (dnf)           | lua_ls     | conform → stylua          | mise (aqua)     |
 | Python   | mise (`python@latest`) | pyright    | ruff                      | dev             |
 | JS/TS    | node                   | ts_ls      | prettier                  | dev             |
 | Astro    | node                   | astro-ls   | LSP fallback              | dev             |

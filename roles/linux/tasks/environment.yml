@@ -14,4 +14,5 @@
     force: true
   loop:
     - .linux_profile
+    - .private_profile
   notify: event_reload_zsh_files
