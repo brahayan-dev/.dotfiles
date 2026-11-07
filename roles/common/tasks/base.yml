@@ -4,17 +4,19 @@
   package:
     name:
       - lua
+      - git
       - qpdf
       - luajit
       - podman
-      - poppler
-      - ripgrep
-      - tree-sitter-cli
       - rlwrap
       - direnv
       - sqlite
+      - nodejs
+      - poppler
+      - ripgrep
       - opentofu
       - visidata
+      - tree-sitter-cli
     state: latest
 
 - name: Install Npm Dependencies

@@ -17,7 +17,6 @@
       - shfmt
       - unzip
       - pdftk-java
-      - nodejs
       - neovim
       - stylua
       - duckdb
