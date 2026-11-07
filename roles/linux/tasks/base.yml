@@ -4,7 +4,6 @@
   ansible.builtin.dnf:
     name:
       - fd-find
-      - git
       - zsh
       - 0ad
       - gcc
@@ -14,16 +13,16 @@
       - tidy
       - make
       - cmake
-      - shfmt
+      # - shfmt
       - unzip
       - pdftk-java
       - neovim
-      - stylua
-      - duckdb
+      # - stylua
+      # - duckdb
       - pandoc
-      - dbeaver
-      - ghostty
-      - lazygit
+      # - dbeaver
+      # - ghostty
+      # - lazygit
       - "@development-tools"
       - gh
       - ShellCheck
@@ -31,7 +30,7 @@
       - fira-code-fonts
       - poppler-glib
       - python3-notebook
-      - lua-language-server
+      # - lua-language-server
 
     state: latest
     update_cache: true
